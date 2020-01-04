@@ -1,0 +1,105 @@
+﻿<!--Success Modal Templates-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-success").Fade().HtmlAttributes(new { @class = "modal-message modal-success" })))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <i class="glyphicon glyphicon-check"></i>
+    }
+    using (var title = modal.BeginTitle())
+    {
+        <text>Correcto</text>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <text>La solicitud se efectuó con éxito</text>
+    }
+    using (var footer = modal.BeginFooter())
+    {
+        @Html.Bootstrap().Button().Text("Aceptar").Color(BootstrapColors.Success).HtmlAttributes(new { data_dismiss = "modal" })
+    }
+}
+
+<!--End Success Modal Templates-->
+<!--Info Modal Templates-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-info").Fade().HtmlAttributes(new { @class = "modal-message modal-info" })))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <i class="fa fa-envelope"></i>
+    }
+    using (var title = modal.BeginTitle())
+    {
+        <text>Información</text>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <text>Se le notifica información importante</text>
+    }
+    using (var footer = modal.BeginFooter())
+    {
+        @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Info).HtmlAttributes(new { data_dismiss = "modal" })
+    }
+}
+<!--End Info Modal Templates-->
+<!--Danger Modal Templates-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-danger").Fade().HtmlAttributes(new { @class = "modal-message modal-danger" })))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <i class="glyphicon glyphicon-fire"></i>
+    }
+    using (var title = modal.BeginTitle())
+    {
+        <text>Error</text>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <text>Se ha producido un error</text>
+    }
+    using (var footer = modal.BeginFooter())
+    {
+        @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Danger).HtmlAttributes(new { data_dismiss = "modal" })
+    }
+}
+<!--End Danger Modal Templates-->
+<!--Warning Modal Templates-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-warning").Fade().HtmlAttributes(new { @class = "modal-message modal-warning" })))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <i class="fa fa-warning"></i>
+    }
+    using (var title = modal.BeginTitle())
+    {
+        <text>Alerta</text>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <text>Algo ha salido mal</text>
+    }
+    using (var footer = modal.BeginFooter())
+    {
+        @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Warning).HtmlAttributes(new { data_dismiss = "modal" })
+    }
+}
+<!--End Warning Modal Templates-->
+<!--Confirm Modal Templates-->
+<div id="core_modalconfirmdialog" style="display:none;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal-header">
+                <i class="fa fa-warning"></i>
+            </div>
+            <div class="modal-body">
+                Mensaje
+            </div>
+            <div class="modal-body">
+                Mensaje que iría en el centro
+            </div>
+        </div>
+    </div>
+</div>
+<!--Confirm Modal Templates-->
+
+<script src="~/assets/js/toastr/toastr.js"></script>
+<script src="~/assets/js/core/core.js"></script>

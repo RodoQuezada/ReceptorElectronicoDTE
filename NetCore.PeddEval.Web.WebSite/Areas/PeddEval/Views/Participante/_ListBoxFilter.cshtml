@@ -1,0 +1,86 @@
+﻿@using System.Data;
+@{
+
+    Layout = "";
+
+}
+
+<!-- EVALUACION -->
+<div class"row">
+    <div class="col-sm-1">
+        <div class="form-group">
+            <strong>Evaluación</strong>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+
+        <div class="form-group">
+            <span class="input-icon icon-right">
+                <select id="numIdCabEvaluacion" name="numIdCabEvaluacion" class="form-control" style="width: 100%;" onchange="FiltrarAplic()">
+                    <option value="0"> </option>
+                    @{
+                        //int IdCabEval = ViewBag.IdCabEvaluacion;
+                        DataTable dtEval = null;
+                        dtEval = (ViewBag.Evaluaciones != null) ? (DataTable)ViewBag.Evaluaciones : null;
+                    }
+                    @if (dtEval != null && dtEval.Rows.Count > 0)
+                    {
+                        foreach (DataRow drEval in dtEval.Rows)
+                        {
+                            // int.Parse(ViewBag.IdCabEvaluacion)
+                            if(int.Parse(drEval["IdCabEvaluacion"].ToString()) == ViewBag.IdCabEvaluacion)
+                            {
+                                <option selected value="@(drEval["IdCabEvaluacion"].ToString())">@(drEval["NomEvaluacion"].ToString())</option>
+                            }
+                            else
+                            {
+                                <option value="@(drEval["IdCabEvaluacion"].ToString())">@(drEval["NomEvaluacion"].ToString())</option>
+                            }
+
+                        }
+                    }
+                </select>
+                <i class="" id="EvaluacionIcon"></i>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+<!-- AREA APLICACION DE EVALUACION -->
+<div class"row">
+
+    <div class="col-sm-1">
+        <div class="form-group">
+            <strong>@ViewBag.NombreListBox</strong>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+
+        <div class="form-group">
+
+            <div class="form-group">
+                <span class="input-icon icon-right">
+                    <select id="numIdGenerico" name="numIdGenerico" class="form-control" style="width: 100%;">
+                        <option value="0"> </option>
+                        <option selected value="@ViewBag.IdGenerico">@ViewBag.NomGenerico</option>
+                    </select>
+                    <i class="" id="GenericoIcon"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BOTON BUSCAR -->
+@*
+    <div class"row">
+      <div class="col-sm-1">
+        <div class="form-group">
+           <button id="btn_filter" type="button" class="btn btn-info btn-xs"><i class="fa fa-filter"></i>Filtrar</button>
+        </div>
+      </div>
+    </div>
+*@

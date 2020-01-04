@@ -1,0 +1,147 @@
+﻿@using System.Data;
+@{
+
+    Layout = "";
+
+}
+
+
+@*<table class="table table-responsive" id="searchEvaluador">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nombre Completo
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th>
+                Actividades
+            </th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nombre Completo
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </tfoot>
+    <tbody id="fbody">*@
+        @{
+            DataTable dtEvaluados = null;
+            dtEvaluados = (ViewBag.EvaluacionesJefatura != null) ? (DataTable)ViewBag.EvaluacionesJefatura : null;
+        }
+        @if (dtEvaluados != null && dtEvaluados.Rows.Count > 0)
+        {
+            foreach (DataRow drEvaludo in dtEvaluados.Rows)
+            {
+                <tr id="@(drEvaludo["IdGrupoEvaluacion"].ToString())">
+                    <td align="left">@(drEvaludo["IdEmpleado"].ToString())</td>
+                    <td align="left">@(drEvaludo["NomEmpleado"].ToString())</td>
+                    <td align="left">Evaluado</td>
+                    <td align="left">
+                        <button id="btn_eliminar" type="button" class="btn btn-danger btn-xs" onclick="EliminarEvaluado(@drEvaludo["IdCabEvaluacion"].ToString(),@drEvaludo["IdEvaluador"].ToString() ,@drEvaludo["IdGrupoEvaluacion"].ToString(),'@(drEvaludo["NomEmpleado"].ToString())')"><i class="fa fa-times"></i>Eliminar</button>
+                    </td>
+                </tr>
+            }
+        }
+
+    @*</tbody>
+</table>*@
+
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/jquery.blockUI.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+    @*<script type="text/javascript" class="init">
+
+        $(document).ready(function () {
+            $('#searchEvaluador').DataTable({
+
+                "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+                "aaSorting": [[0, 'asc']],
+                "aLengthMenu": [
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "All"]
+                ],
+                "iDisplayLength": 10,
+                "oTableTools": {
+                    "aButtons": [
+                        // "copy",
+                        // "print",
+                        {
+                            "sExtends": "print",
+                            "sButtonText": "<i class=\"fa fa-print\"></i> Imprimir",
+                            "aButtons": ["print"]
+                        },
+                        {
+                            "sExtends": "collection",
+                            "sButtonText": "<i class=\"fa fa-save\"></i> Guardar",
+                            "aButtons": ["csv", "xls", "pdf"]
+                        }
+
+                    ],
+                    "sSwfPath": "../assets/swf/copy_csv_xls_pdf.swf"
+                },
+                "language": {
+                    "search": "",
+                    "sLengthMenu": "_MENU_",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                initComplete: function () {
+                    this.api().columns([0, 1, 2]).every(function () {
+                        var column = this;
+                        var select = $('<select placeholder="Search Modelo" class="selectpicker" data-style="btn-primary"><option value="">Todos</option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                }
+            });
+        });
+
+
+    </script>*@
+
+}

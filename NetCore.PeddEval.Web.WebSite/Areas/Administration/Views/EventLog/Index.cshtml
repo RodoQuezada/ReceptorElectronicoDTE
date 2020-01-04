@@ -1,0 +1,335 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Sucesos";
+    ViewBag.Description = "Sucesos del Sistema";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header ">
+                <span class="widget-caption">Sucesos del Sistema</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <table id="expandabledatatable" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                            
+                            <th id="2">
+                                Tipo
+                            </th>
+                            <th id="3">
+                                Proceso
+                            </th>
+                            <th id="4">
+                                Usuario
+                            </th>
+                            <th id="5">
+                                Ruta
+                            </th>
+                            <th id="6">
+                                Última Ocurrencia
+                            </th>
+                            <th id="7"> 
+                                Número de Ocurrencia
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @*@{
+                            DataTable dt = null;
+                            dt = (ViewBag.Sucesos != null) ? (DataTable)ViewBag.Sucesos : null;
+                        }
+
+                        @if (dt != null && dt.Rows.Count > 0)
+                        {
+
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                <tr id="@dr["EventHash"].ToString()">
+                                    <td><i class="fa fa-plus-square-o row-details"></i></td>
+                                    <td>
+                                        @if (dr["EventlogTypeName"].ToString() == "Error")
+                                        {
+                                            <i class="fa fa-remove danger"></i>
+                                        }
+                                        else if (dr["EventlogTypeName"].ToString() == "Warning")
+                                        {
+                                            <i class="fa fa-warning warning"></i>
+                                        }
+                                        else if (dr["EventlogTypeName"].ToString() == "Success")
+                                        {
+                                            <i class="fa fa-check success"></i>
+                                        }
+                                        else if (dr["EventlogTypeName"].ToString() == "Information")
+                                        {
+                                            <i class="fa fa-info information"></i>
+                                        }
+                                        else if (dr["EventlogTypeName"].ToString() == "Debug")
+                                        {
+                                            <i class="fa fa-code-fork green"></i>
+                                        }
+                                        else if (dr["EventlogTypeName"].ToString() == "Trace")
+                                        {
+                                            <i class="fa fa-line-chart blue"></i>
+                                        }
+                                    </td>
+                                    <td id="2">@(dr["EventlogTypeName"].ToString())</td>
+                                    <td id="3">@(dr["ProcessName"].ToString())</td>
+                                    <td id="4">@(dr["UserName"].ToString())</td>
+                                    <td id="5">@(dr["Source"].ToString())</td>
+                                    <td id="6">@(dr["LastEvent"].ToString())</td>
+                                    <td id="7">@(dr["TimesNumber"].ToString().Replace(",", ", "))</td>
+                                </tr>
+                            }
+                        }*@
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageScripts{
+
+    @*@Html.Partial("Notifications")*@
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    @{
+        var relativeUrl = HttpContext.Current.Request.Url.Segments;
+        var url = string.Empty;
+
+        foreach (var item in relativeUrl)
+        {
+            if (!item.Equals("Index"))
+            {
+                url += item;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    <script>
+    var InitiateExpandableDataTable = function () {
+        return {
+            init: function () {
+                /*
+                * Initialize DataTables, with no sorting on the 'details' column
+                */
+                var oTable = $('#expandabledatatable').dataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "aLengthMenu": [
+                           [5, 15, 50, 100, 200, 500],
+                           [5, 15, 50, 100, 200, 500]
+                    ],
+                    "iDisplayLength": 100,
+                    "searchDelay": 2000,
+                    "sPaginationType": "bootstrap",
+                    "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+                    "oTableTools": {
+                        "aButtons": [
+                            {
+                                "sExtends": "copy",
+                                "sButtonText": "Copiar"
+                            },
+                            {
+                                "sExtends": "collection",
+                                "sButtonText": "Exportar <i class=\"fa fa-angle-down\"></i>",
+                                "aButtons": ["csv", "xls", "pdf"]
+                            }
+                        ],
+                        "sSwfPath": "../assets/swf/copy_csv_xls_pdf.swf"
+                    },
+                    "language": {
+                        "sInfo": "Mostrando _START_ de _END_ de _TOTAL_ registros", //
+                        "search": "",
+                        "sLengthMenu": "_MENU_",
+                        "oPaginate": {
+                            "sPrevious": "Anterior",
+                            "sNext": "Siguiente"
+                        }
+                    },
+                    "aaSorting": [6, 'desc'],
+                    'fnCreatedRow': function (nRow, aData, iDataIndex) {
+                        $(nRow).attr('id', (aData[0]));
+                    },
+                    'columnDefs': [{
+                        'targets': 0,
+                        'searchable': false,
+                        'orderable': false,
+                        'render': function (data, type, full, meta) {
+                            return '<i class="fa fa-plus-square-o row-details"></i>';
+                        }
+                    },
+                    {
+                        'targets': 1,
+                        'searchable': false,
+                        'orderable': false,
+                        'render': function (data, type, full, meta) {
+
+                              var Result= "";
+                              if (data == "Error")
+                              {
+                                  Result='<i class="fa fa-remove danger"></i>';
+                              }
+                              else if (data == "Warning")
+                              {
+                                  Result='<i class="fa fa-warning warning"></i>';
+                              }
+                              else if (data == "Success")
+                              {
+                                  Result='<i class="fa fa-check success"></i>';
+                              }
+                              else if (data == "Information")
+                              {
+                                  Result='<i class="fa fa-info information"></i>';
+                              }
+                              else if (data == "Debug")
+                              {
+                                  Result='<i class="fa fa-code-fork green"></i>';
+                              }
+                              else if (data == "Trace")
+                              {
+                                  Result = '<i class="fa fa-line-chart blue"></i>';
+                              }
+
+                            return Result;
+                        }
+                    }],
+                    "aoColumns": [
+                                    { "bSortable": false },
+                                    { "bSortable": false },
+                                    { "bSortable": true },
+                                    { "bSortable": true },
+                                    { "bSortable": true },
+                                    { "bSortable": true },
+                                    { "bSortable": true },
+                                    { "bSortable": true }
+                    ],
+                    "ajax": '@url/GetJson_EventLog_Ajax'
+                    
+                });
+                ///////////////////////////////////////////////////////
+
+                /* Formatting function for row details */
+                function fnFormatDetails(oTable, nTr) {
+                    var sOut = '';
+
+                    $.ajax({
+
+                        url: '@url/GetEventLogAjax?hashEventLog=' + nTr.id,
+                        type: 'post',
+                        dataType: "html",
+                        async: false,
+                        success: function (_result) {
+                            var _objr = JSON.parse(_result);
+                            switch (_objr.Flag) {
+                                case jsCore.FlagError:
+                                    jsCore.showErrorModal("Error", _objr.ErrorDescription);
+                                    break;
+                                default:
+                                    var _objEventLog = _objr.ReturnValue;
+                                    sOut += '<table>';
+                                    var description = _objEventLog.Description;
+                                    var XmlDescription = _objEventLog.XmlDescription;
+                                    var ServerName = _objEventLog.ServerName;
+                                    var IdUser = _objEventLog.IdUser;
+                                    var KeyWords = _objEventLog.KeyWords;
+                                    var FirstEvent = _objEventLog.FirstEvent;
+                                    var dt_created = _objEventLog.dt_created;
+                                    var dt_updated = _objEventLog.dt_updated;
+
+                                    if (description == null) { sOut += '<tr><td>Descripción:</td><td>' + " "; } else { sOut += '<tr><td>Descripción:</td><td>' + _objEventLog.Description; }
+                                    if (XmlDescription == null) { sOut += '<tr><td>Descripción Xml:</td><td>' + " "; } else { sOut += '<tr><td>Descripción:</td><td>' + _objEventLog.XmlDescription }
+                                    if (ServerName == null) { sOut += '<tr><td>Nombre del servidor:</td><td>' + " " } else { sOut += '<tr><td>Nombre del servidor:</td><td>' + _objEventLog.ServerName; }
+                                    if (IdUser == null) { sOut += '<tr><td>Id de Usuario:</td><td>' + " " } else { sOut += '<tr><td>Id de Usuario:</td><td>' + _objEventLog.IdUser; }
+                                    if (KeyWords == null) {sOut += '<tr><td>Key word:</td><td>' + " "} else {sOut += '<tr><td>Key word:</td><td>' + _objEventLog.KeyWords;}
+                                    if (FirstEvent == null) { sOut += '<tr><td>Primer Evento:</td><td>' + " " } else { sOut += '<tr><td>Primer Evento:</td><td>' + _objEventLog.FirstEvent; }
+                                    if (dt_created == null) { sOut += '<tr><td>Fecha Creación:</td><td>' + " " } else { sOut += '<tr><td>Fecha Creación:</td><td>' + _objEventLog.dt_created; }
+                                    if (dt_updated == null) { sOut += '<tr><td>Fecha Edición:</td><td>' + " " } else { sOut += '<tr><td>Fecha Edición:</td><td>' + _objEventLog.dt_updated; }
+                                    sOut += '</table>';
+                            }
+                        }
+                    });
+                    //var aData = oTable.fnGetData(nTr);
+                    //var sOut = '<table>';
+                    //sOut += '<tr><td>Descripción:</td><td>' + aData[8]
+                    //sOut += '<tr><td>Descripción xml:</td><td>' + aData[9]
+                    //sOut += '</table>';
+                    //return sOut;
+                    return sOut;
+                } 
+                /*
+                 * Insert a 'details' column to the table
+                 */
+                //var nCloneTh = document.createElement('th');
+                //var nCloneTd = document.createElement('td');
+                //nCloneTd.innerHTML = '<i class="fa fa-plus-square-o row-details"></i>';
+
+                //$('#expandabledatatable thead tr').each(function () {
+                    //this.insertBefore(nCloneTh, this.childNodes[0]);
+                //});
+
+                //$('#expandabledatatable tbody tr').each(function () {
+                    //this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
+                //});
+
+                $('#expandabledatatable').on('click', ' tbody td .row-details', function () {
+                    var nTr = $(this).parents('tr')[0];
+                    if (oTable.fnIsOpen(nTr)) {
+                        /* This row is already open - close it */
+                        $(this).addClass("fa-plus-square-o").removeClass("fa-minus-square-o");
+                        oTable.fnClose(nTr);
+                    } else {
+                        /* Open this row */
+                        $(this).addClass("fa-minus-square-o").removeClass("fa-plus-square-o");;
+                        //oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr), 'details');
+                        oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr), 'details');
+                    }
+                });
+
+                $('#expandabledatatable_column_toggler input[type="checkbox"]').change(function () {
+                    var iCol = parseInt($(this).attr("data-column"));
+                    var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+                    oTable.fnSetColumnVis(iCol, (bVis ? false : true));
+                });
+
+                $('body').on('click', '.dropdown-menu.hold-on-click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+        };
+    }();
+
+    InitiateExpandableDataTable.init();
+
+    </script>
+}

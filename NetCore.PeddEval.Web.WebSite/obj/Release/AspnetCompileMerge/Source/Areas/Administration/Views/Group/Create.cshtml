@@ -1,0 +1,110 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Crear Grupos de Permisos";
+    ViewBag.Description = "Grupos de Permisos";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+<div class="row">
+    <div class="col-xs-6 col-md-6">
+        <div class="widget">
+            <div class="widget-header ">
+                <span class="widget-caption">Crear Grupos de Permisos</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <form id="togglingForm" action="Create" method="post" class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Nombre </label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="titleGroup" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Permisos </label>
+                        <div class="col-lg-8">
+                            <select id="rolesGroup" name="rolesGroup" class="form-control" multiple="multiple" style="width: 100%;">
+                                @{
+                                    DataTable dt = null;
+                                    dt = (ViewBag.Roles != null) ? (DataTable)ViewBag.Roles : null;
+                                }
+                                @if (dt != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow dr in dt.Rows)
+                                    {
+                                        <option value="@(dr["Id"].ToString())">@(dr["Name"].ToString())</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <hr class="wide" />
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-4">
+                            <button type="submit" class="btn btn-danger">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section PageScripts{
+<script src="~/assets/js/validation/bootstrapValidator.js"></script>
+<script src="~/assets/js/select2/select2.js"></script>
+
+    <script>
+
+        $("#imageurlNode").select2();
+        $("#keyParentNode").select2();
+        $("#rolesGroup").select2({
+            placeholder: "Seleccione permisos del grupo",
+            allowClear: true
+        });
+
+
+        $(document).ready(function () {
+            $('#togglingForm').bootstrapValidator({
+                message: 'El campo no es válido',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                submitHandler: function (validator, form, submitButton) {
+                    // Do nothing
+                },
+                fields: {
+                    titleGroup: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El nombre del Grupo es requerido'
+                            }
+                        }
+                    }
+                }
+            })
+            .find('button[data-toggle]')
+            .on('click', function () {
+                var $target = $($(this).attr('data-toggle'));
+                // Show or hide the additional fields
+                // They will or will not be validated based on their visibilities
+                $target.toggle();
+                if (!$target.is(':visible')) {
+                    // Enable the submit buttons in case additional fields are not valid
+                    $('#togglingForm').data('bootstrapValidator').disableSubmitButtons(false);
+                }
+            });
+        });
+    </script>
+}

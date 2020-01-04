@@ -1,0 +1,97 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Asignar Permiso a Usuario";
+    ViewBag.Description = "Asignar Permiso";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-6 col-md-6">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption">Asignar Grupos de Permisos</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <form id="togglingForm" action="Insert" method="post" class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Usuario</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" readonly value="@ViewBag.UserId" name="titleGroup" />
+                            <input type="hidden" class="form-control" id="UserId" name="UserId" value="@ViewBag.UserId" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Grupo</label>
+                        <div class="col-lg-8">
+                            <select id="Group" name="Group" class="form-control" multiple="multiple" style="width: 100%;">
+                                @{
+                                    DataTable dt = null;
+                                    dt = (ViewBag.Groups != null) ? (DataTable)ViewBag.Groups : null;
+                                }
+                                @if (dt != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow dr in dt.Rows)
+                                    {
+                                        <option value="@(dr["Id"].ToString())">@(dr["Name"].ToString())</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Permisos </label>
+                        <div class="col-lg-8">
+                            <select id="rolesGroup" name="rolesGroup" class="form-control" multiple="multiple" style="width: 100%;">
+                                @{
+                                    DataTable dt2 = null;
+                                    dt2 = (ViewBag.Roles != null) ? (DataTable)ViewBag.Roles : null;
+                                }
+                                @if (dt2 != null && dt2.Rows.Count > 0)
+                                {
+                                    foreach (DataRow dr in dt2.Rows)
+                                    {
+                                        <option value="@(dr["Id"].ToString())">@(dr["Name"].ToString())</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <hr class="wide" />
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-4">
+                            <button type="submit" class="btn btn-danger">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section PageScripts{
+    <script src="~/assets/js/validation/bootstrapValidator.js"></script>
+    <script src="~/assets/js/select2/select2.js"></script>
+    <script>
+        $("#imageurlNode").select2();
+        $("#keyParentNode").select2();
+        $("#Group").select2({
+            placeholder: "Seleccione el grupo",
+            allowClear: true
+        });
+        $("#rolesGroup").select2({
+            placeholder: "Seleccione permisos del grupo",
+            allowClear: true
+        });
+    </script>
+}

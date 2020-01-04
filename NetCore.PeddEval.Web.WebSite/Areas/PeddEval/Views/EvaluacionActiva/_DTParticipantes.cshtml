@@ -1,0 +1,23 @@
+﻿@using System.Data;
+@{
+
+    Layout = "";
+
+}
+
+    <div class="form-group">
+        <select id="numIdParticipante" name="numIdParticipante" class="form-control" style="width: 100%;">
+            <option value="0"> </option>
+            @{
+                DataTable dtParticipante = null;
+                dtParticipante = (ViewBag.Participantes != null) ? (DataTable)ViewBag.Participantes : null;
+            }
+            @if (dtParticipante != null && dtParticipante.Rows.Count > 0)
+            {
+                foreach (DataRow drParticipante in dtParticipante.Rows)
+                {
+                    <option value="@drParticipante["IdEmpleado"].ToString()">@(drParticipante["NomEmpleado"].ToString())</option>
+                }
+            }
+        </select>
+    </div>

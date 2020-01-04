@@ -1,0 +1,395 @@
+﻿@using System.Data;
+
+@{
+    ViewBag.Title = "Creación de Evaluación";
+    ViewBag.Description = "Crear una nueva Evaluación.";
+    Layout = "~/Views/Shared/_Default.cshtml";
+
+}
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-yellow">
+                <span class="widget-caption">
+                    @*[
+                        @{
+                            if (Model.Id_Sistema == null) {
+                                var IDactivo = Model.ID_ACTIVO;
+
+
+                            }
+                            else{ var IDactivo = 0; }
+                         }
+                            ]*@ Creación de Evaluación
+                </span>
+
+                <div class="widget-buttons">
+                    @*<a href="#" data-toggle="maximize">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                        <a href="#" data-toggle="collapse">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="#" data-toggle="dispose">
+                            <i class="fa fa-times"></i>
+                        </a>*@
+                </div>
+            </div>
+            <div class="widget-body">
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Compañía
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="numIdCompania" name="numIdCompania" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtCompania = null;
+                                        dtCompania = (ViewBag.Compania != null) ? (DataTable)ViewBag.Compania : null;
+                                    }
+                                    @foreach (DataRow drComp in dtCompania.Rows)
+                                    {
+                                        <option value="@(drComp["IdCompania"].ToString())">@(drComp["NomCompania"].ToString())</option>
+                                    }
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Nombre
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgNomEvaluacion" type="text" class="form-control" autocomplete="Off" name="dgNomEvaluacion" value="" placeholder="Nombre de la Evaluación"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Descipción
+                        </div>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                @*<input id="dgDesEvaluacion" type="text" class="form-control" autocomplete="Off" name="dgDesEvaluacion" value="" placeholder="Descripción de la Evaluación"
+                        data-bv-notempty="true"
+                        data-bv-notempty-message="El campo es Obligatorio" />*@
+
+
+                                <textarea name="dgdesObjetivo" id="dgDesEvaluacion" class="form-control" rows="3" placeholder="Descripción de la Evaluación"></textarea>
+
+
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Instrucción
+                        </div>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                @*<input id="dgInsEvaluacion" type="text" class="form-control" autocomplete="Off" name="dgInsEvaluacion" value="" placeholder="Instrucciones para la Evaluación"
+                        data-bv-notempty="true"
+                        data-bv-notempty-message="El campo es Obligatorio" />*@
+                                <textarea name="dgdesObjetivo" id="dgInsEvaluacion" class="form-control" rows="3" placeholder="Instrucciones para la Evaluación"></textarea>
+
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Inicio
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgdfInicio" type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" name="dgdfInicio" value="" placeholder="Fecha de Inicio de la Evaluación"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Término
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgdfTermino" type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" name="dgdfTermino" value="" placeholder="Fecha de Término de la Evaluación"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Tipo Evaluación
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="numIdTipoEvaluacion" name="numIdTipoEvaluacion" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtTipoEval = null;
+                                        dtTipoEval = (ViewBag.TipoEvaluacion != null) ? (DataTable)ViewBag.TipoEvaluacion : null;
+                                    }
+                                    @foreach (DataRow drTeval in dtTipoEval.Rows)
+                                    {
+                                        <option value="@(drTeval["IdTipoEvaluacion"].ToString())">@(drTeval["NomTipoEvaluacion"].ToString())</option>
+                                    }
+                                </select>
+                                <i class="" id="IdTipoEvaluacionIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- ESTA SECCION ES UN LISTBOX GENERICO  -->
+                    <!--== INICIO -->
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Area Aplicación
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="numIdCompSucAreDep" name="numIdCompSucAreDep" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @*
+                            @{
+                                DataTable dtGenerico = null;
+                                dtGenerico = (ViewBag.Generico != null) ? (DataTable)ViewBag.Generico : null;
+                            }
+                            @if (dtGenerico != null && dtGenerico.Rows.Count > 0)
+                            {
+                                foreach (DataRow drGen in dtGenerico.Rows)
+                                {
+                                        <option value="@(drGen["Id"].ToString())">@(drGen["Descripcion"].ToString())</option>
+                                }
+
+                            }
+                                    *@
+
+                                </select>
+                                <i class="" id="IdCompSucAreDepIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Estado
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="numIdEstado" name="numIdEstado" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtEstado = null;
+                                        dtEstado = (ViewBag.Estado != null) ? (DataTable)ViewBag.Estado : null;
+                                    }
+                                    @foreach (DataRow dr in dtEstado.Rows)
+                                    {
+                                        <option value="@(dr["IdEstado"].ToString())">@(dr["NomEstado"].ToString())</option>
+                                    }
+                                </select>
+                                <i class="" id="IdEstadoIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            @*@if (User.IsInRole("ope_compania_crear")) *@
+                            @*{*@
+                            <button id="btnAgregar" class="btn btn-primary" onclick="GrabarCabEvaluacionBD(numIdCompania,dgNomEvaluacion,dgDesEvaluacion,dgInsEvaluacion,dgdfInicio,dgdfTermino,numIdTipoEvaluacion,numIdEstado,btnAgregar)"><i class="fa fa-floppy-o"></i>Grabar</button>
+
+
+                            @*}*@
+                            @*else*@
+                            @*{*@
+                            @*<button id="btnAgregar" class="btn-primary" disabled onclick="GrabarAdjuntoBD(dgDescripcion,NomArchivo,AtachTable,btnAgregar)><i class="fa fa-folder-open-o"></i>Grabar</button>*@
+                            @* } *@
+
+                            @*@if (User.IsInRole("ope_compania_crear")) *@
+                            @*{*@
+                            <button id="btnVolver" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-undo"></i>Volver</button>
+
+                            @*}*@
+                            @*else*@
+                            @*{*@
+                            @*<button disabled id="btnVolver" class="btn-primary" data-dismiss="modal"><i class="fa fa-folder-open-o"></i>Archivo</button>*@
+                            @* } *@
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var relativeUrl = HttpContext.Current.Request.Url.Segments;
+    var url = string.Empty;
+
+    foreach (var item in relativeUrl)
+    {
+        if (!item.Equals("Create"))
+        {
+            url += item;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+@section PageScripts{
+    <script src="~/assets/js/validation/bootstrapValidator.js"></script>
+    <script src="~/assets/js/select2/select2.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+
+
+ <script type="text/javascript" class="init">
+
+        //--Bootstrap Date Picker--
+        $('.date-picker').datepicker();
+
+        $('#dgdfInicio').datetimepicker();
+
+
+ //GRABA UNA NUEVA EVALUACION
+  function GrabarCabEvaluacionBD(numIdCompania,dgNomEvaluacion,dgDesEvaluacion,dgInsEvaluacion,dgdfInicio,dgdfTermino,numIdTipoEvaluacion,numIdEstado,btnAgregar)
+  {
+
+      var strIdCompania = "" + numIdCompania.value;
+      var strNomEvaluacion = "" + dgNomEvaluacion.value;
+      var strDesEvaluacion = "" + dgDesEvaluacion.value;
+      var strInsEvaluacion = "" + dgInsEvaluacion.value;
+      var strdfInicio = "" + dgdfInicio.value;
+      var strdfTermino = "" + dgdfTermino.value;
+      var strIdTipoEvaluacion = "" + numIdTipoEvaluacion.value;
+      var strEstado = "" + numIdEstado.value;
+
+      $("#IdCabEvaluacion").val('999999999');
+      $("#IdCompania").val(strIdCompania);
+      $("#NomEvaluacion").val(strNomEvaluacion);
+      $("#DesEvaluacion").val(strDesEvaluacion);
+      $("#InsEvaluacion").val(strInsEvaluacion);
+      $("#dfInicio").val(strdfInicio);
+      $("#dfTermino").val(strdfTermino);
+      $("#IdTipoEvaluacion").val(strIdTipoEvaluacion);
+      $("#IdEstado").val(strEstado);
+
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateCabEvaluacion", "Evaluacion")',
+            data: $("#FormCabEvaluacion").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0)
+                {
+                    Notify('La Evaluacion "' + dgNomEvaluacion.value + '" se grabó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+
+                    var intPos = strRespuesta.indexOf(';');
+                    var strIdCabEvaluacion = strRespuesta.substring(0, intPos);
+                    var strUrl = strRespuesta.substring(intPos + 1, strRespuesta.length);
+
+                    $("#IdCabEvaluacion").val(strIdCabEvaluacion.toString());
+                    $("#btnAgregar").attr("disabled", true);
+                    stExito = 'S';
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al grabar la Evaluacion"' + dgNomEvaluacion.value + '", revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+
+  }
+
+
+ </script>
+}

@@ -1,0 +1,195 @@
+﻿@using System.Data;
+
+@{
+    ViewBag.Title = "Creación de Fases de Evaluación";
+    ViewBag.Description = "Crear una nueva Evaluación.";
+    Layout = "";
+
+    int FaseCab=0;
+
+}
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-yellow">
+                <span class="widget-caption">Creación de Fases:</span>
+
+                @{
+                    DataTable dtCabEval = null;
+                    dtCabEval = (ViewBag.CabEval != null) ? (DataTable)ViewBag.CabEval : null;
+                }
+                @if (dtCabEval != null && dtCabEval.Rows.Count > 0)
+                {
+                    foreach (DataRow drCabEval in dtCabEval.Rows)
+                    {
+                        FaseCab = int.Parse(drCabEval["IdCabEvaluacion"].ToString());
+                        <span class="widget-caption">[</span>
+                        <span class="widget-caption" id="dgCabEvaluacion" name="dgCabEvaluacion">@(drCabEval["IdCabEvaluacion"].ToString())</span>
+                        <span class="widget-caption">]</span>
+                        <span class="widget-caption">/</span>
+                        <span class="widget-caption">[</span>
+                        <span class="widget-caption" id="dgNomEvaluacion">@(drCabEval["NomEvaluacion"].ToString())</span>
+                        <span class="widget-caption">]</span>
+                    }
+                }
+
+
+
+                <div class="widget-buttons">
+                    @*<a href="#" data-toggle="maximize">
+                <i class="fa fa-expand"></i>
+            </a>
+            <a href="#" data-toggle="collapse">
+                <i class="fa fa-minus"></i>
+            </a>
+            <a href="#" data-toggle="dispose">
+                <i class="fa fa-times"></i>
+            </a>*@
+                </div>
+            </div>
+            <div class="widget-body">
+
+ 
+                   <table class="table table-striped table-bordered table-hover" id="tableTipoFase" align="center">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Fase
+                                </th>
+                                <th>
+                                    Inicio
+                                </th>
+                                <th>
+                                    Fin
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="fbody">
+                            @{
+                                DataTable dtTipoFase = null;
+                                dtTipoFase = (ViewBag.TipoFase != null) ? (DataTable)ViewBag.TipoFase : null;
+                            }
+
+                            @if (dtTipoFase != null && dtTipoFase.Rows.Count > 0)
+                            {
+                                foreach (DataRow dr in dtTipoFase.Rows)
+                                {
+                                    <tr id="@(dr["IdTipoFaseEval"].ToString())">
+
+                                        <td align="left">@(dr["IdTipoFaseEval"].ToString())</td>
+
+                                        <td align="left" title="@(dr["NomLargoTipoFaseEval"].ToString())">@(dr["NomTipoFaseEval"].ToString())</td>
+
+                                        <td align="left" width="96px" valign="middle">
+                                            <input id="dgdfInicio" type="date" class="form-control date-picker" data-date-format="dd/mm/yyyy" name="dgdfInicio" value="" placeholder="dd/mm/yyyy"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message="El campo es Obligatorio"  />
+                                        </td>
+
+                                        <td align="left" width="96px">
+                                            <input id="dgdfInicio" type="date" class="form-control date-picker" data-date-format="dd/mm/yyyy" name="dgdfTermino" value="" placeholder="dd/mm/yyyy"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message="El campo es Obligatorio" />
+                                        </td>
+
+                                        <td align="left">
+
+                                            @if (((dr["NomTipoFaseEval"].ToString()) == "FIJACION DE OBJETIVOS") || (dr["NomTipoFaseEval"].ToString() == "INGRESO DE DATOS") || (dr["NomTipoFaseEval"].ToString() == "EVALUACION DESEMPEÑO"))
+                                            {
+                                                <button disabled id="btn_DELETE" type="button" class="btn btn-danger btn-xs Delete-confirm" title="Quitar Fase." onclick="QuitarFaseHtml(tableTipoFase,@(dr["IdTipoFaseEval"].ToString()),this);"><i class="fa fa-trash-o"></i></button>
+                                            }
+                                            else
+                                            {
+                                                <button id="btn_DELETE" type="button" class="btn btn-danger btn-xs Delete-confirm" title="Quitar Fase." onclick="QuitarFaseHtml(tableTipoFase,@(dr["IdTipoFaseEval"].ToString()),this);"><i class="fa fa-trash-o"></i></button>
+                                            }
+
+
+                                        </td>
+
+                                    </tr>
+
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+
+                   <div class="row">
+                       <span class="widget-caption">
+                           <hr />
+                       </span>
+                   </div>
+   
+               <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <table align="center">
+                                    <tr>
+                                        <td align="center">
+
+                                            @*@if (User.IsInRole("pedd_fase_create")) *@
+                                            @*{*@
+                                            <button id="btnAgregaFase" class="btn btn-primary" onclick="GrabarFasesBD(@(FaseCab.ToString()), tableTipoFase, btnAgregaFase);"><i class="fa fa-floppy-o"></i>Grabar</button>
+
+
+                                            @*}*@
+                                            @*else*@
+                                            @*{*@
+                                            @*<button id="btnAgregar" class="btn-primary" disabled onclick="GrabarAdjuntoBD(dgDescripcion,NomArchivo,AtachTable,btnAgregar)><i class="fa fa-folder-open-o"></i>Grabar</button>*@
+                                            @* } *@
+
+                                            <button id="btnVolver" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-undo"></i>Volver</button>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+               </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var relativeUrl = HttpContext.Current.Request.Url.Segments;
+    var url = string.Empty;
+
+    foreach (var item in relativeUrl)
+    {
+        if (!item.Equals("Attach"))
+        {
+            url += item;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+@section PageScripts{
+    <script src="~/assets/js/validation/bootstrapValidator.js"></script>
+    <script src="~/assets/js/select2/select2.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+    <script type="text/javascript" class="init">
+
+        //--Bootstrap Date Picker--
+        $('.date-picker').datepicker();
+
+        $('#dgdfInicio').datetimepicker();
+
+    </script>
+}

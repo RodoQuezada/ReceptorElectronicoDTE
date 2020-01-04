@@ -1,0 +1,261 @@
+﻿@using System.Data;
+@{
+
+    Layout = "";
+
+}
+
+<!-- Modal -->
+
+<div id="myModal" class="modal fade bd-example-modal-xl" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                @*<h4 class="modal-title">Settings</h4>*@
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <div class="widget">
+                            <center> <img src='~/assets/img/cargando.gif' /></center>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<div class="well with-header table-responsive">
+    <div class="header bordered-pink">
+        @*@if (User.IsInRole("pedd_compania_crear")) *@
+        @*{
+                <button id="crear" class="btn btn-primary"><i class="fa fa-calendar"></i>Crear Empresa</button>
+            <a id="btn_create" class="btn btn-primary">
+                <i class="fa fa-check-square-o"></i>Crear Evaluación
+            </a>
+            }*@
+        @*else*@
+        @*{*@
+        @*<button id="crear" class="btn-primary" disabled>Crear Empresa</button>*@
+        @* } *@
+
+    </div>
+    <table class="table table-responsive" id="searchable">
+        <thead>
+            <tr>
+                <th>
+                    Evaluacion
+                </th>
+                <th>
+                    Id
+                </th>
+
+                <th>
+                    Fase
+                </th>
+                <th>
+                    Fecha Inicio
+                </th>
+                <th>
+                    Fecha Fin
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        @*<tfoot>
+                <tr>
+                    <th>
+                        Evaluacion
+                    </th>
+                    <th>
+                        Id
+                    </th>
+
+                    <th>
+                        Fase
+                    </th>
+                    <th>
+                        Fecha Inicio
+                    </th>
+                    <th>
+                        Fecha Fin
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </tfoot>*@
+        <tbody id="fbody">
+            @{
+
+                string stNomEvaluacion = "";
+                DataTable dtFases = null;
+                dtFases = (ViewBag.Fases != null) ? (DataTable)ViewBag.Fases : null;
+            }
+
+            @if (dtFases != null && dtFases.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtFases.Rows)
+                {
+                    <tr id="@(dr["IdFaseEvaluacion"].ToString())">
+
+                        @if ((dr["NomEvaluacion"].ToString() != stNomEvaluacion))
+                        {
+                            if (int.Parse(dr["NumFases"].ToString()) == 0)
+                            {
+                                <td align="left">
+
+                                    @if (int.Parse(dr["IdTipoFaseEval"].ToString()) == 0)
+                                    {
+                                        <button id="btn_FASES" type="button" class="btn btn-info btn-xs" onclick="CrearFases(@(dr["IdCabEvaluacion"].ToString()));"><i class="fa fa-list-ol"></i>Fases</button>
+                                    }
+                                    else
+                                    {
+                                        <button disabled id="btn_FASES" type="button" class="btn btn-info btn-xs" onclick="CrearFases(@(dr["IdCabEvaluacion"].ToString()));"><i class="fa fa-list-ol"></i>Fases</button>
+                                    }
+
+                                    @(dr["NomEvaluacion"].ToString())
+                                </td>
+
+                            }
+                            else
+                            {
+                                <td align="left" rowspan="@dr["NumFases"].ToString()">
+
+                                    @if (int.Parse(dr["IdTipoFaseEval"].ToString()) == 0)
+                                    {
+                                        <button id="btn_FASES" type="button" class="btn btn-info btn-xs" onclick="CrearFases(@(dr["IdCabEvaluacion"].ToString()));"><i class="fa fa-list-ol"></i>Fases</button>
+                                    }
+                                    else
+                                    {
+                                        <button disabled id="btn_FASES" type="button" class="btn btn-info btn-xs" onclick="CrearFases(@(dr["IdCabEvaluacion"].ToString()));"><i class="fa fa-list-ol"></i>Fases</button>
+                                    }
+
+                                    @(dr["NomEvaluacion"].ToString())
+                                </td>
+
+                            }
+
+
+                            stNomEvaluacion = dr["NomEvaluacion"].ToString();
+
+                        }
+                        @*else
+                            {
+                              <td align="left" >@(dr["NomEvaluacion"].ToString())</td>
+                            }*@
+
+
+
+                        <td align="left">@(dr["IdTipoFaseEval"].ToString())</td>
+
+                        @{
+                            int Paso = 0;
+                            DataTable dtTipoFase = null;
+                            dtTipoFase = (ViewBag.TipoFase != null) ? (DataTable)ViewBag.TipoFase : null;
+                        }
+                        @if (dtTipoFase != null && dtTipoFase.Rows.Count > 0)
+                        {
+                            foreach (DataRow drTf in dtTipoFase.Rows)
+                            {
+                                if (drTf["IdTipoFaseEval"].ToString() == dr["IdTipoFaseEval"].ToString())
+                                {
+                                    <td align="left" title="@(drTf["NomLargoTipoFaseEval"].ToString())"> @(drTf["NomTipoFaseEval"].ToString())</td>
+                                    Paso = 1;
+                                }
+
+                            }
+
+                            if (dr["IdTipoFaseEval"].ToString() == "0" && Paso == 0)
+                            {
+                                <td align="left"></td>
+                            }
+
+                        }
+
+
+                        <td align="left"> @(dr["dfInicio"].ToString())</td>
+
+                        <td align="left"> @(dr["dfTermino"].ToString())</td>
+
+                        <td align="left" id="@(dr["IdFaseEvaluacion"].ToString())" title="@dr["NomTipoFaseEval"].ToString()">
+
+                            @* @if (User.IsInRole("pedd_fase_edit")) *@
+                            @* { *@
+                            @*<a href="Users/Detail?UserId=@(dr["ID_SISTEMA"].ToString())"><button class="btn btn-info">Ver</button></a>
+                                <button id="btn_edit" type="button" class="btn btn-info btn-xs"><i class="fa fa-edit"></i>Editar</button> *@
+
+                            @if (int.Parse(dr["IdTipoFaseEval"].ToString()) == 0)
+                            {
+                                <button disabled id="btn_edit" type="button" class="btn btn-info btn-xs" onclick="Editar(@(dr["IdFaseEvaluacion"].ToString()));"><i class="fa fa-check"></i>Editar</button>
+                            }
+                            else
+                            {
+                                <button id="btn_edit" type="button" class="btn btn-info btn-xs" onclick="Editar(@(dr["IdFaseEvaluacion"].ToString()));"><i class="fa fa-check"></i>Editar</button>
+                            }
+
+                            @* } *@
+                            @* else *@
+                            @* { *@
+                            @*<button id="btn_edit" type="button" class="btn btn-info btn-xs" disabled>Editar</button> *@
+                            @* } *@
+
+
+                            @*
+                                @if (User.IsInRole("pedd_fase_create"))
+                                {
+                            *@
+
+
+
+                            @*
+                                }
+                                else
+                                {
+                                 <button id="btn_FASES" type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash-o"></i>Eliminar</button>
+                                }
+                            *@
+
+
+                            @*
+                                @if (User.IsInRole("pedd_evaluacion_delete"))
+                                {
+                            *@
+
+                            @if ((int.Parse(dr["IdTipoFaseEval"].ToString()) == 0) || ((dr["NomTipoFaseEval"].ToString()) == "FIJACION DE OBJETIVOS") || (dr["NomTipoFaseEval"].ToString() == "INGRESO DE DATOS") || (dr["NomTipoFaseEval"].ToString() == "EVALUACION DESEMPEÑO"))
+                            {
+                                <button disabled id="btn_DELETE" type="button" class="btn btn-danger btn-xs Delete-confirm"><i class="fa fa-trash-o"></i>Eliminar</button>
+
+                            }
+                            else
+                            {
+                                <button id="btn_DELETE" type="button" class="btn btn-danger btn-xs Delete-confirm"><i class="fa fa-trash-o"></i>Eliminar</button>
+                            }
+                            @*
+                                }
+                                else
+                                {
+                                   <button id="btn_DELETE" type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash-o"></i>Eliminar</button>
+                                }
+                            *@
+
+
+                        </td>
+
+                    </tr>
+
+                }
+            }
+
+        </tbody>
+    </table>
+</div>

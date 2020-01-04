@@ -1,0 +1,3229 @@
+﻿@model NetCore.PeddEval.Web.WebSite.Areas.PeddEval.Models.CompaniaModels 
+@using System.Data;
+@using CoreLibrary.Web.Bootstrap;
+@{
+    ViewBag.Title = "Editar Empresa";
+    ViewBag.Description = "Editar Empresa";
+    Layout = "~/Views/Shared/_Default.cshtml";
+
+}
+
+<!--ENCABEZADO DE LA OT-->
+<div class="row" >
+    <form id="FormOt" method="post">
+        <div class="col-xs-12 col-md-12">
+            <div class="widget">
+                <div class="widget-header bordered-bottom bordered-yellow">
+                    <span class="widget-caption" id="msgEncabezado">ENCABEZADO DE OT N° : </span>
+                    <span class="widget-caption" id="lblIdOt">@Model.IdOt</span>
+                    <span class="widget-caption" id="lblDescripcion"> - @Model.Descripcion</span>
+                    <div class="widget-buttons">
+                        <a href="#" data-toggle="maximize">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                        <a href="#" data-toggle="collapse" id="otCollapse">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <!--<a href="#" data-toggle="dispose">
+                            <i class="fa fa-times"></i>
+                        </a>-->
+                    </div>
+                </div>
+
+                <div class="widget-body">
+
+                    <!-- Modal -->
+
+                    <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    @*<h4 class="modal-title">Settings</h4>*@
+
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="widget">
+                                                <center> <img src='~/assets/img/cargando.gif' /></center>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                N° OT
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+                                    <input type="text" class="form-control" autocomplete="Off" name="IdOt" value=@Model.IdOt id="IdOt" placeholder="Id Orden Trabajo" readonly />
+                                    <i class=" glyphicon glyphicon-pushpin"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Fecha Prog.
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+
+                                    <input type="text" class="form-control date-picker" id="FecPrograma" name="FecPrograma" value="@Html.Encode(Model.FecPrograma.ToString("dd/MM/yyyy"))" data-date-format="dd/mm/yyyy" placeholder="Fecha Programa Eje: 27/02/2018"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="Este campo es Obligatorio" />
+                                    <i class="glyphicon glyphicon-calendar" id="FecProgramaIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Cliente
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+                                    <select id="IdCliente" name="IdCliente" class="form-control" style="width: 100%;">
+                                        <option value="0"> </option>
+                                        @{
+                                            DataTable dtCliente = null;
+                                            dtCliente = (ViewBag.Clientes != null) ? (DataTable)ViewBag.Clientes : null;
+                                        }
+                                        @foreach (DataRow dr in dtCliente.Rows)
+                                        {
+                                            if(int.Parse((dr["IdCliente"].ToString())) == Model.IdCliente)
+                                            {
+                                                <option selected value="@(dr["IdCliente"].ToString())">@(dr["dgRazonSocial"].ToString())</option>
+                                            }
+                                            else
+                                            { 
+                                                <option value="@(dr["IdCliente"].ToString())">@(dr["dgRazonSocial"].ToString())</option>
+                                            }
+                                        }
+                                    </select>
+                                    <i class="" id="IdClienteIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Area Op.
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+                                    <select id="IdAreaOperativa" name="IdAreaOperativa" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                      DataTable dt = null;
+                                      dt = (ViewBag.Areas != null) ? (DataTable)ViewBag.Areas : null;
+                                     }
+                                     @foreach (DataRow dr in dt.Rows)
+                                     {
+                                         if (int.Parse((dr["IdArea"].ToString())) == Model.IdAreaOperativa)
+                                         {
+                                            <option selected value="@(dr["IdArea"].ToString())">@(dr["dgArea"].ToString())</option>
+                                         }
+                                         else
+                                         {
+                                            <option value="@(dr["IdArea"].ToString())">@(dr["dgArea"].ToString())</option>
+                                         }
+                                     } 
+                                    </select>
+                                    <i class="" id="IdAreaOperativaIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Nave
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+                                    <select id="IdNave" name="IdNave" class="form-control" style="width: 100%;">
+                                       <option value="0"> </option>
+                                        @{
+                                            DataTable dtNave = null;
+                                            dtNave = (ViewBag.Naves != null) ? (DataTable)ViewBag.Naves : null;
+                                        }
+                                        @foreach (DataRow dr in dtNave.Rows)
+                                        {
+                                            if (int.Parse((dr["IdNave"].ToString())) == Model.IdNave)
+                                            {
+                                                <option selected value="@(dr["IdNave"].ToString())">@(dr["dgNave"].ToString())</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@(dr["IdNave"].ToString())">@(dr["dgNave"].ToString())</option>
+                                            }
+                                        }
+                                    </select>
+                                    <i class="" id="IdNaveIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+ 
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Turno
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+                                    <select id="IdTurno" name="IdTurno" class="form-control" style="width: 100%;">
+                                        <option value="0"> </option>
+                                        @{
+                                            DataTable dtTurno = null;
+                                            dtTurno = (ViewBag.Turnos != null) ? (DataTable)ViewBag.Turnos : null;
+                                        }
+                                        @foreach (DataRow dr in dtTurno.Rows)
+                                        {
+                                            if (int.Parse((dr["IdTurno"].ToString())) == Model.IdTurno)
+                                            {
+                                                <option selected value="@(dr["IdTurno"].ToString())">@(dr["NomTurno"].ToString())</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@(dr["IdTurno"].ToString())">@(dr["NomTurno"].ToString())</option>
+                                            }
+                                        }
+                                    </select>
+                                    <i class="" id="IdTurnoIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Cod. Viaje
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+                                    <input type="text" class="form-control" autocomplete="Off" name="CodViaje" value="@Html.Encode(Model.CodViaje)" id="CodViaje" placeholder="N° Viaje  Eje: 7456N"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="Este campo es Obligatorio" />
+                                    <i class="glyphicon glyphicon-globe" id="CodViajeIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Solicitante
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+                                    <input type="text" class="form-control" autocomplete="Off" name="Solicitante" value="@Html.Encode(Model.Solicitante)" id="Solicitante" placeholder="Nombre Solicitante Eje: Juan Perez"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="Este campo es Obligatorio" />
+                                    <i class=" glyphicon glyphicon-user" id="SolicitanteIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Descripción
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+                                    <input type="text" class="form-control" autocomplete="Off" name="Descripcion" value="@Html.Encode(Model.Descripcion)" id="Descripcion" placeholder="Descripción de la OT Eje: SERVICIO INTEGRAL"
+                                           data-bv-notempty="false"
+                                           data-bv-notempty-message="Este campo es Obligatorio" />
+                                    <i class=" glyphicon glyphicon-comment" id="DescripcionIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Comentario
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span class="input-icon icon-right">
+
+                                    <textarea name="Comentario" id="Comentario" class="form-control" rows="3" placeholder="Comentarios">@Html.Encode(Model.Comentario)</textarea><br />
+
+                                    <i class="glyphicon glyphicon-comment"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            
+                            @if (Model.IdEstado > 3)
+                            {
+                              <button disabled id="generarODS" class="btn btn-success"><i class="fa fa-file-o"></i>Generar ODS</button>
+                              <button disabled id="grabarOT" class="btn btn-primary"><i class="fa fa-save"></i>Grabar OT</button>
+                              <button disabled id="archivosOT" class="btn btn-primary"><i class="fa fa-paperclip"></i>Adjuntar</button>
+                              <button disabled id="borrarOT" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar OT</button>
+                              <button id="imprimirOT" class="btn btn-primary"><i class="fa fa-print"></i>Imprimir OT</button>
+
+                              <a id="btnVolver" href="~/Operaciones/Ot" class="btn btn-primary">
+                                <i class="fa fa-undo"></i>Volver
+                              </a>
+                            }
+                            else
+                            {
+                                @*@if (User.IsInRole("ope_ods_crear")) *@
+                                @*{*@
+
+                                <button id="generarODS" class="btn btn-success"><i class="fa fa-file-o"></i>Generar ODS</button>
+
+                                @*}*@
+                                @*else*@
+                                @*{*@
+                                @*<button id="generarODS" class="btn-primary" disabled><i class="fa fa-file-o"></i>Generar ODS</button>*@
+                                @* } *@
+
+
+                                @*@if (User.IsInRole("ope_ot_crear")) *@
+                                @*{*@
+                                <button id="grabarOT" class="btn btn-primary"><i class="fa fa-save"></i>Grabar OT</button>
+
+                                @*}*@
+                                @*else*@
+                                @*{*@
+                                @*<button id="grabarOT" class="btn-primary" disabled><i class="fa fa-save">Grabar OT</button>*@
+                                @* } *@
+
+                                @*@if (User.IsInRole("ope_ot_adjuntar")) *@
+                                @*{*@
+                                <button id="archivosOT" class="btn btn-primary"><i class="fa fa-paperclip"></i>Adjuntar</button>
+
+                                @*}*@
+                                @*else*@
+                                @*{*@
+                                @*<button id="archivosOT" class="btn btn-primary" disabled><i class="fa fa-paperclip">Adjuntar</button>*@
+                                @* } *@
+
+                                @*@if (User.IsInRole("ope_ot_borrar")) *@
+                                @*{*@
+                                <button id="borrarOT" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar OT</button>
+
+                                @*}*@
+                                @*else*@
+                                @*{*@
+                                @*<button id=borrarOT" class=""btn btn-danger" disabled><i class="fa fa-trash-o">Eliminar OT</button>*@
+                                @* } *@
+
+                                @*@if (User.IsInRole("ope_ot_imprimir")) *@
+                                @*{*@
+                                <button id="imprimirOT" class="btn btn-primary"><i class="fa fa-print"></i>Imprimir OT</button>
+                                @*}*@
+                                @*else*@
+                                @*{*@
+                                @*<button id="imprimirOT" class="btn btn-primary" disabled><i class="fa fa-paperclip">Imprimir OT</button>*@
+                                @* } *@
+
+                                @*<button id="btnVolver" class="btn btn-primary" onclick="javascript: window.history.back();"><i class="fa fa-undo"></i>Volver</button>*@
+                                <a id="btnVolver" href="~/Operaciones/Ot" class="btn btn-primary">
+                                    <i class="fa fa-undo"></i>Volver
+                                </a>
+                            }
+
+                           
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+ </div>
+
+
+
+<!--SERVICIOS DE LA OT-->
+
+<div class="row">
+  
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-green">
+                <span class="widget-caption">SERVICIOS DE LA OT</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse" id="servCollapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <!--<a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                        </a>-->
+
+                </div>
+            </div>
+            <div class="widget-body">
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Servicios
+                        </div>
+
+                        <label> </label>
+
+                        <div class="form-group">
+                            Cantidad
+                        </div>
+
+                        <label> </label>
+
+                        <div class="form-group">
+                            Unidad
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdServicioCbx" name="IdServicioCbx" class="form-control" style="width: 100%;">
+                                 <option value="0"> </option>
+                                 @{
+                                   DataTable dtServ = null;
+                                   dtServ = (ViewBag.Servicios != null) ? (DataTable)ViewBag.Servicios : null;
+                                  }
+                                  @foreach (DataRow dr in dtServ.Rows)
+                                  {
+                                   <option value="@(dr["IdServicio"].ToString())">@(dr["dgServicio"].ToString())</option>
+                                  } 
+
+                                </select>
+                                <i class="" id="IdServicioIcon"></i>
+                            </span>
+
+                            <label> </label>
+
+                            <span class="input-icon icon-right">
+                                <input type="text" class="form-control" autocomplete="Off" name="nroCantidadServIpt" value="" id="nroCantidadServIpt" placeholder="Cantidad de Servicios"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="Este campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-equalizer" id="NumCantidadIcon"></i>
+
+                            </span>
+
+                            <label> </label>
+
+                            <span class="input-icon icon-right">
+
+                                <select id="IdUnidadCobroServCbx" name="IdUnidadCobroServCbx" class="form-control" style="width: 100%;">
+
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtUMedC = null;
+                                        dtUMedC = (ViewBag.UMedidasC != null) ? (DataTable)ViewBag.UMedidasC : null;
+                                    }
+                                    @foreach (DataRow dr in dtUMedC.Rows)
+                                    {
+                                        <option value="@(dr["IdUMedidaC"].ToString())">@(dr["dgUMedidaC"].ToString())</option>
+                                    }
+                                    
+                                </select>
+                                <i class="" id="IdUnidadCobroServIcon"></i>
+                            </span>
+
+                        </div>
+
+                        <div align="right">
+                          @if (Model.IdEstado > 3)
+                          {
+                            <button disabled id="AgregarServicio" class="btn btn-primary">Agregar Servicio <i class="fa fa-forward"></i></button>
+                          }
+                          else
+                          {
+                            @*@if (User.IsInRole("ope_servicio_crear")) *@
+                            @*{*@
+
+                            <button id="AgregarServicio" class="btn btn-primary">Agregar Servicio <i class="fa fa-forward"></i></button>
+
+                            @*}*@
+                            @*else*@
+                            @*{*@
+                            @*<button id="AgregarServicio" class="btn btn-primary" disabled>Agregar Servicio <i class="fa fa-forward"></i></button>*@
+                            @* } *@
+                          }
+                           
+                        </div>
+
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <table class="table table-striped table-hover table-bordered" id="tbServicios">
+                                <thead>
+                                    <tr role="row">
+                                        <th>
+                                            Id
+                                        </th>
+                                        <th>
+                                           Servicio
+                                        </th>
+                                        <th>
+                                            Cantidad
+                                        </th>
+                                        <th>
+                                            Unidad
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                 @{
+                                   DataTable dtOtServ = null;
+                                   dtOtServ = (ViewBag.OtServicios != null) ? (DataTable)ViewBag.OtServicios : null;
+                                  }
+
+                                 @if (dtOtServ != null && dtOtServ.Rows.Count > 0)
+                                 {
+                                     foreach (DataRow dr in dtOtServ.Rows)
+                                     {
+                                       <tr id="@(dr["idOtServicio"].ToString())">
+                                         <td>@(dr["idServicio"].ToString())</td>
+                                         <td>@(dr["dgServicio"].ToString())</td>
+                                         <td>@(dr["dnCantidad"].ToString())</td>
+                                         <td>@(dr["dgUMedidaC"].ToString())</td>
+                                           <td id="@(dr["idServicio"].ToString())">
+                                              @if (Model.IdEstado > 3)
+                                              {
+                                                <a disabled href="#" class="btn btn-danger btn-xs delete" id="@(dr["idOtServicio"].ToString())" name="@(dr["dgServicio"].ToString())"
+                                                ><i class="fa fa-trash-o"></i></a>
+                                              }
+                                              else
+                                              {
+                                                <a href="#" class="btn btn-danger btn-xs delete" id="@(dr["idOtServicio"].ToString())" name="@(dr["dgServicio"].ToString())"
+                                                   onclick="QuitarServicio(this.id,this.name, @(dr["idServicio"].ToString()))"><i class="fa fa-trash-o"></i></a>
+                                              }
+                                               
+                                         </td>
+                                       </tr>
+                                     }
+                                 }
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="FormServicio" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="IdOtServicio" value="" id="IdOtServicio" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdServOt" value="" id="IdServOt" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdServicio" value="" id="IdServicio" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="nroCantidadServ" value="" id="nroCantidadServ" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdUnidadCobroServ" value="" id="IdUnidadCobroServ" readonly />
+    </form>
+</div>
+
+
+<!-- FILAS DEPENDIENTES DEL SERVICIO  -->
+
+<div class="row">
+
+    <!-- EQUIPOS DEL SERVICIO  -->
+
+    <div class="col-xs-4 col-md-4">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-red">
+                <span class="widget-caption">EQUIPOS DEL SERVICIO</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse" id="eqpCollapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <!--<a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>-->
+                </div>
+            </div>
+            <div class="widget-body">
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Servicio
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdServEqpCbx" name="IdServEqpCbx" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        dtOtServ = null;
+                                        dtOtServ = (ViewBag.OtServicios != null) ? (DataTable)ViewBag.OtServicios : null;
+                                    }
+
+                                    @if (dtOtServ != null && dtOtServ.Rows.Count > 0)
+                                    {
+                                        foreach (DataRow dr in dtOtServ.Rows)
+                                        {
+                                            <option value="@(dr["IdServicio"].ToString())" data-label="@(dr["idOtServicio"].ToString())">@(dr["dgServicio"].ToString())</option>
+                                        }
+                                    }
+                                </select>
+                                <i class="" id="IdServEqpIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+ 
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Equipo
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdEquipoCbx" name="IdEquipoCbx" class="form-control" style="width: 100%;">
+                                   <option value="0"> </option>
+                                    @{
+                                        DataTable dtEqp = null;
+                                        dtEqp = (ViewBag.Equipos != null) ? (DataTable)ViewBag.Equipos : null;
+                                    }
+                                    @foreach (DataRow dr in dtEqp.Rows)
+                                    {
+                                        <option value="@(dr["IdEquipo"].ToString())">@(dr["dgEquipo"].ToString())</option>
+                                    }
+                                </select>
+                                <i class="" id="IdEquipoIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Cantidad
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input type="text" class="form-control" autocomplete="Off" name="nroCantidadEqpIpt" value="" id="nroCantidadEqpIpt" placeholder="Cantidad de Equipo"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="Este campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-equalizer" id="nroCantidadEqpIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Unidad
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdUnidadCobroEqpCbx" name="IdUnidadCobroEqpCbx" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtUcobEqp = null;
+                                        dtUcobEqp = (ViewBag.UCobros != null) ? (DataTable)ViewBag.UCobros : null;
+                                    }
+                                    @foreach (DataRow dr in dtUcobEqp.Rows)
+                                    {
+                                        <option value="@(dr["IdUCobro"].ToString())">@(dr["dgUCobro"].ToString())</option>
+                                    }
+                                </select>
+                                <i class="" id="IdUnidadCobroEqpIcon"></i>
+                            </span>
+                        </div>
+
+                      @if (Model.IdEstado > 3)
+                      {
+                        <button disabled id="AgregarEquipo" class="btn btn-primary"><i class="fa fa-chevron-down"></i>Agregar Equipo</button>
+                      }
+                      else
+                      {
+                        @*@if (User.IsInRole("ope_equipo_crear")) *@
+                        @*{*@
+
+                        <button id="AgregarEquipo" class="btn btn-primary"><i class="fa fa-chevron-down"></i>Agregar Equipo</button>
+
+                        @*}*@
+                        @*else*@
+                        @*{*@
+                        @*<button id="AgregarEquipo" class="btn-primary" disabled><i class="fa fa-chevron-down"></i>Agregar Equipo</button>*@
+                        @* } *@
+                      }
+                         
+
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <table class="table table-striped table-hover table-bordered" id="tbEquipos" >
+                                <thead>
+                                    <tr role="row">
+                                        <th>
+                                            Id Serv
+                                        </th>
+                                        <th>
+                                            Equipo
+                                        </th>
+                                        <th>
+                                            Cantidad
+                                        </th>
+                                        <th>
+                                            Unidad
+                                        </th>
+                                        <th>
+                                            
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @{
+                                        DataTable dtSrvEqp= null;
+                                        dtSrvEqp = (ViewBag.ServEquipos != null) ? (DataTable)ViewBag.ServEquipos : null;
+                                    }
+
+                                    @if (dtSrvEqp != null && dtSrvEqp.Rows.Count > 0)
+                                    {
+                                        foreach (DataRow dr in dtSrvEqp.Rows)
+                                        {
+                                            <tr id="@(dr["idServEquipo"].ToString())">
+                                                <td title="@(dr["dgServicio"].ToString())">@(dr["idServicio"].ToString())</td>
+                                                <td>@(dr["dgEquipo"].ToString())</td>
+                                                <td>@(dr["dnCantidad"].ToString())</td>
+                                                <td>@(dr["dgUCobro"].ToString())</td>
+                                                <td id="">
+                                                   @if (Model.IdEstado > 3)
+                                                   {
+                                                     <a disabled href="#" class="btn btn-danger btn-xs delete" id="@(dr["idEquipo"].ToString())" name="@(dr["dgEquipo"].ToString())"
+                                                     ><i class="fa fa-trash-o"></i></a>
+                                                   }
+                                                   else
+                                                   {
+                                                    <a href="#" class="btn btn-danger btn-xs delete" id="@(dr["idEquipo"].ToString())" name="@(dr["dgEquipo"].ToString())"
+                                                       onclick="QuitarEquipo(this.id,this.name, @(dr["idServEquipo"].ToString()))"><i class="fa fa-trash-o"></i></a>
+                                                   }
+                                                    
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <form id="FormEquipo" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="IdServEquipo" value="" id="IdServEquipo" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdOtServEqp" value="" id="IdOtServEqp" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdEquipo" value="" id="IdEquipo" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="dnCantidadEqp" value="" id="dnCantidadEqp" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdUnidadCobroEqp" value="" id="IdUnidadCobroEqp" readonly />
+    </form>
+
+
+    <!-- RECURSOS DEL SERVICIO-->
+
+    <div class="col-xs-4 col-md-4">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">PERSONAL DEL SERVICIO</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse" id="recCollapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <!--<a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>-->
+                </div>
+            </div>
+            <div class="widget-body">
+             
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Servicio
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdServRcsCbx" name="IdServRcsCbx" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        dtOtServ = null;
+                                        dtOtServ = (ViewBag.OtServicios != null) ? (DataTable)ViewBag.OtServicios : null;
+                                    }
+
+                                    @if (dtOtServ != null && dtOtServ.Rows.Count > 0)
+                                    {
+                                        foreach (DataRow dr in dtOtServ.Rows)
+                                        {
+                                            <option value="@(dr["IdServicio"].ToString())" data-label="@(dr["idOtServicio"].ToString())">@(dr["dgServicio"].ToString())</option>
+                                        }
+                                    }
+                                </select>
+                                <i id="IdServRcsIcon" class=""></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Funcion
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdRecursoCbx" name="IdRecursoCbx" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtRcs = null;
+                                        dtRcs = (ViewBag.Recursos != null) ? (DataTable)ViewBag.Recursos : null;
+                                    }
+                                    @foreach (DataRow dr in dtRcs.Rows)
+                                    {
+                                        <option value="@(dr["IdRecurso"].ToString())">@(dr["dgRecurso"].ToString())</option>
+                                    }
+                                </select>
+                                <i id="IdRecursoIcon" class=""></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Cantidad
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input type="text" class="form-control" autocomplete="Off" name="nroCantidadRcsIpt" value="" id="nroCantidadRcsIpt" placeholder="Cantidad de Personal/Funcion"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="Este campo es Obligatorio" />
+                                <i id="nroCantidadRcsIcon" class="glyphicon glyphicon-equalizer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Unidad
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdUnidadCobroRcsCbx" name="IdUnidadCobroRcsCbx" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtUcobRcs = null;
+                                        dtUcobRcs = (ViewBag.UCobros != null) ? (DataTable)ViewBag.UCobros : null;
+                                    }
+                                    @foreach (DataRow dr in dtUcobRcs.Rows)
+                                    {
+                                        <option value="@(dr["IdUCobro"].ToString())">@(dr["dgUCobro"].ToString())</option>
+                                    }
+                                </select>
+                                <i id="IdUnidadCobroRcsIcon" class=""></i>
+                            </span>
+                        </div>
+
+                        @if (Model.IdEstado > 3)
+                        {
+                            <button disabled id="AgregarRecurso" class="btn btn-primary"><i class="fa fa-chevron-down"></i>Agregar Personal</button>
+                        }
+                        else
+                        {
+                            @*@if (User.IsInRole("ope_recurso_crear")) *@
+                            @*{*@
+                            <button id="AgregarRecurso" class="btn btn-primary"><i class="fa fa-chevron-down"></i>Agregar Personal</button>
+
+                            @*}*@
+                            @*else*@
+                            @*{*@
+                            @*<button id="AgregarRecurso" class="btn-primary" disabled><i class="fa fa-chevron-down"></i>Agregar Personal</button>*@
+                            @* } *@
+
+                        }
+                       
+                    </div>
+                </div>
+               
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <table class="table table-striped table-hover table-bordered" id="tbRecursos">
+                                <thead>
+                                    <tr role="row">
+                                        <th>
+                                            Id Serv
+                                        </th>
+                                        <th>
+                                            Personal
+                                        </th>
+                                        <th>
+                                            Cantidad
+                                        </th>
+                                        <th>
+                                            Unidad
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                   @{
+                                       DataTable dtSrvRcs = null;
+                                       dtSrvRcs = (ViewBag.ServRecursos != null) ? (DataTable)ViewBag.ServRecursos : null;
+                                    }
+
+                                    @if (dtSrvRcs != null && dtSrvRcs.Rows.Count > 0)
+                                    {
+                                       foreach (DataRow dr in dtSrvRcs.Rows)
+                                       {
+                                          <tr id="@(dr["idServRecurso"].ToString())">
+                                              <td title="@(dr["dgServicio"].ToString())">@(dr["idServicio"].ToString())</td>
+                                              <td>@(dr["dgRecurso"].ToString())</td>
+                                              <td>@(dr["dnCantidad"].ToString())</td>
+                                              <td>@(dr["dgUCobro"].ToString())</td>
+                                              <td id="">
+                                                 @if (Model.IdEstado > 3)
+                                                 {
+                                                    <a disabled href="#" class="btn btn-danger btn-xs delete" id="@(dr["idRecurso"].ToString())" name="@(dr["dgRecurso"].ToString())"
+                                                    ><i class="fa fa-trash-o"></i></a>
+                                                 }
+                                                 else
+                                                 {
+                                                    <a href="#" class="btn btn-danger btn-xs delete" id="@(dr["idRecurso"].ToString())" name="@(dr["dgRecurso"].ToString())"
+                                                       onclick="QuitarRecurso(this.id,this.name, @(dr["idServRecurso"].ToString()))"><i class="fa fa-trash-o"></i></a>
+                                                 }
+                                                  
+                                              </td>
+                                          </tr>
+                                       }
+                                     }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="FormRecurso" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="IdServRecurso" value="" id="IdServRecurso" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdOtServRcs" value="" id="IdOtServRcs" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdRecurso" value="" id="IdRecurso" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="dnCantidadRcs" value="" id="dnCantidadRcs" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdUnidadCobroRcs" value="" id="IdUnidadCobroRcs" readonly />
+    </form>
+
+    <!-- INSUMOS DEL SERVICIO-->
+
+    <div class="col-xs-4 col-md-4">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-yellow">
+                <span class="widget-caption">INSUMOS DEL SERVICIO</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse" id="insCollapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <!--<a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>-->
+                </div>
+            </div>
+            <div class="widget-body">
+     
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Servicio
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdServIsmCbx" name="IdServIsmCbx" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        dtOtServ = null;
+                                        dtOtServ = (ViewBag.OtServicios != null) ? (DataTable)ViewBag.OtServicios : null;
+                                    }
+
+                                    @if (dtOtServ != null && dtOtServ.Rows.Count > 0)
+                                    {
+                                        foreach (DataRow dr in dtOtServ.Rows)
+                                        {
+                                            <option value="@(dr["IdServicio"].ToString())" data-label="@(dr["idOtServicio"].ToString())">@(dr["dgServicio"].ToString())</option>
+                                        }
+                                    }
+                                </select>
+                                <i id="IdServIsmIcon" class=""></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Insumo
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdInsumoCbx" name="IdInsumoCbx" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+
+                                    @{
+                                        DataTable dtInsumo = null;
+                                        dtInsumo = (ViewBag.Insumos != null) ? (DataTable)ViewBag.Insumos : null;
+                                    }
+                                    @foreach (DataRow dr in dtInsumo.Rows)
+                                    {
+                                        <option value="@(dr["IdInsumo"].ToString())">@(dr["dgInsumo"].ToString())</option>
+                                    }
+                                </select>
+                                <i id="IdInsumoIcon" class=""></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Cantidad
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input type="text" class="form-control" autocomplete="Off" name="nroCantidadIsmIpt" value="" id="nroCantidadIsmIpt" placeholder="Cantidad de Insumo"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="Este campo es Obligatorio" />
+                                <i id="nroCantidadIsmIcon" class="glyphicon glyphicon-equalizer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Unidad
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="IdUnidadCobroIsmCbx" name="IdUnidadCobroIsmCbx" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtUcobIsm = null;
+                                        dtUcobIsm = (ViewBag.UCobros != null) ? (DataTable)ViewBag.UCobros : null;
+                                    }
+                                    @foreach (DataRow dr in dtUcobIsm.Rows)
+                                    {
+                                        <option value="@(dr["IdUCobro"].ToString())">@(dr["dgUCobro"].ToString())</option>
+                                    }
+                                </select>
+                                <i id="IdUnidadCobroIsmIcon" class=""></i>
+                            </span>
+                        </div>
+
+                        @if (Model.IdEstado > 3)
+                        {
+                            <button disabled id="AgregarInsumo" class="btn btn-primary"><i class="fa fa-chevron-down"></i>Agregar Insumo</button>
+                        }
+                        else
+                        {
+                            @*@if (User.IsInRole("ope_insumo_crear")) *@
+                            @*{*@
+                            <button id="AgregarInsumo" class="btn btn-primary"><i class="fa fa-chevron-down"></i>Agregar Insumo</button>
+
+                            @*}*@
+                            @*else*@
+                            @*{*@
+                            @*<button id="AgregarInsumo" class="btn-primary" disabled><i class="fa fa-chevron-down"></i>Modificar OT</button>*@
+                            @* } *@
+                        }
+
+                    </div>
+                </div>
+   
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <table class="table table-striped table-hover table-bordered" id="tbInsumos">
+                                <thead>
+                                    <tr role="row">
+                                        <th>
+                                            Id Serv
+                                        </th>
+                                        <th>
+                                            Insumo
+                                        </th>
+                                        <th>
+                                            Cantidad
+                                        </th>
+                                        <th>
+                                            Unidad
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @{
+                                        DataTable dtSrvIsm = null;
+                                        dtSrvIsm = (ViewBag.ServInsumos != null) ? (DataTable)ViewBag.ServInsumos : null;
+                                    }
+
+                                    @if (dtSrvIsm != null && dtSrvIsm.Rows.Count > 0)
+                                    {
+                                        foreach (DataRow dr in dtSrvIsm.Rows)
+                                        {
+                                            <tr id="@(dr["idServInsumo"].ToString())">
+                                                <td title="@(dr["dgServicio"].ToString())">@(dr["idServicio"].ToString())</td>
+                                                <td>@(dr["dgInsumo"].ToString())</td>
+                                                <td>@(dr["dnCantidad"].ToString())</td>
+                                                <td>@(dr["dgUCobro"].ToString())</td>
+                                                <td id="">
+                                                   @if (Model.IdEstado > 3)
+                                                   {
+                                                      <a disabled href="#" class="btn btn-danger btn-xs delete" id="@(dr["idInsumo"].ToString())" name="@(dr["dgInsumo"].ToString())">
+                                                      <i class="fa fa-trash-o"></i></a>
+                                                   }
+                                                   else
+                                                   {
+                                                    <a href="#" class="btn btn-danger btn-xs delete" id="@(dr["idInsumo"].ToString())" name="@(dr["dgInsumo"].ToString())"
+                                                       onclick="QuitarInsumo(this.id,this.name, @(dr["idServInsumo"].ToString()))"><i class="fa fa-trash-o"></i></a>
+                                                   }
+                                                    
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <form id="FormInsumo" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="IdServInsumo" value="" id="IdServInsumo" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdOtServIsm" value="" id="IdOtServIsm" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdInsumo" value="" id="IdInsumo" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="dnCantidadIsm" value="" id="dnCantidadIsm" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdUnidadCobroIsm" value="" id="IdUnidadCobroIsm" readonly />
+    </form>
+
+    <form id="FormAdjunto" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="IdAdjunto" value="" id="IdAdjunto" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdOtAdjunto" value="" id="IdOtAdjunto" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdBusqueda" value="" id="IdBusqueda" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="FecCreacionAdjunto" value="" id="FecCreacionAdjunto" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="DesAdjunto" value="" id="DesAdjunto" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="FileNameAdjunto" value="" id="FileNameAdjunto" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="FileB64" value="" id="FileB64" readonly />
+    </form>
+    
+</div>
+
+
+    <!--Email Modal Templates-->
+    <div id="myEmailModal" class="modal fade" data-backdrop="static" data-keyboard="false" style="display:none;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="To" required="">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Subject" required="">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Content" rows="5" required=""></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@{
+    var relativeUrl = HttpContext.Current.Request.Url.Segments;
+    var url = string.Empty;
+
+    foreach (var item in relativeUrl)
+    {
+        if (!item.Equals("Edit"))
+        {
+            url += item;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/jquery.blockUI.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <script src="~/assets/js/validation/bootstrapValidator.js"></script>
+
+    <script type="text/javascript" class="init">
+
+    var strFecha = $('#FecPrograma').val();
+    strFecha = strFecha.replace("-", "/");
+    strFecha = strFecha.replace("-", "/");
+    $('#FecPrograma').val(strFecha);
+
+    // VARIABLES PARA CONTROLAR COLAPSO DE AREAS
+    var bOtCollapse = "ABIERTO";
+    var bServCollapse = "CERRADO";
+    var bEqpCollapse = "CERRADO";
+    var bRecCollapse = "CERRADO";
+    var bInsCollapse = "CERRADO";
+
+    $('#servCollapse').click();
+    $('#eqpCollapse').click();
+    $('#recCollapse').click();
+    $('#insCollapse').click();
+
+    //--Bootstrap Date Picker--
+    $('.date-picker').datepicker();
+
+    //END
+
+    // OCULTA AUTOMATICAMENTE EL CALENDARIO
+        $('#FecPrograma').focus(function () {
+            $(this).datepicker("show");
+            setTimeout(function () {
+                $('#FecPrograma').datepicker("hide");
+                $('#FecPrograma').blur();
+            }, 5000)
+        });
+
+   // OCULTA CALENDARIO DESPUES DE CLICK
+    $('#FecPrograma').on('changeDate', function (ev) {
+        $(this).datepicker('hide');
+    });
+
+    //DESPLEGAR ATTACH
+    $('#archivosOT').on("click", function (e)
+    {
+        //SE AGREGA PARA PREVENIR CIERRE AUTOMATICO DEL MODAL
+        e.preventDefault();
+
+        var url = "Attach?IdOt=" + $('#lblIdOt').text();
+
+        mostrarModal(url);
+    });
+
+    // DESPLEGAR IMPRIMIR OT
+    //function imprimirOT()
+    //{
+   //     alert("IMPRIMIR");
+
+   //     var nrOt = $('#lblIdOt').text();
+   //     window.location.href = '@Url.Action("Print", "Ot")?IdOt=' + nrOt ;
+  //  }
+
+    $('#imprimirOT').on("click", function (e) {
+
+       e.preventDefault();
+
+        var nrOt = $('#lblIdOt').text();
+
+        window.location.href = '@Url.Action("Print", "Ot")?IdOt=' + nrOt ;
+    });
+
+    // GENERAR NUEVA OT
+    $('#nuevaOT').on("click", function () {
+
+        var stMensaje = "";
+        //var opsConfirm = jsCore.bootBoxConfirm;
+
+        var nrOt = $('#lblIdOt').text();
+
+        if (nrOt != '????')
+        {
+            stMensaje = "Ya está creada la OT N° :" + nrOt + ". ¿ Igual desea generar una nueva OT y perder los datos actuales?.";
+        }
+        else
+            stMensaje = "¿ Está seguro de generar una nueva OT?.";
+
+        //opsConfirm.buttons.success.callback = function ()
+        //{
+        //    $(location).href('~/Operaciones/Ot/Create');
+
+        //};
+
+        //bootbox.dialog(opsConfirm);
+
+        bootbox.confirm({
+            message: stMensaje,
+            buttons: {
+                confirm: {
+                    label: 'Si',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result)
+            {
+                if (result && nrOt != '????')
+                {
+                    var stExito = EliminarOtBD(nrOt);
+
+                    if (stExito == 'S')
+                    {
+                        $(location).attr('href', '/Operaciones/Ot/Create');
+                        //$.ajax('/Operaciones/Ot/Create')
+
+
+                    }
+                }
+                else
+                    if (result && nrOt == '????')
+                    {
+                        $(location).attr('href', '/Operaciones/Ot/Create');
+                        //$.ajax('/Operaciones/Ot/Create')
+                    }
+
+
+            }
+        });
+
+        return;
+
+    });
+
+
+    //DESPLEGAR O CONTRAER AREA OT
+    $('#otCollapse').on("click", function () {
+
+        if (bOtCollapse == "ABIERTO")
+        {
+            bOtCollapse = "CERRADO";
+
+            if (bServCollapse == "CERRADO")
+                $('#servCollapse').click();
+
+        }
+
+        else
+        {
+            bOtCollapse = "ABIERTO";
+        }
+
+
+        return;
+    });
+
+    //DESPLEGAR O CONTRAER AREA SERVICIOS
+    $('#servCollapse').on("click", function () {
+
+        if (bServCollapse == "ABIERTO")
+            bServCollapse = "CERRADO";
+        else
+            bServCollapse = "ABIERTO";
+
+        return;
+    });
+
+    //DESPLEGAR O CONTRAER AREA EQUIPOS
+    $('#eqpCollapse').on("click", function () {
+
+        if (bEqpCollapse == "ABIERTO")
+            bEqpCollapse = "CERRADO";
+        else
+        {
+            bEqpCollapse = "ABIERTO";
+
+            if (bOtCollapse == "ABIERTO")
+                $('#otCollapse').click();
+
+            if (bServCollapse == "ABIERTO")
+                $('#servCollapse').click();
+
+        }
+
+       return;
+    });
+
+    //DESPLEGAR O CONTRAER AREA RECURSOS
+    $('#recCollapse').on("click", function () {
+
+        if (bRecCollapse == "ABIERTO")
+            bRecCollapse = "CERRADO";
+        else
+        {
+            bRecCollapse = "ABIERTO";
+
+            if (bOtCollapse == "ABIERTO")
+                $('#otCollapse').click();
+
+            if (bServCollapse == "ABIERTO")
+                $('#servCollapse').click();
+
+
+        }
+
+        return;
+    });
+
+    //DESPLEGAR O CONTRAER AREA INSUMOS
+    $('#insCollapse').on("click", function () {
+
+        if (bInsCollapse == "ABIERTO")
+            bInsCollapse = "CERRADO";
+        else
+        {
+            bInsCollapse = "ABIERTO";
+
+            if (bOtCollapse == "ABIERTO")
+                $('#otCollapse').click();
+
+            if (bServCollapse == "ABIERTO")
+                $('#servCollapse').click();
+
+        }
+
+        return;
+    });
+
+    // GENERAR ODS
+    $('#generarODS').on("click", function (e) {
+        e.preventDefault();
+        var stExito;
+        var nIdOt = $('#IdOt').val();
+
+        var _this = this;
+        var opsConfirm = jsCore.bootBoxConfirmOptions;
+        opsConfirm.message = "¿Desea generar ODS a partir de la OT N°: " + nIdOt + " ?.";
+        opsConfirm.buttons.success.callback = function () {
+            stExito = 'N';
+            stExito = GenerarOdsBD();
+
+            if (stExito == 'S')
+            {
+                //04-10-2018 VConcha Comentado porque se cambia estado en capa Bussiness
+                //CambiaEstadoOT(nIdOt); 
+                BlockPostODS();
+            }
+
+
+        };
+
+        bootbox.dialog(opsConfirm);
+
+     });
+
+
+    // GRABAR ENCABEZADO OT
+    $('#grabarOT').on("click", function (e) {
+        var stValido = 'S';
+        var stGrabado = '';
+
+        e.preventDefault();
+
+        stValido = ValidaCabecera();
+
+        if (stValido == 'N')
+        {
+
+            bootbox.alert("Existen campos obligatorios sin valores, debe revisar.");
+
+            return;
+        }
+        else
+        {
+            stGrabado = GrabarOtBD();
+
+            if (stGrabado == 'S')
+            {
+                LimpiaCabecera();
+                $('#otCollapse').click();
+
+                return;
+            }
+        }
+
+    });
+
+    // DESPUES DE GRABAR, SE CORRIGEN LOS ICONOS
+    function LimpiaCabecera()
+    {
+        $('#FecProgramaIcon').removeClass('glyphicon glyphicon-ok green');
+        $('#FecProgramaIcon').removeClass('glyphicon glyphicon-remove red');
+        $('#FecProgramaIcon').addClass('glyphicon glyphicon-calendar');
+
+        $('#IdClienteIcon').removeClass('glyphicon glyphicon-remove red');
+        $('#IdClienteIcon').removeClass('glyphicon glyphicon-ok green');
+
+        $('#CodViajeIcon').removeClass('glyphicon glyphicon-remove red');
+        $('#CodViajeIcon').removeClass('glyphicon glyphicon-ok green');
+        $('#CodViajeIcon').addClass('glyphicon glyphicon-globe');
+
+        $('#IdAreaOperativaIcon').removeClass('glyphicon glyphicon-remove red');
+        $('#IdAreaOperativaIcon').removeClass('glyphicon glyphicon-ok green');
+
+        $('#IdTurnoIcon').removeClass('glyphicon glyphicon-remove red');
+        $('#IdTurnoIcon').removeClass('glyphicon glyphicon-ok green');
+
+        $('#IdNaveIcon').removeClass('glyphicon glyphicon-remove red');
+        $('#IdNaveIcon').removeClass('glyphicon glyphicon-ok green');
+
+        $('#SolicitanteIcon').removeClass('glyphicon glyphicon-remove red');
+        $('#SolicitanteIcon').removeClass('glyphicon glyphicon-ok green');
+        $('#SolicitanteIcon').addClass('glyphicon glyphicon-user');
+
+        $('#DescripcionIcon').removeClass('glyphicon glyphicon-remove red');
+        $('#DescripcionIcon').removeClass('glyphicon glyphicon-ok green');
+        $('#DescripcionIcon').addClass('glyphicon glyphicon-comment');
+
+        return;
+    }
+
+    // GRABAR SERVICIO
+
+    $('#AgregarServicio').on("click", function (e) {
+        var stValido = 'S';
+        var stGrabado = '';
+        e.preventDefault();
+
+        var nrOt = $('#lblIdOt').text();
+
+        if (nrOt == '????')
+        {
+            bootbox.alert("La OT no se encuentra creada.");
+            return;
+        }
+
+        stValido = ValidaServicios();
+
+        if (stValido == 'N')
+        {
+
+            bootbox.alert("Existen campos obligatorios sin valores, debe revisar.");
+
+            return;
+        }
+        else
+        {
+            stGrabado = GrabarServicioBD();
+
+            if (stGrabado == 'S')
+            {
+
+                $('#IdServicioIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#IdUnidadCobroServIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#NumCantidadIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#NumCantidadIcon').addClass('glyphicon glyphicon-equalizer');
+
+                var tds = '<tr id="' + $("#IdOtServicio").val() + '">';
+
+                tds += '<td>' + $('#IdServicioCbx option:selected').val() + '</td>';
+                tds += '<td>' + $('#IdServicioCbx option:selected').text() + '</td>';
+                tds += '<td>' + $('#nroCantidadServIpt').val() + '</td>';
+                tds += '<td>' + $('#IdUnidadCobroServCbx option:selected').text() + '</td>';
+                tds += '<td id="' + +$('#IdServicioCbx option:selected').text() + '">';
+                tds += '<a href="#" class="btn btn-danger btn-xs delete" id="' + $("#IdOtServicio").val() + '" name="' + $('#IdServicioCbx option:selected').text()  + '" ';
+                tds += 'onclick="QuitarServicio(this.id,this.name,' + $('#IdServicioCbx option:selected').val() + ')"><i class="fa fa-trash-o"></i></a></td>';
+                tds += '</tr>';
+
+                $("#tbServicios").append(tds);
+
+                // AGREGA SERVICIO A LOS COMBOBOX DE EQUIPOS, INSUMOS Y RECURSOS
+                $("#IdServEqpCbx").append('<option value="' + $('#IdServicioCbx option:selected').val() + '"  data-label="' + $("#IdOtServicio").val() + '">' + $('#IdServicioCbx option:selected').text() + '</option>');
+                $("#IdServRcsCbx").append('<option value="' + $('#IdServicioCbx option:selected').val() + '"  data-label="' + $("#IdOtServicio").val() + '">' + $('#IdServicioCbx option:selected').text() + '</option>');
+                $("#IdServIsmCbx").append('<option value="' + $('#IdServicioCbx option:selected').val() + '"  data-label="' + $("#IdOtServicio").val() + '">' + $('#IdServicioCbx option:selected').text() + '</option>');
+
+                LimpiaServicios();
+
+            }
+
+            return;
+        }
+
+    });
+
+    // GRABAR INSUMO
+
+    $('#AgregarInsumo').on("click", function (e) {
+        var stValido = 'S';
+        var stGrabado = '';
+        e.preventDefault();
+
+        var nrContServ = $('#IdServIsmCbx > option').length;
+
+        if (nrContServ == 1) {
+            bootbox.alert("Debe agregar un Servicio antes de ingresar un Insumo, debe revisar.");
+            return;
+        }
+
+        stValido = ValidaInsumos();
+
+        if (stValido == 'N') {
+
+            bootbox.alert("Existen campos obligatorios sin valores, debe revisar.");
+
+            return;
+        }
+        else
+        {
+            stGrabado = GrabarInsumoBD();
+
+            if (stGrabado == 'S') {
+
+                $('#IdServIsmIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#IdInsumoIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#IdUnidadCobroIsmIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#nroCantidadIsmIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#nroCantidadIsmIcon').addClass('glyphicon glyphicon-equalizer');
+
+                var tds = '<tr id="' + $("#IdServInsumo").val() + '">';
+
+                tds += '<td>' + $('#IdServIsmCbx option:selected').val() + '</td>';
+                tds += '<td>' + $('#IdInsumoCbx option:selected').text() + '</td>';
+                tds += '<td>' + $('#nroCantidadIsmIpt').val() + '</td>';
+                tds += '<td>' + $('#IdUnidadCobroIsmCbx option:selected').text() + '</td>';
+                tds += '<td id="' + +$('#IdServInsumo option:selected').text() + '">';
+                tds += '<a href="#" class="btn btn-danger btn-xs delete" id="' + $("#IdInsumoCbx").val() + '" name="' + $('#IdInsumoCbx option:selected').text() + '" ';
+                tds += 'onclick="QuitarInsumo(this.id,this.name,' + $('#IdServInsumo').val() + ')"><i class="fa fa-trash-o"></i></a></td>';
+                tds += '</tr>';
+
+                $("#tbInsumos").append(tds);
+
+                LimpiaInsumos();
+
+            }
+
+            return;
+        }
+
+    });
+
+    // GRABAR RECURSO
+
+    $('#AgregarRecurso').on("click", function (e) {
+        var stValido = 'S';
+        var stGrabado = '';
+        e.preventDefault();
+
+        var nrContServ = $('#IdServRcsCbx > option').length;
+
+        if (nrContServ == 1) {
+            bootbox.alert("Debe agregar un Servicio antes de ingresar Personal, debe revisar.");
+            return;
+        }
+
+        stValido = ValidaRecursos();
+
+        if (stValido == 'N') {
+
+            bootbox.alert("Existen campos obligatorios sin valores, debe revisar.");
+
+            return;
+        }
+        else {
+            stGrabado = GrabarRecursoBD();
+
+            if (stGrabado == 'S') {
+
+                $('#IdServRcsIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#IdRecursoIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#IdUnidadCobroRcsIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#nroCantidadRcsIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#nroCantidadRcsIcon').addClass('glyphicon glyphicon-equalizer');
+
+                var tds = '<tr id="' + $("#IdServRecurso").val() + '">';
+
+                tds += '<td>' + $('#IdServRcsCbx option:selected').val() + '</td>';
+                tds += '<td>' + $('#IdRecursoCbx option:selected').text() + '</td>';
+                tds += '<td>' + $('#nroCantidadRcsIpt').val() + '</td>';
+                tds += '<td>' + $('#IdUnidadCobroRcsCbx option:selected').text() + '</td>';
+                tds += '<td id="' + +$('#IdServRecurso option:selected').text() + '">';
+                tds += '<a href="#" class="btn btn-danger btn-xs delete" id="' + $("#IdRecursoCbx").val() + '" name="' + $('#IdRecursoCbx option:selected').text() + '" ';
+                tds += 'onclick="QuitarRecurso(this.id,this.name,' + $('#IdServRecurso').val() + ')"><i class="fa fa-trash-o"></i></a></td>';
+                tds += '</tr>';
+
+                $("#tbRecursos").append(tds);
+
+                LimpiaRecursos();
+
+            }
+
+            return;
+        }
+
+    });
+
+    // GRABAR EQUIPO
+
+    $('#AgregarEquipo').on("click", function (e) {
+        var stValido = 'S';
+        var stGrabado = '';
+        e.preventDefault();
+
+        var nrContServ = $('#IdServEqpCbx > option').length;
+
+        if (nrContServ == 1) {
+            bootbox.alert("Debe agregar un Servicio antes de ingresar un equipo, debe revisar.");
+            return;
+        }
+
+        stValido = ValidaEquipos();
+
+        if (stValido == 'N') {
+
+            bootbox.alert("Existen campos obligatorios sin valores, debe revisar.");
+
+            return;
+        }
+        else
+        {
+            stGrabado = GrabarEquipoBD();
+
+            if (stGrabado == 'S') {
+
+                $('#IdServEqpIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#IdEquipoIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#IdUnidadCobroEqpIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#nroCantidadEqpIcon').removeClass('glyphicon glyphicon-ok green');
+                $('#nroCantidadEqpIcon').addClass('glyphicon glyphicon-equalizer');
+
+                var tds = '<tr id="' + $("#IdServEquipo").val() + '">';
+
+                tds += '<td id="' + $('#IdServEqpCbx option:selected').val() + '">' + $('#IdServEqpCbx option:selected').val() + '</td>';
+                tds += '<td>' + $('#IdEquipoCbx option:selected').text() + '</td>';
+                tds += '<td>' + $('#nroCantidadEqpIpt').val() + '</td>';
+                tds += '<td>' + $('#IdUnidadCobroEqpCbx option:selected').text() + '</td>';
+                tds += '<td id="' + +$('#IdServEquipo option:selected').text() + '">';
+                tds += '<a href="#" class="btn btn-danger btn-xs delete" id="' + $("#IdEquipoCbx").val() + '" name="' + $('#IdEquipoCbx option:selected').text() + '" ';
+                tds += 'onclick="QuitarEquipo(this.id,this.name,' + $('#IdServEquipo').val() + ')"><i class="fa fa-trash-o"></i></a></td>';
+                tds += '</tr>';
+
+                $("#tbEquipos").append(tds);
+
+                LimpiaEquipos();
+
+            }
+
+            return;
+        }
+
+    });
+
+    // ELIMINAR UN INSUMO
+
+    function QuitarInsumo(nrIdInsumo, stNombreInsumo, nrIdServicioInsumo)
+    {
+        var stEliminado = '';
+        var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+        opsConfirm.message = "¿Desea eliminar Insumo: " + stNombreInsumo + " ?.";
+
+        opsConfirm.buttons.success.callback = function () {
+            stEliminado = EliminarInsumoBD(nrIdServicioInsumo);
+
+            if (stEliminado == 'S') {
+                //ELIMINA LA FILA DESDE TABLA INSUMOS
+                $("#" + nrIdServicioInsumo).remove();
+
+                // LIMPIO EL FORMULARIO
+                LimpiaInsumos();
+            }
+
+        };
+
+        bootbox.dialog(opsConfirm);
+
+    }
+
+    // ELIMINAR UN RECURSO
+
+    function QuitarRecurso(nrIdRecurso, stNombreRecurso, nrIdServicioRecurso)
+    {
+        var stEliminado = '';
+        var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+        opsConfirm.message = "¿Desea eliminar Personal: " + stNombreRecurso + " ?.";
+
+        opsConfirm.buttons.success.callback = function () {
+            stEliminado = EliminarRecursoBD(nrIdServicioRecurso);
+
+            if (stEliminado == 'S') {
+                //ELIMINA LA FILA DESDE TABLA EQUIPOS
+                $("#" + nrIdServicioRecurso).remove();
+
+                // LIMPIO EL FORMULARIO
+                LimpiaRecursos();
+            }
+
+        };
+
+        bootbox.dialog(opsConfirm);
+
+    }
+
+    // ELIMINAR UN EQUIPO
+    function QuitarEquipo(nrIdEquipo, stNombreEquipo,nrIdServicioEquipo)
+    {
+        var stEliminado = '';
+        var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+        opsConfirm.message = "¿Desea eliminar Equipo: " + stNombreEquipo + " ?.";
+
+        opsConfirm.buttons.success.callback = function ()
+        {
+            stEliminado = EliminarEquipoBD(nrIdServicioEquipo);
+
+            if (stEliminado == 'S') {
+                //ELIMINA LA FILA DESDE TABLA EQUIPOS
+                $("#" + nrIdServicioEquipo).remove();
+
+                // LIMPIO EL FORMULARIO
+                LimpiaEquipos();
+            }
+
+        };
+
+        bootbox.dialog(opsConfirm);
+
+    }
+
+
+    function QuitarServicio(nrIdOtServicio, stNombreServicio,nrIdServicio)
+    {
+        var stEliminado = '';
+        var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+        opsConfirm.message = "¿Desea eliminar servicio: " + stNombreServicio + " ?.";
+        opsConfirm.buttons.success.callback = function ()
+        {
+            stEliminado = EliminarServicioBD(nrIdOtServicio);
+
+            if (stEliminado=='S')
+            {
+                //ELIMINA LA FILA DESDE TABLA SERVICIOS
+                $("#" + nrIdOtServicio).remove();
+
+                // ELIMINA SERVICIO DESDE LOS COMBOBOX DE EQUIPOS, INSUMOS Y RECURSOS
+
+                $("#IdServEqpCbx option[value='" + nrIdServicio + "']").remove();
+                $("#IdServRcsCbx option[value='" + nrIdServicio + "']").remove();
+                $("#IdServIsmCbx option[value='" + nrIdServicio + "']").remove();
+
+                // ELIMINA SERVICIO DESDE LA TABLA HTML EQUIPOS
+
+                $("#tbEquipos tbody tr td").each(function()
+                {
+                    if ($(this).index() == 0 && $(this).text() == nrIdServicio)
+                    {
+                        $(this).parent().remove(); // ELIMINO EL TR DE TABLA EQUIPOS
+                    }
+
+                });
+
+                // ELIMINA SERVICIO DESDE LA TABLA HTML RECURSOS
+                $("#tbRecursos tbody tr td").each(function () {
+                    if ($(this).index() == 0 && $(this).text() == nrIdServicio) {
+                        $(this).parent().remove(); // ELIMINO EL TR DE TABLA RECURSOS
+                    }
+
+                });
+
+                // ELIMINA SERVICIO DESDE LA TABLA HTML INSUMOS
+                $("#tbInsumos tbody tr td").each(function () {
+                    if ($(this).index() == 0 && $(this).text() == nrIdServicio) {
+                        $(this).parent().remove(); // ELIMINO EL TR DE TABLA INSUMOS
+                    }
+
+                });
+
+                // LIMPIO EL FORMULARIO
+                LimpiaServicios();
+            }
+
+        };
+
+        bootbox.dialog(opsConfirm);
+
+    };
+
+    // ELIMINAR INSUMO DE LA BASE DE DATOS
+
+    function EliminarInsumoBD(nrIdServicioInsumo)
+    {
+        var stExito = '';
+
+        $("#IdServInsumo").val(nrIdServicioInsumo);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "ServicioInsumo")',
+            data: $("#FormInsumo").serialize(),
+            async: false,
+            success: function (response) {
+                Notify('El Insumo se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                stExito = 'S';
+
+            },
+            failure: function (response) {
+
+                Notify('Hubo un error al eliminar el Insumo, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+    }
+
+    // ELIMINAR RECURSO DE LA BASE DE DATOS
+
+    function EliminarRecursoBD(nrIdServicioRecurso) {
+        var stExito = '';
+
+        $("#IdServRecurso").val(nrIdServicioRecurso);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "ServicioRecurso")',
+            data: $("#FormRecurso").serialize(),
+            async: false,
+            success: function (response) {
+                Notify('El Personal se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                stExito = 'S';
+
+            },
+            failure: function (response) {
+
+                Notify('Hubo un error al eliminar el Personal, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+    }
+
+    // ELIMINAR EQUIPO DE LA BASE DE DATOS
+    function EliminarEquipoBD(nrIdServicioEquipo)
+    {
+        var stExito = '';
+
+        $("#IdServEquipo").val(nrIdServicioEquipo);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "ServicioEquipo")',
+            data: $("#FormEquipo").serialize(),
+            async: false,
+            success: function (response) {
+                Notify('El Equipo se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                stExito = 'S';
+
+            },
+            failure: function (response) {
+
+                Notify('Hubo un error al eliminar el Equipo, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+    }
+
+
+    // ELIMINAR SEFVICIO DESDE LA BASE DE DATOS
+    function EliminarServicioBD(nrIdOtServicio)
+    {
+        var stExito = '';
+
+        $("#IdOtServicio").val(nrIdOtServicio);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "OtServicio")',
+                data: $("#FormServicio").serialize(),
+                async: false,
+                success: function (response)
+                {
+                    Notify('El servicio se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                    stExito = 'S';
+
+                },
+                failure: function (response)
+                {
+
+                    Notify('Hubo un error al eliminar el servicio, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                    stExito = 'N';
+                }
+            });
+
+            return stExito;
+    }
+
+    // ELIMINAR OT DE LA BASE DE DATOS
+
+    function EliminarOtBD(nrIdOt)
+    {
+        var stExito = '';
+
+        $("#IdOtServicio").val(nrIdOt);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "Ot")',
+            data: $("#FormOt").serialize(),
+            async: false,
+            success: function (response) {
+                Notify('La OT se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                stExito = 'S';
+
+            },
+            failure: function (response) {
+
+                Notify('Hubo un error al eliminar la OT, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+    }
+
+   function ValidaCabecera()
+   {
+            var stValido = 'S';
+            var stPatronFecha = /^[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]$/;
+
+            var dtFecha = $('#FecPrograma').val();
+            var nrIdCliente = $('#IdCliente').val();
+            var stCodViaje = $('#CodViaje').val();
+            var nrIdAreaOperativa = $('#IdAreaOperativa').val();
+            var nrIdNave = $('#IdNave').val();
+            var nrIdTurno = $('#IdTurno').val();
+            var stSolicitante = $('#Solicitante').val();
+            var stDescripcion = $('#Descripcion').val();
+            var stComentario = $('#Comentario').val();
+
+            if (dtFecha.length == 0 || !stPatronFecha.exec(dtFecha))
+                stValido = 'N'
+
+            var d = new Date()
+            // la función tiene como entrada: año, mes, día
+            d.setFullYear(dtFecha.substring(6, 10), dtFecha.substring(3, 5) - 1, dtFecha.substring(0, 2))
+
+            // ¿el mes del objeto Date es el mes introducido por el usuario?
+            //      OJO: getMonth() devuelve el número de mes del 0 al 11
+
+            //       ¿el día del objeto Date es el día introducido por el usuario?
+            //       OJO: getDate() devuelve el día del mes */
+            if (d.getMonth() != dtFecha.substring(3, 5) - 1 || d.getDate() != dtFecha.substring(0, 2)) {
+                stValido = 'N'
+                $('#FecProgramaIcon').removeClass('glyphicon glyphicon-calendar');
+                $('#FecProgramaIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else
+            {
+                $('#FecProgramaIcon').removeClass('glyphicon glyphicon-calendar');
+                $('#FecProgramaIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#FecProgramaIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrIdCliente < 1) {
+                stValido = 'N'
+                $('#IdClienteIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else
+            {
+                $('#IdClienteIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdClienteIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrIdNave < 1) {
+                stValido = 'N'
+                $('#IdNaveIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdNaveIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdNaveIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (stCodViaje.trim().length < 1) {
+                stValido = 'N';
+                $('#CodViajeIcon').removeClass('glyphicon glyphicon-globe');
+                $('#CodViajeIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else
+            {
+                $('#CodViajeIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#CodViajeIcon').removeClass('glyphicon glyphicon-globe');
+                $('#CodViajeIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrIdAreaOperativa < 1) {
+                stValido = 'N'
+                $('#IdAreaOperativaIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else
+            {
+                $('#IdAreaOperativaIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdAreaOperativaIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+
+            if (nrIdTurno < 1)
+            {
+                stValido = 'N'
+                $('#IdTurnoIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else
+            {
+                $('#IdTurnoIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdTurnoIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (stSolicitante.trim().length < 5) {
+                stValido = 'N'
+                $('#SolicitanteIcon').removeClass('glyphicon glyphicon-user');
+                $('#SolicitanteIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else
+            {
+                $('#SolicitanteIcon').removeClass('glyphicon glyphicon-user');
+                $('#SolicitanteIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#SolicitanteIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (stDescripcion.trim().length < 5) {
+                stValido = 'N'
+                $('#DescripcionIcon').removeClass('glyphicon glyphicon-comment');
+                $('#DescripcionIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else
+            {
+                $('#DescripcionIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#DescripcionIcon').removeClass('glyphicon glyphicon-comment');
+                $('#DescripcionIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            return stValido;
+        };
+
+        // VALIDAR INSUMO
+        function ValidaInsumos() {
+            var stValido = 'S';
+
+            var nrIdServicio = $('#IdServIsmCbx').val();
+            var nrInsumo = $('#IdInsumoCbx').val();
+            var nrNumCantidad = $('#nroCantidadIsmIpt').val();
+            var nrIdUnidad = $('#IdUnidadCobroIsmCbx').val();
+
+            if (nrIdServicio < 1) {
+                stValido = 'N'
+                $('#IdServIsmIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdServIsmIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdServIsmIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrInsumo < 1) {
+                stValido = 'N'
+                $('#IdInsumoIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdInsumoIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdInsumoIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrNumCantidad < 1 || isNaN(nrNumCantidad)) {
+                stValido = 'N'
+                $('#nroCantidadIsmIcon').removeClass('glyphicon glyphicon-equalizer');
+                $('#nroCantidadIsmIcon').addClass('glyphicon glyphicon-remove red');
+
+            }
+            else {
+                $('#nroCantidadIsmIcon').removeClass('glyphicon glyphicon-equalizer');
+                $('#nroCantidadIsmIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#nroCantidadIsmIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+
+            if (nrIdUnidad < 1) {
+                stValido = 'N'
+                $('#IdUnidadCobroIsmIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdUnidadCobroIsmIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdUnidadCobroIsmIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            return stValido;
+
+        };
+
+        // VALIDAR RECURSOS
+
+        function ValidaRecursos() {
+            var stValido = 'S';
+
+
+            var nrIdServicio = $('#IdServRcsCbx').val();
+            var nrRecurso = $('#IdRecursoCbx').val();
+            var nrNumCantidad = $('#nroCantidadRcsIpt').val();
+            var nrIdUnidad = $('#IdUnidadCobroRcsCbx').val();
+
+            if (nrIdServicio < 1) {
+                stValido = 'N'
+                $('#IdServRcsIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdServRcsIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdServRcsIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrRecurso < 1) {
+                stValido = 'N'
+                $('#IdRecursoIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdRecursoIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdRecursoIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrNumCantidad < 1 || isNaN(nrNumCantidad)) {
+                stValido = 'N'
+                $('#nroCantidadRcsIcon').removeClass('glyphicon glyphicon-equalizer');
+                $('#nroCantidadRcsIcon').addClass('glyphicon glyphicon-remove red');
+
+            }
+            else {
+                $('#nroCantidadRcsIcon').removeClass('glyphicon glyphicon-equalizer');
+                $('#nroCantidadRcsIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#nroCantidadRcsIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+
+            if (nrIdUnidad < 1) {
+                stValido = 'N'
+                $('#IdUnidadCobroRcsIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdUnidadCobroRcsIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdUnidadCobroRcsIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            return stValido;
+
+        };
+
+
+        // VALIDAR EQUIPOS
+        function ValidaEquipos() {
+            var stValido = 'S';
+
+            var nrIdServicio = $('#IdServEqpCbx').val();
+            var nrEquipo = $('#IdEquipoCbx').val();
+            var nrNumCantidad = $('#nroCantidadEqpIpt').val();
+            var nrIdUnidad = $('#IdUnidadCobroEqpCbx').val();
+
+            if (nrIdServicio < 1) {
+                stValido = 'N'
+                $('#IdServEqpIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdServEqpIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdServEqpIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrEquipo < 1) {
+                stValido = 'N'
+                $('#IdEquipoIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdEquipoIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdEquipoIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrNumCantidad < 1 || isNaN(nrNumCantidad)) {
+                stValido = 'N'
+                $('#nroCantidadEqpIcon').removeClass('glyphicon glyphicon-equalizer');
+                $('#nroCantidadEqpIcon').addClass('glyphicon glyphicon-remove red');
+
+            }
+            else {
+                $('#nroCantidadEqpIcon').removeClass('glyphicon glyphicon-equalizer');
+                $('#nroCantidadEqpIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#nroCantidadEqpIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+
+            if (nrIdUnidad < 1) {
+                stValido = 'N'
+                $('#IdUnidadCobroEqpIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdUnidadCobroEqpIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdUnidadCobroEqpIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            return stValido;
+
+        };
+
+        // VALIDAR SERVICIOS
+        function ValidaServicios()
+        {
+            var stValido = 'S';
+
+
+            var nrIdServicio = $('#IdServicioCbx').val();
+            var nrNumCantidad = $('#nroCantidadServIpt').val();
+            var nrIdUnidad = $('#IdUnidadCobroServCbx').val();
+
+            if (nrIdServicio < 1)
+            {
+                stValido = 'N'
+                $('#IdServicioIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else
+            {
+                $('#IdServicioIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdServicioIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            if (nrNumCantidad < 1 || isNaN(nrNumCantidad))
+            {
+                stValido = 'N'
+                $('#NumCantidadIcon').removeClass('glyphicon glyphicon-equalizer');
+                $('#NumCantidadIcon').addClass('glyphicon glyphicon-remove red');
+
+            }
+            else
+            {
+                $('#NumCantidadIcon').removeClass('glyphicon glyphicon-equalizer');
+                $('#NumCantidadIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#NumCantidadIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+
+            if (nrIdUnidad < 1) {
+                stValido = 'N'
+                $('#IdUnidadCobroServIcon').addClass('glyphicon glyphicon-remove red');
+            }
+            else {
+                $('#IdUnidadCobroServIcon').removeClass('glyphicon glyphicon-remove red');
+                $('#IdUnidadCobroServIcon').addClass('glyphicon glyphicon-ok green');
+            }
+
+            return stValido;
+
+        };
+
+        // LIMPIA INSUMOS
+
+        function LimpiaInsumos()
+        {
+            $('#IdServIsmCbx').val("");
+            $('#IdInsumoCbx').val("");
+            $('#IdUnidadCobroIsmCbx').val("");
+            $('#nroCantidadIsmIpt').val("");
+
+            $("#IdServInsumo").val("");
+            $("#IdOtServIsm").val("");
+            $("#IdInsumo").val("");
+            $("#dnCantidadIsm").val("");
+            $("#IdUnidadCobroIsm").val("");
+
+            return;
+        }
+
+        // LIMPIA RECURSOS
+
+        function LimpiaRecursos()
+        {
+            $('#IdServRcsCbx').val("");
+            $('#IdRecursoCbx').val("");
+            $('#IdUnidadCobroRcsCbx').val("");
+            $('#nroCantidadRcsIpt').val("");
+
+            $("#IdServRecurso").val("");
+            $("#IdOtServRcs").val("");
+            $("#IdRecurso").val("");
+            $("#dnCantidadRcs").val("");
+            $("#IdUnidadCobroRcs").val("");
+
+            return;
+        }
+
+        // LIMPIA EQUIPOS
+
+        function LimpiaEquipos()
+        {
+            $('#IdServEqpCbx').val("");
+            $('#IdEquipoCbx').val("");
+            $('#IdUnidadCobroEqpCbx').val("");
+            $('#nroCantidadEqpIpt').val("");
+
+            $("#IdServEquipo").val("");
+            $("#IdOtServEqp").val("");
+            $("#IdEquipo").val("");
+            $("#dnCantidadEqp").val("");
+            $("#IdUnidadCobroEqp").val("");
+
+            return;
+        }
+
+        function LimpiaServicios()
+        {
+            $('#IdServicioCbx').val("");
+            $('#IdUnidadCobroServCbx').val("");
+            $('#nroCantidadServIpt').val("");
+
+            $('#IdOtServicio').val("");
+            $('#IdServOt').val("");
+            $('#IdServicio').val("");
+            $('#nroCantidadServ').val("");
+            $('#IdUnidadCobroServ').val("");
+
+            return;
+        }
+
+
+        // BORRAR OT
+        $('#borrarOT').on("click", function (e) {
+
+            e.preventDefault();
+            var stExito;
+            var nIdOt = $('#lblIdOt').text();
+
+            var _this = this;
+            var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+            opsConfirm.message = "¿Desea eliminar la OT " + nIdOt + " y todas sus dependencias?";
+            opsConfirm.buttons.success.callback = function ()
+            {
+                stExito = EliminarOtBD(nIdOt);
+
+                if (stExito == 'S')
+                {
+                    $(location).attr('href', '/Operaciones/Ot/Index');
+
+                }
+
+            };
+
+            bootbox.dialog(opsConfirm);
+
+        });
+
+        // GRABA EL INSUMO EN LA BASE DE DATOS
+
+        function GrabarInsumoBD() {
+            var stExito = '';
+
+            $("#IdServInsumo").val('999999999');
+            $("#IdOtServIsm").val($("#IdServIsmCbx :selected").attr("data-label"));
+            $("#IdInsumo").val($("#IdInsumoCbx").val());
+            $("#dnCantidadIsm").val($("#nroCantidadIsmIpt").val());
+            $("#IdUnidadCobroIsm").val($("#IdUnidadCobroIsmCbx").val());
+
+           // alert($("#nroCantidadIsmIpt").val());
+
+            $.blockUI();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create", "ServicioInsumo")',
+                data: $("#FormInsumo").serialize(),
+                async: false,
+                success: function (response) {
+                    Notify('El Insumo se creó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                    $("#IdServInsumo").val(response);
+                    stExito = 'S';
+
+                },
+                failure: function (response) {
+
+                    Notify('Hubo un error al grabar el Insumo, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                    stExito = 'N';
+                }
+            });
+
+            $.unblockUI();
+
+            return stExito;
+        }
+
+        // GRABA EL RECURSO EN LA BASE DE DATOS
+
+        function GrabarRecursoBD() {
+            var stExito = '';
+
+            $("#IdServRecurso").val('999999999');
+            $("#IdOtServRcs").val($("#IdServRcsCbx :selected").attr("data-label"));
+            $("#IdRecurso").val($("#IdRecursoCbx").val());
+            $("#dnCantidadRcs").val($("#nroCantidadRcsIpt").val());
+            $("#IdUnidadCobroRcs").val($("#IdUnidadCobroRcsCbx").val());
+
+            $.blockUI();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create", "ServicioRecurso")',
+                data: $("#FormRecurso").serialize(),
+                async: false,
+                success: function (response) {
+                     Notify('El Personal se creó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                     $("#IdServRecurso").val(response);
+                     stExito = 'S';
+
+                },
+            failure: function (response) {
+
+                Notify('Hubo un error al grabar el Personal, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        $.unblockUI();
+
+        return stExito;
+    }
+
+    // GRABA EL EQUIPO EN LA BASE DE DATOS
+
+    function GrabarEquipoBD() {
+        var stExito = '';
+
+        $("#IdServEquipo").val('999999999');
+        $("#IdOtServEqp").val($("#IdServEqpCbx :selected").attr("data-label"));
+        $("#IdEquipo").val($("#IdEquipoCbx").val());
+        $("#dnCantidadEqp").val($("#nroCantidadEqpIpt").val());
+        $("#IdUnidadCobroEqp").val($("#IdUnidadCobroEqpCbx").val());
+
+        $.blockUI();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Create", "ServicioEquipo")',
+            data: $("#FormEquipo").serialize(),
+            async: false,
+            success: function (response) {
+
+                if (response.length > 0) {
+                    Notify('El equipo se creó correctamente>.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                    $("#IdServEquipo").val(response);
+                    stExito = 'S';
+                }
+                else {
+                    Notify('Hubo un error al grabar el Equipo, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                    stExito = 'N';
+                }
+
+            },
+            failure: function (response) {
+
+                Notify('Hubo un error al grabar el Equipo, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        $.unblockUI();
+
+        return stExito;
+    }
+
+    // GRABA OT EN BASE DE DATOS
+    function GrabarOtBD() {
+        var stExito = '';
+
+        $.blockUI();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Editar", "Ot")',
+            data: $("#FormOt").serialize(),
+            async: false,
+            success: function (response) {
+                if (response.length > 0)
+                {
+                    Notify('La cabecera de OT se actualizó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                    $('#lblIdOt').text(response);
+                    $('#IdOt').text(response);
+                    $('#IdOt').val(response);
+                    $('#lblDescripcion').text(' - ' + $('#Descripcion').val());
+                    stExito = 'S';
+                }
+                else
+                {
+                    Notify('Hubo un error al actualizar la cabecera de OT, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                    stExito = 'N';
+                }
+
+
+            },
+            failure: function (response) {
+
+                Notify('Hubo un error al grabar la cabecera de OT, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito =  'N';
+            }
+        });
+
+        $.unblockUI();
+
+        return stExito;
+        }
+
+    // GENERAR ODS EN LA BD
+    function GenerarOdsBD()
+    {
+        var stExito = '';
+
+        $.blockUI();
+
+        $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CreateOds", "Ot")',
+                data: $("#FormOt").serialize(),
+                async: false,
+                success: function (response)
+                {
+                    var strResp = response.toString();
+
+                    if (strResp.length > 0)
+                    {
+                        Notify('Se generó correctamente la nueva ODS.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                        stExito = 'S';
+                    }
+                    else
+                    {
+                        Notify('Hubo un error al generar nueva ODS, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                        stExito = 'N';
+                    }
+                },
+                failure: function (response)
+                {
+                 Notify('Hubo un error al generar nueva ODS, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                 stExito = 'N';
+                }
+        });
+
+        $.unblockUI();
+
+        return stExito;
+     }
+
+    // BLOQUEA BOTONES DESPUES DE GENERAR ODS
+     function BlockPostODS()
+     {
+         $('#generarODS').attr("disabled", true);
+         $('#grabarOT').attr("disabled", true);
+         $('#archivosOT').attr("disabled", true);
+         $('#borrarOT').attr("disabled", true);
+
+         return;
+
+     }
+
+    // GRABAR SERVICIO EN LA BD
+    function GrabarServicioBD()
+    {
+        var stExito = '';
+
+        $("#IdOtServicio").val('999999999');
+        $("#IdServOt").val($('#lblIdOt').text());
+        $("#IdServicio").val($("#IdServicioCbx").val());
+        $("#nroCantidadServ").val($("#nroCantidadServIpt").val());
+        $("#IdUnidadCobroServ").val($("#IdUnidadCobroServCbx").val());
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Create", "OtServicio")',
+            data: $("#FormServicio").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (response) {
+
+                Notify('El Servicio se grabó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                $("#IdOtServicio").val(response);
+                stExito = 'S';
+
+            },
+            failure: function (response) {
+                Notify('Hubo un error al grabar el Servicio, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+
+            }
+        });
+
+        return stExito;
+    }
+
+
+    //DESPLEGAR CREACION OT
+    //$('#editar').on("click", function (e) {
+    //    mostrarModal("Edit");
+
+    // });
+
+
+    function mostrarModal(page)
+    {
+        $.blockUI();
+        $.ajax({
+            url: '@url/' + page,
+            jsonp: false,
+            data: {}, //Si le vas a pasar parámetros
+            //jsonpCallback: 'products', //Callback de jsonp
+            async: true,
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+                $.unblockUI();
+                bootbox.dialog({
+                    message: data,
+                    title: "Módulo Operaciones",
+                    className: "modal-darkorange"//,
+                    //buttons: {
+                    //    success: {
+                    //        label: "Send",
+                    //        className: "btn-blue",
+                    //        callback: function () { }
+                    //    },
+                    //    "Save as Draft": {
+                    //        className: "btn-danger",
+                    //        callback: function () { }
+                    //    }
+                    //}
+                });
+
+            },
+            error: function () {
+                $('#myModal').removeClass("modal-body");
+                $('#myModal').modal({ show: false });
+                alert("error");
+                //$('ModalPage').removeClass('loading'); //Removemos la clase loading
+
+            }
+        });
+    }
+
+
+    @*$("#myModal").on('hidden.bs.modal', function () {
+        // alert("Esta accion se ejecuta al cerrar el modal")
+        $('#myModal').removeClass("modal-body");
+        $('#myModal .modal-body').load('@url/Loading', function () { });
+
+
+    });*@
+
+
+
+
+    $(function () {
+        $("#myEmailModal").draggable();
+    });
+
+
+    //-----------------------------------------------
+
+    var InitiateEditableDataTable = function () {
+        return {
+            init: function () {
+                //Datatable Initiating
+
+                var isEditing = null;
+                var isAdding = false;
+                //Add New Row
+                $('#editabledatatable_new').click(function (e) {
+                    e.preventDefault();
+                    if (!isAdding) {
+                        isAdding = true;
+                        var aiNew = oTable.fnAddData([
+                            '',
+                            '<a href="#" class="btn btn-success btn-xs saveNewRow"><i class="fa fa-edit"></i> Guardar</a> <a href="#" class="btn btn-warning btn-xs cancel" data-mode="new"><i class="fa fa-times"></i> Cancelar</a>'
+                        ]);
+                        var nRow = oTable.fnGetNodes(aiNew[0]);
+                        editAddedRow(oTable, nRow);
+                        isEditing = nRow;
+                    }
+                    $('#text0').focus();
+                });
+
+                //Delete an Existing Row
+                $('#editabledatatable').on("click", 'a.delete', function (e) {
+                    e.preventDefault();
+                    var _this = this;
+                    var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+                    opsConfirm.message = "¿Desea eliminar el Servicio?";
+                    opsConfirm.buttons.success.callback = function () {
+                        var xPermissionId = $(_this).parents('tr')[0].id;
+                        var nRow = $(_this).parents('tr')[0];
+                        $.ajax({
+
+                            url: '@url/DeleteAjax?Permission=' + xPermissionId,
+                            type: 'post',
+                            dataType: "html",
+                            async: false,
+                            success: function (_result) {
+                                var _objr = JSON.parse(_result);
+                                switch (_objr.Flag) {
+                                    case jsCore.FlagOK: //Si se eliminó correctamente
+                                        oTable.fnDeleteRow(nRow);
+                                        jsCore.showSuccessModal("Eliminado", "El Servicio fue eliminado con éxito");
+                                        break;
+                                    case jsCore.FlagError: // Si Ocurrio un error especifico
+                                        jsCore.showErrorModal("Error", _objr.ErrorDescription);
+                                        break;
+                                }
+                            }
+                        });
+                    };
+
+                    bootbox.dialog(opsConfirm);
+
+                });
+
+                //Cancel Editing or Adding a Row
+                $('#editabledatatable').on("click", 'a.cancel', function (e) {
+                    e.preventDefault();
+                    isAdding = false;
+                    if ($(this).attr("data-mode") == "new") {
+                        var nRow = $(this).parents('tr')[0];
+                        oTable.fnDeleteRow(nRow);
+                        isEditing = null;
+                    } else {
+                        if (isEditing == null) var isEditing = $(this).parents('tr')[0];
+                        restoreRow(oTable, isEditing);
+                        isEditing = null;
+                    }
+                });
+
+                //Edit A Row
+                $('#editabledatatable').on("click", 'a.edit', function (e) {
+                    e.preventDefault();
+
+                    var nRow = $(this).parents('tr')[0];
+
+                    if (isEditing !== null && isEditing != nRow) {
+                        restoreRow(oTable, isEditing);
+                        editRow(oTable, nRow);
+                        isEditing = nRow;
+
+                    } else {
+                        editRow(oTable, nRow);
+                        isEditing = nRow;
+                    }
+                    $('#text0').select();
+                });
+
+                //Save an Creating Row
+                $('#editabledatatable').on("click", 'a.saveNewRow', function (e) {
+                    e.preventDefault();
+                    if (this.innerHTML.indexOf("Guardar") >= 0) {
+                        saveNewRow(oTable, isEditing);
+                        isEditing = null;
+                        isAdding = false;
+                        //Some Code to Highlight Updated Row
+                    }
+                });
+                //Save an Editing Row
+                $('#editabledatatable').on("click", 'a.save', function (e) {
+                    e.preventDefault();
+                    if (this.innerHTML.indexOf("Guardar") >= 0) {
+                        if (isEditing == null) var isEditing = $(this).parents('tr')[0];
+                        saveRow(oTable, isEditing);
+
+                        isEditing = null;
+                        isAdding = false;
+                        //Some Code to Highlight Updated Row
+                    }
+                });
+
+                function restoreRow(oTable, nRow) {
+                    var aData = oTable.fnGetData(nRow);
+                    var jqTds = $('>td', nRow);
+
+                    for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
+                        oTable.fnUpdate(aData[i], nRow, i, false);
+                    }
+
+                    oTable.fnDraw();
+                }
+
+                function editRow(oTable, nRow) {
+
+                    var aData = oTable.fnGetData(nRow);
+                    var jqTds = $('>td', nRow);
+                    jqTds[0].innerHTML = '<div class="form-group"><input type="text" class="form-control input-small" id="text0" value="' + aData[0] + '" placeholder="nombre del permiso"></div>';
+                    jqTds[1].innerHTML = '<a href="#" class="btn btn-success btn-xs save"><i class="fa fa-save"></i> Guardar</a> <a href="#" class="btn btn-warning btn-xs cancel"><i class="fa fa-times"></i> Cancelar</a>';
+                }
+
+                function editAddedRow(oTable, nRow) {
+                    var aData = oTable.fnGetData(nRow);
+                    var jqTds = $('>td', nRow);
+                    jqTds[0].innerHTML = '<div class="form-group"><input type="text" class="form-control input-small" id="text0" value="' + aData[0] + '" placeholder="nombre del permiso"></div>';
+                    jqTds[1].innerHTML = aData[1];
+                }
+
+                //save a change of a existing row and update DB
+                function saveRow(oTable, nRow) {
+
+                    var jqInputs = $('input', nRow);
+                    if (jqInputs[0].value.toString().trim() == "") {
+                        jqInputs[0].focus();
+                        jsCore.showWarnModal('Validación', 'Debe especificar un nombre para el permiso');
+                        return false;
+                    }
+                    var xPermissionId = jqInputs.parents('tr')[0].id;
+                    $.ajax({
+                        url: '@url/UpdateAjax?PermissionId=' + xPermissionId + '&PermissionValue=' + jqInputs[0].value,
+                        type: 'post',
+                        dataType: "html",
+                        async: false,
+                        success: function (_result) {
+                            var _objr = JSON.parse(_result);
+                            switch (_objr.Flag) {
+                                case jsCore.FlagError:
+                                    jqInputs[0].select();
+                                    jsCore.showErrorModal("Error", _objr.ErrorDescription);
+                                    break;
+                                case jsCore.FlagNo:
+                                    //jqInputs[0].select();
+                                    jsCore.showWarnModal("Validación", _objr.ErrorDescription, function () { jqInputs[0].select(); });
+                                    return;
+                                    break;
+                                default:
+                                    oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                                    oTable.fnUpdate('<a href="#" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> Editar</a> <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> Eliminar</a>', nRow, 1, false);
+                                    oTable.fnDraw();
+                                    $(nRow).attr('id', _objr.ReturnValue); // Ingresa Id Permiso en el tr que lo contiene.
+                                    break;
+                            }
+                        }
+                    });
+
+                }
+                //save a new row and insert in DB
+                function saveNewRow(oTable, nRow) {
+
+                    var jqInputs = $('input', nRow);
+                    if (jqInputs[0].value.toString().trim() == "") {
+                        jqInputs[0].focus();
+                        jsCore.showWarnModal('Validación', 'Debe especificar un nombre para el permiso');
+                        return false;
+                    }
+                    $.ajax({
+
+                        url: '@url/InsertAjax?Permission=' + jqInputs[0].value,
+                        type: 'post',
+                        dataType: "html",
+                        async: false,
+                        success: function (_result) {
+                            var _objr = JSON.parse(_result);
+                            switch (_objr.Flag) {
+                                case jsCore.FlagError:
+                                    jqInputs[0].select();
+                                    jsCore.showErrorModal("Error", _objr.ErrorDescription);
+                                    break;
+                                case jsCore.FlagNo:
+                                    jqInputs[0].select();
+                                    jsCore.showWarnModal("Validación", _objr.ErrorDescription)
+                                    break;
+                                default:
+                                    oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                                    oTable.fnUpdate('<a href="#" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> Editar</a> <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> Eliminar</a>', nRow, 1, false);
+                                    oTable.fnDraw();
+                                    $(nRow).attr('id', _objr.ReturnValue); // Ingresa Id Permiso en el tr que lo contiene.
+                                    break;
+                            }
+                        }
+                    });
+                }
+
+                function cancelEditRow(oTable, nRow) {
+                    var jqInputs = $('input', nRow);
+                    oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                    oTable.fnUpdate('<a href="#" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> Editar</a> <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> Eliminar</a>', nRow, 1, false);
+                    oTable.fnDraw();
+                }
+            }
+
+        };
+    }();
+
+    InitiateEditableDataTable.init();
+
+ //**************************************
+ // PROGRAMACION DE VENTANA MODAL ATTACH
+ //**************************************
+
+  function LoadFileName(btnFile)
+  {
+      btnFile.click();
+  }
+
+  function modalValCampos(dgDescripcion, NomArchivo, btnFile, AtachTable)
+  {
+      var strError = "N";
+      var strCampos = "";
+      var strExito = "";
+      var strDescripcion = "" + dgDescripcion.value;
+      var strFullPath = NomArchivo.value;
+      var files = btnFile.files;
+
+      //VALIDA CAMPO DESCRIPCION
+     if (strDescripcion.length < 1)
+     {
+         strError = "S";
+        strCampos = strCampos + "Descripcion";
+     }
+
+      //VALIDA CAMPO NOMBRE ARCHIVO
+      if (strFullPath.length < 1)
+      {
+         strError = "S";
+         if (strCampos.length < 1) {
+             strCampos = strCampos + "Nombre archivo";
+         }
+         else {
+                 strCampos = strCampos + " y Nombre archivo";
+         }
+      }
+
+      if (strError == "S")
+      {
+          bootbox.alert("Existen campos obligatorios sin valores, debe revisar: " + strCampos);
+      }
+      else
+      {
+          if (strError == "N")
+          {
+              getBase64(files[0]);
+
+              $("#btnAgregar").attr("disabled", false);
+
+              //strExito = GrabarAdjuntoBD(strDescripcion, strFullPath);
+
+              //if (strExito == "S")
+              //{
+              //    AgregaFilaAttach(AtachTable, strDescripcion);
+              //    dgDescripcion.value = "";
+              //    NomArchivo.value = "";
+              //}
+          }
+      }
+  }
+
+  function GrabarAdjuntoBD(dgDescripcion, NomArchivo, AtachTable, btnAgregar)
+  {
+      var ClaveBusqueda = "OT-" + $("#lblIdOt").text();
+      var strDescripcion = "" + dgDescripcion.value;
+      var strFullPath = NomArchivo.value;
+      var strArchivo = strFullPath.replace(/^.*[\\\/]/, '');
+      var strFileHtml= $("#FileB64").val();
+      var strFileB64 = "";
+
+      $("#IdAdjunto").val('999999999');
+      $("#IdOtAdjunto").val($("#lblIdOt").text());
+      $("#IdBusqueda").val(ClaveBusqueda);
+      $("#FecCreacionAdjunto").val("01/01/1900");
+      $("#DesAdjunto").val(strDescripcion);
+      $("#FileNameAdjunto").val(strArchivo);
+
+      var intPos64 = strFileHtml.indexOf(',');
+
+      strFileB64 = strFileHtml.substring(intPos64 + 1, strFileHtml.length);
+
+      $("#FileB64").val(strFileB64);
+
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateAdjunto", "Ot")',
+            data: $("#FormAdjunto").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0)
+                {
+                    Notify('El Adjunto se grabó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+
+                    var intPos = strRespuesta.indexOf(';');
+                    var strIdAdjunto = strRespuesta.substring(0, intPos);
+                    var strUrl = strRespuesta.substring(intPos + 1, strRespuesta.length);
+
+                    $("#IdAdjunto").val(strIdAdjunto.toString());
+                    ClaveBusqueda = ClaveBusqueda + '-' + strIdAdjunto.toString();
+                    $("#IdBusqueda").val(ClaveBusqueda);
+                    AgregaFilaAttach(AtachTable, strDescripcion, strUrl);
+                    dgDescripcion.value = "";
+                    strFullPath.value = "";
+                    $("#btnAgregar").attr("disabled", true);   
+                    stExito = 'S';
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al grabar el Adjunto, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+
+  }
+
+  function AgregaFilaAttach(AtachTable, strDescripcion, strUrl)
+  {
+      var tds = '<tr id="' + $("#IdAdjunto").val() + '">';
+      tds += '<td width="10%" align="center">' + '<a href="' + strUrl.toString() +'" download class="btn btn-info btn-xs" target="_blank"><i class="fa fa-search"></i></a>' + '</td>';
+      tds += '<td>' + $("#IdBusqueda").val() + '</td>';
+      tds += '<td>' + strDescripcion + '</td>';
+      tds += '<td width="10%" align="center">' + '<a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i></a>' +'</td>';
+      tds += '</tr>';
+
+      $("#AtachTable").append(tds);
+
+  }
+
+  function getBase64(file)
+  {
+      var reader = new FileReader();
+     
+      reader.onload = function (fileLoadedEvent)
+      {
+
+          $("#FileB64").val(fileLoadedEvent.target.result);
+          //  return fileLoadedEvent.target.result;
+
+        };
+
+        reader.readAsDataURL(file);
+
+     // reader.onerror = function (error)
+     // {
+     //   return "ERROR";
+     // };
+  }
+
+</script>
+
+}

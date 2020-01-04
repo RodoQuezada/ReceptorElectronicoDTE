@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8c4d49a8-7bd3-4757-818a-6e0c901a8e39" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://dev.ultraport.cl/wcfAdmArchivos/AdmArchivos.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AdmArchivos.xsd" MetadataType="Schema" ID="d5ecc295-5e53-4dc2-80dd-bfcea2d8f9c5" SourceId="1" SourceUrl="http://dev.ultraport.cl/wcfAdmArchivos/AdmArchivos.svc?xsd=xsd2" />
+    <MetadataFile FileName="AdmArchivos1.xsd" MetadataType="Schema" ID="19b983cc-ea00-4050-a060-f0d5a58f0a50" SourceId="1" SourceUrl="http://dev.ultraport.cl/wcfAdmArchivos/AdmArchivos.svc?xsd=xsd1" />
+    <MetadataFile FileName="AdmArchivos.disco" MetadataType="Disco" ID="86696802-2988-4410-923d-d8031b5fe99e" SourceId="1" SourceUrl="http://dev.ultraport.cl/wcfAdmArchivos/AdmArchivos.svc?disco" />
+    <MetadataFile FileName="AdmArchivos.wsdl" MetadataType="Wsdl" ID="ea454407-3ff9-40ad-af11-dc04784dff2e" SourceId="1" SourceUrl="http://dev.ultraport.cl/wcfAdmArchivos/AdmArchivos.svc?wsdl" />
+    <MetadataFile FileName="AdmArchivos2.xsd" MetadataType="Schema" ID="dce47afd-2b88-49bd-b418-8b241275b1cf" SourceId="1" SourceUrl="http://dev.ultraport.cl/wcfAdmArchivos/AdmArchivos.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

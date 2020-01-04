@@ -1,0 +1,1119 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Editar Nodo del Sitio";
+    ViewBag.Description = "Mapa del sistema";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+<div class="row">
+    <div class="col-xs-6 col-md-6">
+        <div class="widget">
+            <div class="widget-header ">
+                <span class="widget-caption">Editar nodo del sitio</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#" data-toggle="dispose">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <form id="togglingForm" action="Edit_SiteMap_Node" method="post" class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Nombre </label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="titleNode" name="titleNode" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Descripción </label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="descriptionNode" name="descriptionNode" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Ícono </label>
+                        <div class="col-lg-8">
+                            <select id="imageurlNode" class="form-control" name="imageurlNode" style="width:100%;">
+                                <option value=""></option>
+                                <option value="fa fa-bed">bed</option>
+                                <option value="fa fa-buysellads">buysellads</option>
+                                <option value="fa fa-cart-arrow-down">cart-arrow-down</option>
+                                <option value="fa fa-cart-plus">cart-plus</option>
+                                <option value="fa fa-connectdevelop">connectdevelop</option>
+                                <option value="fa fa-dashcube">dashcube</option>
+                                <option value="fa fa-diamond">diamond</option>
+                                <option value="fa fa-facebook-official">facebook-official</option>
+                                <option value="fa fa-forumbee">forumbee</option>
+                                <option value="fa fa-heartbeat">heartbeat</option>
+                                <option value="fa fa-hotel">hotel</option>
+                                <option value="fa fa-leanpub">leanpub</option>
+                                <option value="fa fa-mars">mars</option>
+                                <option value="fa fa-mars-double">mars-double</option>
+                                <option value="fa fa-mars-stroke">mars-stroke</option>
+                                <option value="fa fa-mars-stroke-h">mars-stroke-h</option>
+                                <option value="fa fa-mars-stroke-v">mars-stroke-v</option>
+                                <option value="fa fa-medium">medium</option>
+                                <option value="fa fa-mercury">mercury</option>
+                                <option value="fa fa-motorcycle">motorcycle</option>
+                                <option value="fa fa-neuter">neuter</option>
+                                <option value="fa fa-pinterest-p">pinterest-p</option>
+                                <option value="fa fa-sellsy">sellsy</option>
+                                <option value="fa fa-server">server</option>
+                                <option value="fa fa-ship">ship</option>
+                                <option value="fa fa-shirtsinbulk">shirtsinbulk</option>
+                                <option value="fa fa-simplybuilt">simplybuilt</option>
+                                <option value="fa fa-skyatlas">skyatlas</option>
+                                <option value="fa fa-street-view">street-view</option>
+                                <option value="fa fa-subway">subway</option>
+                                <option value="fa fa-train">train</option>
+                                <option value="fa fa-transgender">transgender</option>
+                                <option value="fa fa-transgender-alt">transgender-alt</option>
+                                <option value="fa fa-user-plus">user-plus</option>
+                                <option value="fa fa-user-secret">user-secret</option>
+                                <option value="fa fa-user-times">user-times</option>
+                                <option value="fa fa-venus">venus</option>
+                                <option value="fa fa-venus-double">venus-double</option>
+                                <option value="fa fa-venus-mars">venus-mars</option>
+                                <option value="fa fa-viacoin">viacoin</option>
+                                <option value="fa fa-whatsapp">whatsapp</option>
+                                <option value="fa fa-adjust">adjust</option>
+                                <option value="fa fa-anchor">anchor</option>
+                                <option value="fa fa-archive">archive</option>
+                                <option value="fa fa-area-chart">area-chart</option>
+                                <option value="fa fa-arrows">arrows</option>
+                                <option value="fa fa-arrows-h">arrows-h</option>
+                                <option value="fa fa-arrows-v">arrows-v</option>
+                                <option value="fa fa-asterisk">asterisk</option>
+                                <option value="fa fa-at">at</option>
+                                <option value="fa fa-automobile">automobile</option>
+                                <option value="fa fa-ban">ban</option>
+                                <option value="fa fa-bank">bank</option>
+                                <option value="fa fa-bar-chart">bar-chart</option>
+                                <option value="fa fa-bar-chart-o">bar-chart-o</option>
+                                <option value="fa fa-barcode">barcode</option>
+                                <option value="fa fa-bars">bars</option>
+                                <option value="fa fa-bed">bed</option>
+                                <option value="fa fa-beer">beer</option>
+                                <option value="fa fa-bell">bell</option>
+                                <option value="fa fa-bell-o">bell-o</option>
+                                <option value="fa fa-bell-slash">bell-slash</option>
+                                <option value="fa fa-bell-slash-o">bell-slash-o</option>
+                                <option value="fa fa-bicycle">bicycle</option>
+                                <option value="fa fa-binoculars">binoculars</option>
+                                <option value="fa fa-birthday-cake">birthday-cake</option>
+                                <option value="fa fa-bolt">bolt</option>
+                                <option value="fa fa-bomb">bomb</option>
+                                <option value="fa fa-book">book</option>
+                                <option value="fa fa-bookmark">bookmark</option>
+                                <option value="fa fa-bookmark-o">bookmark-o</option>
+                                <option value="fa fa-briefcase">briefcase</option>
+                                <option value="fa fa-bug">bug</option>
+                                <option value="fa fa-building">building</option>
+                                <option value="fa fa-building-o">building-o</option>
+                                <option value="fa fa-bullhorn">bullhorn</option>
+                                <option value="fa fa-bullseye">bullseye</option>
+                                <option value="fa fa-bus">bus</option>
+                                <option value="fa fa-cab">cab</option>
+                                <option value="fa fa-calculator">calculator</option>
+                                <option value="fa fa-calendar">calendar</option>
+                                <option value="fa fa-calendar-o">calendar-o</option>
+                                <option value="fa fa-camera">camera</option>
+                                <option value="fa fa-camera-retro">camera-retro</option>
+                                <option value="fa fa-car">car</option>
+                                <option value="fa fa-caret-square-o-down">caret-square-o-down</option>
+                                <option value="fa fa-caret-square-o-left">caret-square-o-left</option>
+                                <option value="fa fa-caret-square-o-right">caret-square-o-right</option>
+                                <option value="fa fa-caret-square-o-up">caret-square-o-up</option>
+                                <option value="fa fa-cart-arrow-down">cart-arrow-down</option>
+                                <option value="fa fa-cart-plus">cart-plus</option>
+                                <option value="fa fa-cc">cc</option>
+                                <option value="fa fa-certificate">certificate</option>
+                                <option value="fa fa-check">check</option>
+                                <option value="fa fa-check-circle">check-circle</option>
+                                <option value="fa fa-check-circle-o">check-circle-o</option>
+                                <option value="fa fa-check-square">check-square</option>
+                                <option value="fa fa-check-square-o">check-square-o</option>
+                                <option value="fa fa-child">child</option>
+                                <option value="fa fa-circle">circle</option>
+                                <option value="fa fa-circle-o">circle-o</option>
+                                <option value="fa fa-circle-o-notch">circle-o-notch</option>
+                                <option value="fa fa-circle-thin">circle-thin</option>
+                                <option value="fa fa-clock-o">clock-o</option>
+                                <option value="fa fa-close">close</option>
+                                <option value="fa fa-cloud">cloud</option>
+                                <option value="fa fa-cloud-download">cloud-download</option>
+                                <option value="fa fa-cloud-upload">cloud-upload</option>
+                                <option value="fa fa-code">code</option>
+                                <option value="fa fa-code-fork">code-fork</option>
+                                <option value="fa fa-coffee">coffee</option>
+                                <option value="fa fa-cog">cog</option>
+                                <option value="fa fa-cogs">cogs</option>
+                                <option value="fa fa-comment">comment</option>
+                                <option value="fa fa-comment-o">comment-o</option>
+                                <option value="fa fa-comments">comments</option>
+                                <option value="fa fa-comments-o">comments-o</option>
+                                <option value="fa fa-compass">compass</option>
+                                <option value="fa fa-copyright">copyright</option>
+                                <option value="fa fa-credit-card">credit-card</option>
+                                <option value="fa fa-crop">crop</option>
+                                <option value="fa fa-crosshairs">crosshairs</option>
+                                <option value="fa fa-cube">cube</option>
+                                <option value="fa fa-cubes">cubes</option>
+                                <option value="fa fa-cutlery">cutlery</option>
+                                <option value="fa fa-dashboard">dashboard</option>
+                                <option value="fa fa-database">database</option>
+                                <option value="fa fa-desktop">desktop</option>
+                                <option value="fa fa-diamond">diamond</option>
+                                <option value="fa fa-dot-circle-o">dot-circle-o</option>
+                                <option value="fa fa-download">download</option>
+                                <option value="fa fa-edit">edit</option>
+                                <option value="fa fa-ellipsis-h">ellipsis-h</option>
+                                <option value="fa fa-ellipsis-v">ellipsis-v</option>
+                                <option value="fa fa-envelope">envelope</option>
+                                <option value="fa fa-envelope-o">envelope-o</option>
+                                <option value="fa fa-envelope-square">envelope-square</option>
+                                <option value="fa fa-eraser">eraser</option>
+                                <option value="fa fa-exchange">exchange</option>
+                                <option value="fa fa-exclamation">exclamation</option>
+                                <option value="fa fa-exclamation-circle">exclamation-circle</option>
+                                <option value="fa fa-exclamation-triangle">exclamation-triangle</option>
+                                <option value="fa fa-external-link">external-link</option>
+                                <option value="fa fa-external-link-square">external-link-square</option>
+                                <option value="fa fa-eye">eye</option>
+                                <option value="fa fa-eye-slash">eye-slash</option>
+                                <option value="fa fa-eyedropper">eyedropper</option>
+                                <option value="fa fa-fax">fax</option>
+                                <option value="fa fa-female">female</option>
+                                <option value="fa fa-fighter-jet">fighter-jet</option>
+                                <option value="fa fa-file-archive-o">file-archive-o</option>
+                                <option value="fa fa-file-audio-o">file-audio-o</option>
+                                <option value="fa fa-file-code-o">file-code-o</option>
+                                <option value="fa fa-file-excel-o">file-excel-o</option>
+                                <option value="fa fa-file-image-o">file-image-o</option>
+                                <option value="fa fa-file-movie-o">file-movie-o</option>
+                                <option value="fa fa-file-pdf-o">file-pdf-o</option>
+                                <option value="fa fa-file-photo-o">file-photo-o</option>
+                                <option value="fa fa-file-picture-o">file-picture-o</option>
+                                <option value="fa fa-file-powerpoint-o">file-powerpoint-o</option>
+                                <option value="fa fa-file-sound-o">file-sound-o</option>
+                                <option value="fa fa-file-video-o">file-video-o</option>
+                                <option value="fa fa-file-word-o">file-word-o</option>
+                                <option value="fa fa-file-zip-o">file-zip-o</option>
+                                <option value="fa fa-film">film</option>
+                                <option value="fa fa-filter">filter</option>
+                                <option value="fa fa-fire">fire</option>
+                                <option value="fa fa-fire-extinguisher">fire-extinguisher</option>
+                                <option value="fa fa-flag">flag</option>
+                                <option value="fa fa-flag-checkered">flag-checkered</option>
+                                <option value="fa fa-flag-o">flag-o</option>
+                                <option value="fa fa-flash">flash</option>
+                                <option value="fa fa-flask">flask</option>
+                                <option value="fa fa-folder">folder</option>
+                                <option value="fa fa-folder-o">folder-o</option>
+                                <option value="fa fa-folder-open">folder-open</option>
+                                <option value="fa fa-folder-open-o">folder-open-o</option>
+                                <option value="fa fa-frown-o">frown-o</option>
+                                <option value="fa fa-futbol-o">futbol-o</option>
+                                <option value="fa fa-gamepad">gamepad</option>
+                                <option value="fa fa-gavel">gavel</option>
+                                <option value="fa fa-gear">gear</option>
+                                <option value="fa fa-gears">gears</option>
+                                <option value="fa fa-genderless">genderless</option>
+                                <option value="fa fa-gift">gift</option>
+                                <option value="fa fa-glass">glass</option>
+                                <option value="fa fa-globe">globe</option>
+                                <option value="fa fa-graduation-cap">graduation-cap</option>
+                                <option value="fa fa-group">group</option>
+                                <option value="fa fa-hdd-o">hdd-o</option>
+                                <option value="fa fa-headphones">headphones</option>
+                                <option value="fa fa-heart">heart</option>
+                                <option value="fa fa-heart-o">heart-o</option>
+                                <option value="fa fa-heartbeat">heartbeat</option>
+                                <option value="fa fa-history">history</option>
+                                <option value="fa fa-home">home</option>
+                                <option value="fa fa-hotel">hotel</option>
+                                <option value="fa fa-image">image</option>
+                                <option value="fa fa-inbox">inbox</option>
+                                <option value="fa fa-info">info</option>
+                                <option value="fa fa-info-circle">info-circle</option>
+                                <option value="fa fa-institution">institution</option>
+                                <option value="fa fa-key">key</option>
+                                <option value="fa fa-keyboard-o">keyboard-o</option>
+                                <option value="fa fa-language">language</option>
+                                <option value="fa fa-laptop">laptop</option>
+                                <option value="fa fa-leaf">leaf</option>
+                                <option value="fa fa-legal">legal</option>
+                                <option value="fa fa-lemon-o">lemon-o</option>
+                                <option value="fa fa-level-down">level-down</option>
+                                <option value="fa fa-level-up">level-up</option>
+                                <option value="fa fa-life-bouy">life-bouy</option>
+                                <option value="fa fa-life-buoy">life-buoy</option>
+                                <option value="fa fa-life-ring">life-ring</option>
+                                <option value="fa fa-life-saver">life-saver</option>
+                                <option value="fa fa-lightbulb-o">lightbulb-o</option>
+                                <option value="fa fa-line-chart">line-chart</option>
+                                <option value="fa fa-location-arrow">location-arrow</option>
+                                <option value="fa fa-lock">lock</option>
+                                <option value="fa fa-magic">magic</option>
+                                <option value="fa fa-magnet">magnet</option>
+                                <option value="fa fa-mail-forward">mail-forward</option>
+                                <option value="fa fa-mail-reply">mail-reply</option>
+                                <option value="fa fa-mail-reply-all">mail-reply-all</option>
+                                <option value="fa fa-male">male</option>
+                                <option value="fa fa-map-marker">map-marker</option>
+                                <option value="fa fa-meh-o">meh-o</option>
+                                <option value="fa fa-microphone">microphone</option>
+                                <option value="fa fa-microphone-slash">microphone-slash</option>
+                                <option value="fa fa-minus">minus</option>
+                                <option value="fa fa-minus-circle">minus-circle</option>
+                                <option value="fa fa-minus-square">minus-square</option>
+                                <option value="fa fa-minus-square-o">minus-square-o</option>
+                                <option value="fa fa-mobile">mobile</option>
+                                <option value="fa fa-mobile-phone">mobile-phone</option>
+                                <option value="fa fa-money">money</option>
+                                <option value="fa fa-moon-o">moon-o</option>
+                                <option value="fa fa-mortar-board">mortar-board</option>
+                                <option value="fa fa-motorcycle">motorcycle</option>
+                                <option value="fa fa-music">music</option>
+                                <option value="fa fa-navicon">navicon</option>
+                                <option value="fa fa-newspaper-o">newspaper-o</option>
+                                <option value="fa fa-paint-brush">paint-brush</option>
+                                <option value="fa fa-paper-plane">paper-plane</option>
+                                <option value="fa fa-paper-plane-o">paper-plane-o</option>
+                                <option value="fa fa-paw">paw</option>
+                                <option value="fa fa-pencil">pencil</option>
+                                <option value="fa fa-pencil-square">pencil-square</option>
+                                <option value="fa fa-pencil-square-o">pencil-square-o</option>
+                                <option value="fa fa-phone">phone</option>
+                                <option value="fa fa-phone-square">phone-square</option>
+                                <option value="fa fa-photo">photo</option>
+                                <option value="fa fa-picture-o">picture-o</option>
+                                <option value="fa fa-pie-chart">pie-chart</option>
+                                <option value="fa fa-plane">plane</option>
+                                <option value="fa fa-plug">plug</option>
+                                <option value="fa fa-plus">plus</option>
+                                <option value="fa fa-plus-circle">plus-circle</option>
+                                <option value="fa fa-plus-square">plus-square</option>
+                                <option value="fa fa-plus-square-o">plus-square-o</option>
+                                <option value="fa fa-power-off">power-off</option>
+                                <option value="fa fa-print">print</option>
+                                <option value="fa fa-puzzle-piece">puzzle-piece</option>
+                                <option value="fa fa-qrcode">qrcode</option>
+                                <option value="fa fa-question">question</option>
+                                <option value="fa fa-question-circle">question-circle</option>
+                                <option value="fa fa-quote-left">quote-left</option>
+                                <option value="fa fa-quote-right">quote-right</option>
+                                <option value="fa fa-random">random</option>
+                                <option value="fa fa-recycle">recycle</option>
+                                <option value="fa fa-refresh">refresh</option>
+                                <option value="fa fa-remove">remove</option>
+                                <option value="fa fa-reorder">reorder</option>
+                                <option value="fa fa-reply">reply</option>
+                                <option value="fa fa-reply-all">reply-all</option>
+                                <option value="fa fa-retweet">retweet</option>
+                                <option value="fa fa-road">road</option>
+                                <option value="fa fa-rocket">rocket</option>
+                                <option value="fa fa-rss">rss</option>
+                                <option value="fa fa-rss-square">rss-square</option>
+                                <option value="fa fa-search">search</option>
+                                <option value="fa fa-search-minus">search-minus</option>
+                                <option value="fa fa-search-plus">search-plus</option>
+                                <option value="fa fa-send">send</option>
+                                <option value="fa fa-send-o">send-o</option>
+                                <option value="fa fa-server">server</option>
+                                <option value="fa fa-share">share</option>
+                                <option value="fa fa-share-alt">share-alt</option>
+                                <option value="fa fa-share-alt-square">share-alt-square</option>
+                                <option value="fa fa-share-square">share-square</option>
+                                <option value="fa fa-share-square-o">share-square-o</option>
+                                <option value="fa fa-shield">shield</option>
+                                <option value="fa fa-ship">ship</option>
+                                <option value="fa fa-shopping-cart">shopping-cart</option>
+                                <option value="fa fa-sign-in">sign-in</option>
+                                <option value="fa fa-sign-out">sign-out</option>
+                                <option value="fa fa-signal">signal</option>
+                                <option value="fa fa-sitemap">sitemap</option>
+                                <option value="fa fa-sliders">sliders</option>
+                                <option value="fa fa-smile-o">smile-o</option>
+                                <option value="fa fa-soccer-ball-o">soccer-ball-o</option>
+                                <option value="fa fa-sort">sort</option>
+                                <option value="fa fa-sort-alpha-asc">sort-alpha-asc</option>
+                                <option value="fa fa-sort-alpha-desc">sort-alpha-desc</option>
+                                <option value="fa fa-sort-amount-asc">sort-amount-asc</option>
+                                <option value="fa fa-sort-amount-desc">sort-amount-desc</option>
+                                <option value="fa fa-sort-asc">sort-asc</option>
+                                <option value="fa fa-sort-desc">sort-desc</option>
+                                <option value="fa fa-sort-down">sort-down</option>
+                                <option value="fa fa-sort-numeric-asc">sort-numeric-asc</option>
+                                <option value="fa fa-sort-numeric-desc">sort-numeric-desc</option>
+                                <option value="fa fa-sort-up">sort-up</option>
+                                <option value="fa fa-space-shuttle">space-shuttle</option>
+                                <option value="fa fa-spinner">spinner</option>
+                                <option value="fa fa-spoon">spoon</option>
+                                <option value="fa fa-square">square</option>
+                                <option value="fa fa-square-o">square-o</option>
+                                <option value="fa fa-star">star</option>
+                                <option value="fa fa-star-half">star-half</option>
+                                <option value="fa fa-star-half-empty">star-half-empty</option>
+                                <option value="fa fa-star-half-full">star-half-full</option>
+                                <option value="fa fa-star-half-o">star-half-o</option>
+                                <option value="fa fa-star-o">star-o</option>
+                                <option value="fa fa-street-view">street-view</option>
+                                <option value="fa fa-suitcase">suitcase</option>
+                                <option value="fa fa-sun-o">sun-o</option>
+                                <option value="fa fa-support">support</option>
+                                <option value="fa fa-tablet">tablet</option>
+                                <option value="fa fa-tachometer">tachometer</option>
+                                <option value="fa fa-tag">tag</option>
+                                <option value="fa fa-tags">tags</option>
+                                <option value="fa fa-tasks">tasks</option>
+                                <option value="fa fa-taxi">taxi</option>
+                                <option value="fa fa-terminal">terminal</option>
+                                <option value="fa fa-thumb-tack">thumb-tack</option>
+                                <option value="fa fa-thumbs-down">thumbs-down</option>
+                                <option value="fa fa-thumbs-o-down">thumbs-o-down</option>
+                                <option value="fa fa-thumbs-o-up">thumbs-o-up</option>
+                                <option value="fa fa-thumbs-up">thumbs-up</option>
+                                <option value="fa fa-ticket">ticket</option>
+                                <option value="fa fa-times">times</option>
+                                <option value="fa fa-times-circle">times-circle</option>
+                                <option value="fa fa-times-circle-o">times-circle-o</option>
+                                <option value="fa fa-tint">tint</option>
+                                <option value="fa fa-toggle-down">toggle-down</option>
+                                <option value="fa fa-toggle-left">toggle-left</option>
+                                <option value="fa fa-toggle-off">toggle-off</option>
+                                <option value="fa fa-toggle-on">toggle-on</option>
+                                <option value="fa fa-toggle-right">toggle-right</option>
+                                <option value="fa fa-toggle-up">toggle-up</option>
+                                <option value="fa fa-trash">trash</option>
+                                <option value="fa fa-trash-o">trash-o</option>
+                                <option value="fa fa-tree">tree</option>
+                                <option value="fa fa-trophy">trophy</option>
+                                <option value="fa fa-truck">truck</option>
+                                <option value="fa fa-tty">tty</option>
+                                <option value="fa fa-umbrella">umbrella</option>
+                                <option value="fa fa-university">university</option>
+                                <option value="fa fa-unlock">unlock</option>
+                                <option value="fa fa-unlock-alt">unlock-alt</option>
+                                <option value="fa fa-unsorted">unsorted</option>
+                                <option value="fa fa-upload">upload</option>
+                                <option value="fa fa-user">user</option>
+                                <option value="fa fa-user-plus">user-plus</option>
+                                <option value="fa fa-user-secret">user-secret</option>
+                                <option value="fa fa-user-times">user-times</option>
+                                <option value="fa fa-users">users</option>
+                                <option value="fa fa-video-camera">video-camera</option>
+                                <option value="fa fa-volume-down">volume-down</option>
+                                <option value="fa fa-volume-off">volume-off</option>
+                                <option value="fa fa-volume-up">volume-up</option>
+                                <option value="fa fa-warning">warning</option>
+                                <option value="fa fa-wheelchair">wheelchair</option>
+                                <option value="fa fa-wifi">wifi</option>
+                                <option value="fa fa-wrench">wrench</option>
+                                <option value="fa fa-ambulance">ambulance</option>
+                                <option value="fa fa-automobile">automobile</option>
+                                <option value="fa fa-bicycle">bicycle</option>
+                                <option value="fa fa-bus">bus</option>
+                                <option value="fa fa-cab">cab</option>
+                                <option value="fa fa-car">car</option>
+                                <option value="fa fa-fighter-jet">fighter-jet</option>
+                                <option value="fa fa-motorcycle">motorcycle</option>
+                                <option value="fa fa-plane">plane</option>
+                                <option value="fa fa-rocket">rocket</option>
+                                <option value="fa fa-ship">ship</option>
+                                <option value="fa fa-space-shuttle">space-shuttle</option>
+                                <option value="fa fa-subway">subway</option>
+                                <option value="fa fa-taxi">taxi</option>
+                                <option value="fa fa-train">train</option>
+                                <option value="fa fa-truck">truck</option>
+                                <option value="fa fa-wheelchair">wheelchair</option>
+                                <option value="fa fa-circle-thin">circle-thin</option>
+                                <option value="fa fa-genderless">genderless</option>
+                                <option value="fa fa-mars">mars</option>
+                                <option value="fa fa-mars-double">mars-double</option>
+                                <option value="fa fa-mars-stroke">mars-stroke</option>
+                                <option value="fa fa-mars-stroke-h">mars-stroke-h</option>
+                                <option value="fa fa-mars-stroke-v">mars-stroke-v</option>
+                                <option value="fa fa-mercury">mercury</option>
+                                <option value="fa fa-neuter">neuter</option>
+                                <option value="fa fa-transgender">transgender</option>
+                                <option value="fa fa-transgender-alt">transgender-alt</option>
+                                <option value="fa fa-venus">venus</option>
+                                <option value="fa fa-venus-double">venus-double</option>
+                                <option value="fa fa-venus-mars">venus-mars</option>
+                                <option value="fa fa-file">file</option>
+                                <option value="fa fa-file-archive-o">file-archive-o</option>
+                                <option value="fa fa-file-audio-o">file-audio-o</option>
+                                <option value="fa fa-file-code-o">file-code-o</option>
+                                <option value="fa fa-file-excel-o">file-excel-o</option>
+                                <option value="fa fa-file-image-o">file-image-o</option>
+                                <option value="fa fa-file-movie-o">file-movie-o</option>
+                                <option value="fa fa-file-o">file-o</option>
+                                <option value="fa fa-file-pdf-o">file-pdf-o</option>
+                                <option value="fa fa-file-photo-o">file-photo-o</option>
+                                <option value="fa fa-file-picture-o">file-picture-o</option>
+                                <option value="fa fa-file-powerpoint-o">file-powerpoint-o</option>
+                                <option value="fa fa-file-sound-o">file-sound-o</option>
+                                <option value="fa fa-file-text">file-text</option>
+                                <option value="fa fa-file-text-o">file-text-o</option>
+                                <option value="fa fa-file-video-o">file-video-o</option>
+                                <option value="fa fa-file-word-o">file-word-o</option>
+                                <option value="fa fa-file-zip-o">file-zip-o</option>
+                                <option value="fa fa-circle-o-notch">circle-o-notch</option>
+                                <option value="fa fa-cog">cog</option>
+                                <option value="fa fa-gear">gear</option>
+                                <option value="fa fa-refresh">refresh</option>
+                                <option value="fa fa-spinner">spinner</option>
+                                <option value="fa fa-check-square">check-square</option>
+                                <option value="fa fa-check-square-o">check-square-o</option>
+                                <option value="fa fa-circle">circle</option>
+                                <option value="fa fa-circle-o">circle-o</option>
+                                <option value="fa fa-dot-circle-o">dot-circle-o</option>
+                                <option value="fa fa-minus-square">minus-square</option>
+                                <option value="fa fa-minus-square-o">minus-square-o</option>
+                                <option value="fa fa-plus-square">plus-square</option>
+                                <option value="fa fa-plus-square-o">plus-square-o</option>
+                                <option value="fa fa-square">square</option>
+                                <option value="fa fa-square-o">square-o</option>
+                                <option value="fa fa-cc-amex">cc-amex</option>
+                                <option value="fa fa-cc-discover">cc-discover</option>
+                                <option value="fa fa-cc-mastercard">cc-mastercard</option>
+                                <option value="fa fa-cc-paypal">cc-paypal</option>
+                                <option value="fa fa-cc-stripe">cc-stripe</option>
+                                <option value="fa fa-cc-visa">cc-visa</option>
+                                <option value="fa fa-credit-card">credit-card</option>
+                                <option value="fa fa-google-wallet">google-wallet</option>
+                                <option value="fa fa-paypal">paypal</option>
+                                <option value="fa fa-area-chart">area-chart</option>
+                                <option value="fa fa-bar-chart">bar-chart</option>
+                                <option value="fa fa-bar-chart-o">bar-chart-o</option>
+                                <option value="fa fa-line-chart">line-chart</option>
+                                <option value="fa fa-pie-chart">pie-chart</option>
+                                <option value="fa fa-bitcoin">bitcoin</option>
+                                <option value="fa fa-btc">btc</option>
+                                <option value="fa fa-cny">cny</option>
+                                <option value="fa fa-dollar">dollar</option>
+                                <option value="fa fa-eur">eur</option>
+                                <option value="fa fa-euro">euro</option>
+                                <option value="fa fa-gbp">gbp</option>
+                                <option value="fa fa-ils">ils</option>
+                                <option value="fa fa-inr">inr</option>
+                                <option value="fa fa-jpy">jpy</option>
+                                <option value="fa fa-krw">krw</option>
+                                <option value="fa fa-money">money</option>
+                                <option value="fa fa-rmb">rmb</option>
+                                <option value="fa fa-rouble">rouble</option>
+                                <option value="fa fa-rub">rub</option>
+                                <option value="fa fa-ruble">ruble</option>
+                                <option value="fa fa-rupee">rupee</option>
+                                <option value="fa fa-shekel">shekel</option>
+                                <option value="fa fa-sheqel">sheqel</option>
+                                <option value="fa fa-try">try</option>
+                                <option value="fa fa-turkish-lira">turkish-lira</option>
+                                <option value="fa fa-usd">usd</option>
+                                <option value="fa fa-won">won</option>
+                                <option value="fa fa-yen">yen</option>
+                                <option value="fa fa-align-center">align-center</option>
+                                <option value="fa fa-align-justify">align-justify</option>
+                                <option value="fa fa-align-left">align-left</option>
+                                <option value="fa fa-align-right">align-right</option>
+                                <option value="fa fa-bold">bold</option>
+                                <option value="fa fa-chain">chain</option>
+                                <option value="fa fa-chain-broken">chain-broken</option>
+                                <option value="fa fa-clipboard">clipboard</option>
+                                <option value="fa fa-columns">columns</option>
+                                <option value="fa fa-copy">copy</option>
+                                <option value="fa fa-cut">cut</option>
+                                <option value="fa fa-dedent">dedent</option>
+                                <option value="fa fa-eraser">eraser</option>
+                                <option value="fa fa-file">file</option>
+                                <option value="fa fa-file-o">file-o</option>
+                                <option value="fa fa-file-text">file-text</option>
+                                <option value="fa fa-file-text-o">file-text-o</option>
+                                <option value="fa fa-files-o">files-o</option>
+                                <option value="fa fa-floppy-o">floppy-o</option>
+                                <option value="fa fa-font">font</option>
+                                <option value="fa fa-header">header</option>
+                                <option value="fa fa-indent">indent</option>
+                                <option value="fa fa-italic">italic</option>
+                                <option value="fa fa-link">link</option>
+                                <option value="fa fa-list">list</option>
+                                <option value="fa fa-list-alt">list-alt</option>
+                                <option value="fa fa-list-ol">list-ol</option>
+                                <option value="fa fa-list-ul">list-ul</option>
+                                <option value="fa fa-outdent">outdent</option>
+                                <option value="fa fa-paperclip">paperclip</option>
+                                <option value="fa fa-paragraph">paragraph</option>
+                                <option value="fa fa-paste">paste</option>
+                                <option value="fa fa-repeat">repeat</option>
+                                <option value="fa fa-rotate-left">rotate-left</option>
+                                <option value="fa fa-rotate-right">rotate-right</option>
+                                <option value="fa fa-save">save</option>
+                                <option value="fa fa-scissors">scissors</option>
+                                <option value="fa fa-strikethrough">strikethrough</option>
+                                <option value="fa fa-subscript">subscript</option>
+                                <option value="fa fa-superscript">superscript</option>
+                                <option value="fa fa-table">table</option>
+                                <option value="fa fa-text-height">text-height</option>
+                                <option value="fa fa-text-width">text-width</option>
+                                <option value="fa fa-th">th</option>
+                                <option value="fa fa-th-large">th-large</option>
+                                <option value="fa fa-th-list">th-list</option>
+                                <option value="fa fa-underline">underline</option>
+                                <option value="fa fa-undo">undo</option>
+                                <option value="fa fa-unlink">unlink</option>
+                                <option value="fa fa-angle-double-down">angle-double-down</option>
+                                <option value="fa fa-angle-double-left">angle-double-left</option>
+                                <option value="fa fa-angle-double-right">angle-double-right</option>
+                                <option value="fa fa-angle-double-up">angle-double-up</option>
+                                <option value="fa fa-angle-down">angle-down</option>
+                                <option value="fa fa-angle-left">angle-left</option>
+                                <option value="fa fa-angle-right">angle-right</option>
+                                <option value="fa fa-angle-up">angle-up</option>
+                                <option value="fa fa-arrow-circle-down">arrow-circle-down</option>
+                                <option value="fa fa-arrow-circle-left">arrow-circle-left</option>
+                                <option value="fa fa-arrow-circle-o-down">arrow-circle-o-down</option>
+                                <option value="fa fa-arrow-circle-o-left">arrow-circle-o-left</option>
+                                <option value="fa fa-arrow-circle-o-right">arrow-circle-o-right</option>
+                                <option value="fa fa-arrow-circle-o-up">arrow-circle-o-up</option>
+                                <option value="fa fa-arrow-circle-right">arrow-circle-right</option>
+                                <option value="fa fa-arrow-circle-up">arrow-circle-up</option>
+                                <option value="fa fa-arrow-down">arrow-down</option>
+                                <option value="fa fa-arrow-left">arrow-left</option>
+                                <option value="fa fa-arrow-right">arrow-right</option>
+                                <option value="fa fa-arrow-up">arrow-up</option>
+                                <option value="fa fa-arrows">arrows</option>
+                                <option value="fa fa-arrows-alt">arrows-alt</option>
+                                <option value="fa fa-arrows-h">arrows-h</option>
+                                <option value="fa fa-arrows-v">arrows-v</option>
+                                <option value="fa fa-caret-down">caret-down</option>
+                                <option value="fa fa-caret-left">caret-left</option>
+                                <option value="fa fa-caret-right">caret-right</option>
+                                <option value="fa fa-caret-square-o-down">caret-square-o-down</option>
+                                <option value="fa fa-caret-square-o-left">caret-square-o-left</option>
+                                <option value="fa fa-caret-square-o-right">caret-square-o-right</option>
+                                <option value="fa fa-caret-square-o-up">caret-square-o-up</option>
+                                <option value="fa fa-caret-up">caret-up</option>
+                                <option value="fa fa-chevron-circle-down">chevron-circle-down</option>
+                                <option value="fa fa-chevron-circle-left">chevron-circle-left</option>
+                                <option value="fa fa-chevron-circle-right">chevron-circle-right</option>
+                                <option value="fa fa-chevron-circle-up">chevron-circle-up</option>
+                                <option value="fa fa-chevron-down">chevron-down</option>
+                                <option value="fa fa-chevron-left">chevron-left</option>
+                                <option value="fa fa-chevron-right">chevron-right</option>
+                                <option value="fa fa-chevron-up">chevron-up</option>
+                                <option value="fa fa-hand-o-down">hand-o-down</option>
+                                <option value="fa fa-hand-o-left">hand-o-left</option>
+                                <option value="fa fa-hand-o-right">hand-o-right</option>
+                                <option value="fa fa-hand-o-up">hand-o-up</option>
+                                <option value="fa fa-long-arrow-down">long-arrow-down</option>
+                                <option value="fa fa-long-arrow-left">long-arrow-left</option>
+                                <option value="fa fa-long-arrow-right">long-arrow-right</option>
+                                <option value="fa fa-long-arrow-up">long-arrow-up</option>
+                                <option value="fa fa-toggle-down">toggle-down</option>
+                                <option value="fa fa-toggle-left">toggle-left</option>
+                                <option value="fa fa-toggle-right">toggle-right</option>
+                                <option value="fa fa-toggle-up">toggle-up</option>
+                                <option value="fa fa-arrows-alt">arrows-alt</option>
+                                <option value="fa fa-backward">backward</option>
+                                <option value="fa fa-compress">compress</option>
+                                <option value="fa fa-eject">eject</option>
+                                <option value="fa fa-expand">expand</option>
+                                <option value="fa fa-fast-backward">fast-backward</option>
+                                <option value="fa fa-fast-forward">fast-forward</option>
+                                <option value="fa fa-forward">forward</option>
+                                <option value="fa fa-pause">pause</option>
+                                <option value="fa fa-play">play</option>
+                                <option value="fa fa-play-circle">play-circle</option>
+                                <option value="fa fa-play-circle-o">play-circle-o</option>
+                                <option value="fa fa-step-backward">step-backward</option>
+                                <option value="fa fa-step-forward">step-forward</option>
+                                <option value="fa fa-stop">stop</option>
+                                <option value="fa fa-youtube-play">youtube-play</option>
+                                <option value="fa fa-adn">adn</option>
+                                <option value="fa fa-android">android</option>
+                                <option value="fa fa-angellist">angellist</option>
+                                <option value="fa fa-apple">apple</option>
+                                <option value="fa fa-behance">behance</option>
+                                <option value="fa fa-behance-square">behance-square</option>
+                                <option value="fa fa-bitbucket">bitbucket</option>
+                                <option value="fa fa-bitbucket-square">bitbucket-square</option>
+                                <option value="fa fa-bitcoin">bitcoin</option>
+                                <option value="fa fa-btc">btc</option>
+                                <option value="fa fa-buysellads">buysellads</option>
+                                <option value="fa fa-cc-amex">cc-amex</option>
+                                <option value="fa fa-cc-discover">cc-discover</option>
+                                <option value="fa fa-cc-mastercard">cc-mastercard</option>
+                                <option value="fa fa-cc-paypal">cc-paypal</option>
+                                <option value="fa fa-cc-stripe">cc-stripe</option>
+                                <option value="fa fa-cc-visa">cc-visa</option>
+                                <option value="fa fa-codepen">codepen</option>
+                                <option value="fa fa-connectdevelop">connectdevelop</option>
+                                <option value="fa fa-css3">css3</option>
+                                <option value="fa fa-dashcube">dashcube</option>
+                                <option value="fa fa-delicious">delicious</option>
+                                <option value="fa fa-deviantart">deviantart</option>
+                                <option value="fa fa-digg">digg</option>
+                                <option value="fa fa-dribbble">dribbble</option>
+                                <option value="fa fa-dropbox">dropbox</option>
+                                <option value="fa fa-drupal">drupal</option>
+                                <option value="fa fa-empire">empire</option>
+                                <option value="fa fa-facebook">facebook</option>
+                                <option value="fa fa-facebook-f">facebook-f</option>
+                                <option value="fa fa-facebook-official">facebook-official</option>
+                                <option value="fa fa-facebook-square">facebook-square</option>
+                                <option value="fa fa-flickr">flickr</option>
+                                <option value="fa fa-forumbee">forumbee</option>
+                                <option value="fa fa-foursquare">foursquare</option>
+                                <option value="fa fa-ge">ge</option>
+                                <option value="fa fa-git">git</option>
+                                <option value="fa fa-git-square">git-square</option>
+                                <option value="fa fa-github">github</option>
+                                <option value="fa fa-github-alt">github-alt</option>
+                                <option value="fa fa-github-square">github-square</option>
+                                <option value="fa fa-gittip">gittip</option>
+                                <option value="fa fa-google">google</option>
+                                <option value="fa fa-google-plus">google-plus</option>
+                                <option value="fa fa-google-plus-square">google-plus-square</option>
+                                <option value="fa fa-google-wallet">google-wallet</option>
+                                <option value="fa fa-gratipay">gratipay</option>
+                                <option value="fa fa-hacker-news">hacker-news</option>
+                                <option value="fa fa-html5">html5</option>
+                                <option value="fa fa-instagram">instagram</option>
+                                <option value="fa fa-ioxhost">ioxhost</option>
+                                <option value="fa fa-joomla">joomla</option>
+                                <option value="fa fa-jsfiddle">jsfiddle</option>
+                                <option value="fa fa-lastfm">lastfm</option>
+                                <option value="fa fa-lastfm-square">lastfm-square</option>
+                                <option value="fa fa-leanpub">leanpub</option>
+                                <option value="fa fa-linkedin">linkedin</option>
+                                <option value="fa fa-linkedin-square">linkedin-square</option>
+                                <option value="fa fa-linux">linux</option>
+                                <option value="fa fa-maxcdn">maxcdn</option>
+                                <option value="fa fa-meanpath">meanpath</option>
+                                <option value="fa fa-medium">medium</option>
+                                <option value="fa fa-openid">openid</option>
+                                <option value="fa fa-pagelines">pagelines</option>
+                                <option value="fa fa-paypal">paypal</option>
+                                <option value="fa fa-pied-piper">pied-piper</option>
+                                <option value="fa fa-pied-piper-alt">pied-piper-alt</option>
+                                <option value="fa fa-pinterest">pinterest</option>
+                                <option value="fa fa-pinterest-p">pinterest-p</option>
+                                <option value="fa fa-pinterest-square">pinterest-square</option>
+                                <option value="fa fa-qq">qq</option>
+                                <option value="fa fa-ra">ra</option>
+                                <option value="fa fa-rebel">rebel</option>
+                                <option value="fa fa-reddit">reddit</option>
+                                <option value="fa fa-reddit-square">reddit-square</option>
+                                <option value="fa fa-renren">renren</option>
+                                <option value="fa fa-sellsy">sellsy</option>
+                                <option value="fa fa-share-alt">share-alt</option>
+                                <option value="fa fa-share-alt-square">share-alt-square</option>
+                                <option value="fa fa-shirtsinbulk">shirtsinbulk</option>
+                                <option value="fa fa-simplybuilt">simplybuilt</option>
+                                <option value="fa fa-skyatlas">skyatlas</option>
+                                <option value="fa fa-skype">skype</option>
+                                <option value="fa fa-slack">slack</option>
+                                <option value="fa fa-slideshare">slideshare</option>
+                                <option value="fa fa-soundcloud">soundcloud</option>
+                                <option value="fa fa-spotify">spotify</option>
+                                <option value="fa fa-stack-exchange">stack-exchange</option>
+                                <option value="fa fa-stack-overflow">stack-overflow</option>
+                                <option value="fa fa-steam">steam</option>
+                                <option value="fa fa-steam-square">steam-square</option>
+                                <option value="fa fa-stumbleupon">stumbleupon</option>
+                                <option value="fa fa-stumbleupon-circle">stumbleupon-circle</option>
+                                <option value="fa fa-tencent-weibo">tencent-weibo</option>
+                                <option value="fa fa-trello">trello</option>
+                                <option value="fa fa-tumblr">tumblr</option>
+                                <option value="fa fa-tumblr-square">tumblr-square</option>
+                                <option value="fa fa-twitch">twitch</option>
+                                <option value="fa fa-twitter">twitter</option>
+                                <option value="fa fa-twitter-square">twitter-square</option>
+                                <option value="fa fa-viacoin">viacoin</option>
+                                <option value="fa fa-vimeo-square">vimeo-square</option>
+                                <option value="fa fa-vine">vine</option>
+                                <option value="fa fa-vk">vk</option>
+                                <option value="fa fa-wechat">wechat</option>
+                                <option value="fa fa-weibo">weibo</option>
+                                <option value="fa fa-weixin">weixin</option>
+                                <option value="fa fa-whatsapp">whatsapp</option>
+                                <option value="fa fa-windows">windows</option>
+                                <option value="fa fa-wordpress">wordpress</option>
+                                <option value="fa fa-xing">xing</option>
+                                <option value="fa fa-xing-square">xing-square</option>
+                                <option value="fa fa-yahoo">yahoo</option>
+                                <option value="fa fa-yelp">yelp</option>
+                                <option value="fa fa-youtube">youtube</option>
+                                <option value="fa fa-youtube-play">youtube-play</option>
+                                <option value="fa fa-youtube-square">youtube-square</option>
+                                <option value="fa fa-ambulance">ambulance</option>
+                                <option value="fa fa-h-square">h-square</option>
+                                <option value="fa fa-heart">heart</option>
+                                <option value="fa fa-heart-o">heart-o</option>
+                                <option value="fa fa-heartbeat">heartbeat</option>
+                                <option value="fa fa-hospital-o">hospital-o</option>
+                                <option value="fa fa-medkit">medkit</option>
+                                <option value="fa fa-plus-square">plus-square</option>
+                                <option value="fa fa-stethoscope">stethoscope</option>
+                                <option value="fa fa-user-md">user-md</option>
+                                <option value="fa fa-wheelchair">wheelchair</option>
+                                <option value="glyphicon glyphicon-asterisk">th-large</option>
+                                <option value="glyphicon glyphicon-plus">th</option>
+                                <option value="glyphicon glyphicon-euro">th-list</option>
+                                <option value="glyphicon glyphicon-minus">ok</option>
+                                <option value="glyphicon glyphicon-cloud">remove</option>
+                                <option value="glyphicon glyphicon-envelope">zoom-in</option>
+                                <option value="glyphicon glyphicon-pencil">zoom-out</option>
+                                <option value="glyphicon glyphicon-glass">off</option>
+                                <option value="glyphicon glyphicon-music">signal</option>
+                                <option value="glyphicon glyphicon-search">cog</option>
+                                <option value="glyphicon glyphicon-heart">trash</option>
+                                <option value="glyphicon glyphicon-star">home</option>
+                                <option value="glyphicon glyphicon-star-empty">file</option>
+                                <option value="glyphicon glyphicon-user">time</option>
+                                <option value="glyphicon glyphicon-film">road</option>
+                                <option value="glyphicon glyphicon-th-large">download-alt</option>
+                                <option value="glyphicon glyphicon-th">download</option>
+                                <option value="glyphicon glyphicon-th-list">upload</option>
+                                <option value="glyphicon glyphicon-ok">inbox</option>
+                                <option value="glyphicon glyphicon-remove">play-circle</option>
+                                <option value="glyphicon glyphicon-zoom-in">repeat</option>
+                                <option value="glyphicon glyphicon-zoom-out">refresh</option>
+                                <option value="glyphicon glyphicon-off">list-alt</option>
+                                <option value="glyphicon glyphicon-signal">lock</option>
+                                <option value="glyphicon glyphicon-cog">flag</option>
+                                <option value="glyphicon glyphicon-trash">headphones</option>
+                                <option value="glyphicon glyphicon-home">volume-off</option>
+                                <option value="glyphicon glyphicon-file">volume-down</option>
+                                <option value="glyphicon glyphicon-time">volume-up</option>
+                                <option value="glyphicon glyphicon-road">qrcode</option>
+                                <option value="glyphicon glyphicon-download-alt">barcode</option>
+                                <option value="glyphicon glyphicon-download">tag</option>
+                                <option value="glyphicon glyphicon-upload">tags</option>
+                                <option value="glyphicon glyphicon-inbox">book</option>
+                                <option value="glyphicon glyphicon-play-circle">bookmark</option>
+                                <option value="glyphicon glyphicon-repeat">print</option>
+                                <option value="glyphicon glyphicon-refresh">camera</option>
+                                <option value="glyphicon glyphicon-list-alt">font</option>
+                                <option value="glyphicon glyphicon-lock">bold</option>
+                                <option value="glyphicon glyphicon-flag">italic</option>
+                                <option value="glyphicon glyphicon-headphones">text-height</option>
+                                <option value="glyphicon glyphicon-volume-off">text-width</option>
+                                <option value="glyphicon glyphicon-volume-down">align-left</option>
+                                <option value="glyphicon glyphicon-volume-up">align-center</option>
+                                <option value="glyphicon glyphicon-qrcode">align-right</option>
+                                <option value="glyphicon glyphicon-barcode">align-justify</option>
+                                <option value="glyphicon glyphicon-tag">list</option>
+                                <option value="glyphicon glyphicon-tags">indent-left</option>
+                                <option value="glyphicon glyphicon-book">indent-right</option>
+                                <option value="glyphicon glyphicon-bookmark">facetime-video</option>
+                                <option value="glyphicon glyphicon-print">picture</option>
+                                <option value="glyphicon glyphicon-camera">map-marker</option>
+                                <option value="glyphicon glyphicon-font">adjust</option>
+                                <option value="glyphicon glyphicon-bold">tint</option>
+                                <option value="glyphicon glyphicon-italic">edit</option>
+                                <option value="glyphicon glyphicon-text-height">share</option>
+                                <option value="glyphicon glyphicon-text-width">check</option>
+                                <option value="glyphicon glyphicon-align-left">move</option>
+                                <option value="glyphicon glyphicon-align-center">step-backward</option>
+                                <option value="glyphicon glyphicon-align-right">fast-backward</option>
+                                <option value="glyphicon glyphicon-align-justify">backward</option>
+                                <option value="glyphicon glyphicon-list">play</option>
+                                <option value="glyphicon glyphicon-indent-left">pause</option>
+                                <option value="glyphicon glyphicon-indent-right">stop</option>
+                                <option value="glyphicon glyphicon-facetime-video">forward</option>
+                                <option value="glyphicon glyphicon-picture">fast-forward</option>
+                                <option value="glyphicon glyphicon-map-marker">step-forward</option>
+                                <option value="glyphicon glyphicon-adjust">eject</option>
+                                <option value="glyphicon glyphicon-tint">chevron-left</option>
+                                <option value="glyphicon glyphicon-edit">chevron-right</option>
+                                <option value="glyphicon glyphicon-share">plus-sign</option>
+                                <option value="glyphicon glyphicon-check">minus-sign</option>
+                                <option value="glyphicon glyphicon-move">remove-sign</option>
+                                <option value="glyphicon glyphicon-step-backward">ok-sign</option>
+                                <option value="glyphicon glyphicon-fast-backward">question-sign</option>
+                                <option value="glyphicon glyphicon-backward">info-sign</option>
+                                <option value="glyphicon glyphicon-play">screenshot</option>
+                                <option value="glyphicon glyphicon-pause">remove-circle</option>
+                                <option value="glyphicon glyphicon-stop">ok-circle</option>
+                                <option value="glyphicon glyphicon-forward">ban-circle</option>
+                                <option value="glyphicon glyphicon-fast-forward">arrow-left</option>
+                                <option value="glyphicon glyphicon-step-forward">arrow-right</option>
+                                <option value="glyphicon glyphicon-eject">arrow-up</option>
+                                <option value="glyphicon glyphicon-chevron-left">arrow-down</option>
+                                <option value="glyphicon glyphicon-chevron-right">share-alt</option>
+                                <option value="glyphicon glyphicon-plus-sign">resize-full</option>
+                                <option value="glyphicon glyphicon-minus-sign">resize-small</option>
+                                <option value="glyphicon glyphicon-remove-sign">exclamation-sign</option>
+                                <option value="glyphicon glyphicon-ok-sign">gift</option>
+                                <option value="glyphicon glyphicon-question-sign">leaf</option>
+                                <option value="glyphicon glyphicon-info-sign">fire</option>
+                                <option value="glyphicon glyphicon-screenshot">eye-open</option>
+                                <option value="glyphicon glyphicon-remove-circle">eye-close</option>
+                                <option value="glyphicon glyphicon-ok-circle">warning-sign</option>
+                                <option value="glyphicon glyphicon-ban-circle">plane</option>
+                                <option value="glyphicon glyphicon-arrow-left">calendar</option>
+                                <option value="glyphicon glyphicon-arrow-right">random</option>
+                                <option value="glyphicon glyphicon-arrow-up">comment</option>
+                                <option value="glyphicon glyphicon-arrow-down">magnet</option>
+                                <option value="glyphicon glyphicon-share-alt">chevron-up</option>
+                                <option value="glyphicon glyphicon-resize-full">chevron-down</option>
+                                <option value="glyphicon glyphicon-resize-small">retweet</option>
+                                <option value="glyphicon glyphicon-exclamation-sign">shopping-cart</option>
+                                <option value="glyphicon glyphicon-gift">folder-close</option>
+                                <option value="glyphicon glyphicon-leaf">folder-open</option>
+                                <option value="glyphicon glyphicon-fire">resize-vertical</option>
+                                <option value="glyphicon glyphicon-eye-open">resize-horizontal</option>
+                                <option value="glyphicon glyphicon-eye-close">hdd</option>
+                                <option value="glyphicon glyphicon-warning-sign">bullhorn</option>
+                                <option value="glyphicon glyphicon-plane">bell</option>
+                                <option value="glyphicon glyphicon-calendar">certificate</option>
+                                <option value="glyphicon glyphicon-random">thumbs-up</option>
+                                <option value="glyphicon glyphicon-comment">thumbs-down</option>
+                                <option value="glyphicon glyphicon-magnet">hand-right</option>
+                                <option value="glyphicon glyphicon-chevron-up">hand-left</option>
+                                <option value="glyphicon glyphicon-chevron-down">hand-up</option>
+                                <option value="glyphicon glyphicon-retweet">hand-down</option>
+                                <option value="glyphicon glyphicon-shopping-cart">circle-arrow-right</option>
+                                <option value="glyphicon glyphicon-folder-close">circle-arrow-left</option>
+                                <option value="glyphicon glyphicon-folder-open">circle-arrow-up</option>
+                                <option value="glyphicon glyphicon-resize-vertical">circle-arrow-down</option>
+                                <option value="glyphicon glyphicon-resize-horizontal">globe</option>
+                                <option value="glyphicon glyphicon-hdd">wrench</option>
+                                <option value="glyphicon glyphicon-bullhorn">tasks</option>
+                                <option value="glyphicon glyphicon-bell">filter</option>
+                                <option value="glyphicon glyphicon-certificate">briefcase</option>
+                                <option value="glyphicon glyphicon-thumbs-up">fullscreen</option>
+                                <option value="glyphicon glyphicon-thumbs-down">dashboard</option>
+                                <option value="glyphicon glyphicon-hand-right">paperclip</option>
+                                <option value="glyphicon glyphicon-hand-left">heart-empty</option>
+                                <option value="glyphicon glyphicon-hand-up">link</option>
+                                <option value="glyphicon glyphicon-hand-down">phone</option>
+                                <option value="glyphicon glyphicon-circle-arrow-right">pushpin</option>
+                                <option value="glyphicon glyphicon-circle-arrow-left">usd</option>
+                                <option value="glyphicon glyphicon-circle-arrow-up">gbp</option>
+                                <option value="glyphicon glyphicon-circle-arrow-down">sort</option>
+                                <option value="glyphicon glyphicon-globe">sort-by-alphabet</option>
+                                <option value="glyphicon glyphicon-wrench">sort-by-alphabet-alt</option>
+                                <option value="glyphicon glyphicon-tasks">sort-by-order</option>
+                                <option value="glyphicon glyphicon-filter">sort-by-order-alt</option>
+                                <option value="glyphicon glyphicon-briefcase">sort-by-attributes</option>
+                                <option value="glyphicon glyphicon-fullscreen">sort-by-attributes-alt</option>
+                                <option value="glyphicon glyphicon-dashboard">unchecked</option>
+                                <option value="glyphicon glyphicon-paperclip">expand</option>
+                                <option value="glyphicon glyphicon-heart-empty">collapse-down</option>
+                                <option value="glyphicon glyphicon-link">collapse-up</option>
+                                <option value="glyphicon glyphicon-phone">log-in</option>
+                                <option value="glyphicon glyphicon-pushpin">flash</option>
+                                <option value="glyphicon glyphicon-usd">log-out</option>
+                                <option value="glyphicon glyphicon-gbp">new-window</option>
+                                <option value="glyphicon glyphicon-sort">record</option>
+                                <option value="glyphicon glyphicon-sort-by-alphabet">save</option>
+                                <option value="glyphicon glyphicon-sort-by-alphabet-alt">open</option>
+                                <option value="glyphicon glyphicon-sort-by-order">saved</option>
+                                <option value="glyphicon glyphicon-sort-by-order-alt">import</option>
+                                <option value="glyphicon glyphicon-sort-by-attributes">export</option>
+                                <option value="glyphicon glyphicon-sort-by-attributes-alt">send</option>
+                                <option value="glyphicon glyphicon-unchecked">floppy-disk</option>
+                                <option value="glyphicon glyphicon-expand">floppy-saved</option>
+                                <option value="glyphicon glyphicon-collapse-down">floppy-remove</option>
+                                <option value="glyphicon glyphicon-collapse-up">floppy-save</option>
+                                <option value="glyphicon glyphicon-log-in">floppy-open</option>
+                                <option value="glyphicon glyphicon-flash">credit-card</option>
+                                <option value="glyphicon glyphicon-log-out">transfer</option>
+                                <option value="glyphicon glyphicon-new-window">cutlery</option>
+                                <option value="glyphicon glyphicon-record">header</option>
+                                <option value="glyphicon glyphicon-save">compressed</option>
+                                <option value="glyphicon glyphicon-open">earphone</option>
+                                <option value="glyphicon glyphicon-saved">phone-alt</option>
+                                <option value="glyphicon glyphicon-import">tower</option>
+                                <option value="glyphicon glyphicon-export">stats</option>
+                                <option value="glyphicon glyphicon-send">sd-video</option>
+                                <option value="glyphicon glyphicon-floppy-disk">hd-video</option>
+                                <option value="glyphicon glyphicon-floppy-saved">subtitles</option>
+                                <option value="glyphicon glyphicon-floppy-remove">sound-stereo</option>
+                                <option value="glyphicon glyphicon-floppy-save">sound-dolby</option>
+                                <option value="glyphicon glyphicon-floppy-open">sound-5-1</option>
+                                <option value="glyphicon glyphicon-credit-card">sound-6-1</option>
+                                <option value="glyphicon glyphicon-transfer">sound-7-1</option>
+                                <option value="glyphicon glyphicon-cutlery">copyright-mark</option>
+                                <option value="glyphicon glyphicon-header">registration-mark</option>
+                                <option value="glyphicon glyphicon-compressed">cloud-download</option>
+                                <option value="glyphicon glyphicon-earphone">cloud-upload</option>
+                                <option value="glyphicon glyphicon-phone-alt">tree-conifer</option>
+                                <option value="glyphicon glyphicon-tower">tree-deciduous</option>
+                                <option value="glyphicon glyphicon-stats"></option>
+                                <option value="glyphicon glyphicon-sd-video"></option>
+                                <option value="glyphicon glyphicon-hd-video"></option>
+                                <option value="glyphicon glyphicon-subtitles"></option>
+                                <option value="glyphicon glyphicon-sound-stereo"></option>
+                                <option value="glyphicon glyphicon-sound-dolby"></option>
+                                <option value="glyphicon glyphicon-sound-5-1"></option>
+                                <option value="glyphicon glyphicon-sound-6-1"></option>
+                                <option value="glyphicon glyphicon-sound-7-1"></option>
+                                <option value="glyphicon glyphicon-copyright-mark"></option>
+                                <option value="glyphicon glyphicon-registration-mark"></option>
+                                <option value="glyphicon glyphicon-cloud-download"></option>
+                                <option value="glyphicon glyphicon-cloud-upload"></option>
+                                <option value="glyphicon glyphicon-tree-conifer"></option>
+                                <option value="glyphicon glyphicon-tree-deciduous"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Permisos </label>
+                        <div class="col-lg-8">
+                            <select id="rolesNode" name="rolesNode" class="form-control" multiple="multiple" style="width: 100%;">
+                                @{
+                                    DataTable dt = null;
+                                    dt = (ViewBag.Roles != null) ? (DataTable)ViewBag.Roles : null;
+                                }
+                                @if (dt != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow dr in dt.Rows)
+                                    {
+                                        <option value="@(dr["Name"].ToString())">@(dr["Name"].ToString())</option>
+                                        @*<option value="@(dr["Id"].ToString())">@(dr["Name"].ToString())</option>*@
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Area </label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="areaNode" name="areaNode" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Controller </label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="controllerNode" name="controllerNode" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Action </label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="actionNode" name="actionNode" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Padre </label>
+                        <div class="col-lg-8">
+                            <select id="keyParentNode" class="form-control" name="keyParentNode" style="width:100%;">
+                                <option value=""></option>
+                                @{
+                                    DataTable dtsp = null;
+                                    dtsp = (ViewBag.ParentSiteMaps != null) ? (DataTable)ViewBag.ParentSiteMaps : null;
+                                }
+                                @if (dtsp != null && dtsp.Rows.Count > 0)
+                                {
+                                    foreach (DataRow dr in dtsp.Rows)
+                                    {
+                                        <option value="@(dr["key"].ToString())">@(dr["title"].ToString())</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <hr class="wide" />
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-4">
+                            <button type="submit" class="btn btn-danger">Guardar</button>
+                        </div>
+                    </div>
+                    <input type="Hidden" id="ChildNodeId" name="ChildNodeId" value="@ViewBag.KeyChild" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section PageScripts{
+    <script src="~/assets/js/validation/bootstrapValidator.js"></script>
+    <script src="~/assets/js/select2/select2.js"></script>
+
+    <script>
+        function Fill_Elements() {
+            document.getElementById("titleNode").value = '@Html.Raw(ViewBag.TittleNode)';
+            document.getElementById("descriptionNode").value = '@Html.Raw(ViewBag.DescriptionNode)';
+            document.getElementById("imageurlNode").value = '@Html.Raw(ViewBag.ImageUrlNode)';
+
+            var Roles = '@ViewBag.RolesNode'; //declara una variable para la cadena de Roles
+            var selectedValues = Roles.split(","); // Separa la cadena de Roles y los almacena en un arreglo(es necesario para indicarle al combo de roles que se ingresara mas de un parametro si fuece el caso.)
+            $("#rolesNode").val(selectedValues); // se asigna la cadena
+
+            document.getElementById("areaNode").value = '@ViewBag.AreaNode';
+            document.getElementById("controllerNode").value = '@ViewBag.ControllerNode';
+            document.getElementById("actionNode").value = '@ViewBag.ActionNode';
+            document.getElementById("keyParentNode").value = '@ViewBag.KeyParent';
+            $("#rolesNode").change();
+            $("#imageurlNode").change();
+            $("#keyParentNode").change();
+        }
+        $("#imageurlNode").select2();
+        $("#keyParentNode").select2();
+        $("#rolesNode").select2({
+            placeholder: "Seleccione permisos",
+            allowClear: true
+        });
+
+
+        $(document).ready(function () {
+            Fill_Elements();
+            $('#togglingForm').bootstrapValidator({
+                message: 'El campo no es válido',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                submitHandler: function (validator, form, submitButton) {
+                    // Do nothing
+                },
+                fields: {
+                    titleNode: {
+                        validators: {
+                            notEmpty: {
+                                message: 'El nombre del nodo es requerido'
+                            }
+                        }
+                    },
+                    descriptionNode: {
+                        validators: {
+                            notEmpty: {
+                                message: 'La descripción del nodo es requerida'
+                            }
+                        }
+                    },
+                    //imageurlNode: {
+                    //    validators: {
+                    //        notEmpty: {
+                    //            message: 'El ícono del nodo es requerido'
+                    //        }
+                    //    }
+                    //}
+                }
+            })
+            .find('button[data-toggle]')
+            .on('click', function () {
+                var $target = $($(this).attr('data-toggle'));
+                // Show or hide the additional fields
+                // They will or will not be validated based on their visibilities
+                $target.toggle();
+                if (!$target.is(':visible')) {
+                    // Enable the submit buttons in case additional fields are not valid
+                    $('#togglingForm').data('bootstrapValidator').disableSubmitButtons(false);
+                }
+            });
+
+        });
+
+    </script>
+}

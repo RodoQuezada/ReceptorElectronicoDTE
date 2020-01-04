@@ -1,0 +1,686 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Agregar Evaluado";
+    ViewBag.Description = "Agregar Evaluado";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+<!-- EVALUADOR -->
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="row">
+
+            <div class="widget">
+                <div class="widget-header bordered-bottom bordered-yellow">
+                    <span class="widget-caption"><strong>AGREGAR EVALUADO</strong></span>
+                    <div class="widget-buttons">
+                        @*<a href="#" data-toggle="maximize">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                        <a href="#" data-toggle="collapse">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="#" data-toggle="dispose">
+                            <i class="fa fa-times"></i>
+                        </a>*@
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <!-- Modal -->
+
+                    <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    @*<h4 class="modal-title">Settings</h4>*@
+
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="widget">
+                                                <center> <img src='~/assets/img/cargando.gif' /></center>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+
+                    <div class="row">
+
+                        <div class="form-group">
+                            &nbsp;
+                        </div>
+
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Evaluación
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <select id="numIdEvaluacion" name="numIdEvaluacion" class="form-control" style="width: 100%;" onchange="ListarEvaluados(this.value,@ViewBag.IdEvaluador)">
+                                    <option value="0"> </option>
+
+                                    @{
+                                        DataTable dtEvalJef = null;
+                                        dtEvalJef = (ViewBag.EvaluacionesJefatura != null) ? (DataTable)ViewBag.EvaluacionesJefatura : null;
+                                    }
+                                    @if (dtEvalJef != null && dtEvalJef.Rows.Count > 0)
+                                    {
+                                        foreach (DataRow drEvalJef in dtEvalJef.Rows)
+                                        {
+                                            <option value="@drEvalJef["IdCabEvaluacion"].ToString()">@(drEvalJef["NomEvaluacion"].ToString())</option>
+                                        }
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                Participantes
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4" id="CbxParticipantes">
+                            <div class="form-group">
+                                <select id="numIdParticipante" name="numIdParticipante" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <button id="btn_agregar" type="button" class="btn btn-primary" onclick="GrabarEvaluado(numIdEvaluacion.value,@ViewBag.IdEvaluador,numIdParticipante.value);"><i class="fa fa-angle-double-down"></i>Agregar</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <span class="widget-caption">
+                            <hr />
+                        </span>
+                    </div>
+
+
+                    <div class="well with-header table-responsive">
+                        <div class="header bordered-pink">
+                            <span class="widget-caption">MIS EVALUADOS</span>
+                            @*@if (User.IsInRole("pedd_compania_crear")) *@
+                            @*{
+        <button id="crear" class="btn btn-primary"><i class="fa fa-calendar"></i>Crear Empresa</button> *@
+                            @*
+        <a id="btn_create" class="btn btn-primary">
+        <i class="fa fa-check-square-o"></i>Crear Participantes
+        </a>
+                            *@
+                            @*}*@
+                            @*else*@
+                            @*{*@
+                            @*<button id="crear" class="btn-primary" disabled>Crear Participantes</button>*@
+                            @* } *@
+
+                        </div>
+                        @*ACA SE DEBE ACTUALIZAR CON PARTIALVIEW DESDE EL CONTROLADOR*@
+                        <div class="row" id="ListEvaluados">
+                            <table class="table table-responsive" id="searchEvaluador">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Id
+                                        </th>
+                                        <th>
+                                            Nombre Completo
+                                        </th>
+                                        <th>
+                                            Tipo
+                                        </th>
+                                        <th>
+                                            Actividades
+                                        </th>
+                                    </tr>
+                                </thead>
+                                @*<tfoot>
+                                    <tr>
+                                        <th>
+                                            Id
+                                        </th>
+                                        <th>
+                                            Nombre Completo
+                                        </th>
+                                        <th>
+                                            Tipo
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                </tfoot>*@
+                                <tbody id="fbody">
+                                    <tr>
+                                       <td align="left"></td>
+                                       <td align="left"></td>
+                                       <td align="left"></td>
+                                       <td align="left"></td>
+                                     </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<form id="FormGroup" method="post" hidden>
+    <input type="text" class="form-control" autocomplete="Off" name="IdGrupoEval" id="IdGrupoEval" value="0" readonly />
+</form>
+
+<form id="FormEvaluador" method="post"  hidden>
+    <input type="text" class="form-control" autocomplete="Off" name="IdCabEval" id="IdCabEval" value="0" readonly />
+    <input type="text" class="form-control" autocomplete="Off" name="IdEvaluador" id="IdEvaluador" value="0" readonly />
+</form>
+
+<form id="FormAddEvaluado" method="post" hidden>
+    <input type="text" class="form-control" autocomplete="Off" name="IdCabEvalGroup" id="IdCabEvalGroup" value="0" readonly />
+    <input type="text" class="form-control" autocomplete="Off" name="IdEvaluadGroup" id="IdEvaluadGroup" value="0" readonly />
+    <input type="text" class="form-control" autocomplete="Off" name="IdEmpleadGroup" id="IdEmpleadGroup" value="0" readonly />
+</form>
+
+
+<!--Email Modal Templates-->
+<div id="myEmailModal" class="modal fade" data-backdrop="static" data-keyboard="false" style="display:none;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="To" required="">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Subject" required="">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Content" rows="5" required=""></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var relativeUrl = HttpContext.Current.Request.Url.Segments;
+    var url = string.Empty;
+
+    foreach (var item in relativeUrl)
+    {
+        if (!item.Equals("AddEvaluado"))
+        {
+            url += item;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/jquery.blockUI.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+ <script type="text/javascript" class="init">
+
+  //$(document).ready(function () {
+  //     $('#searchEvaluador').DataTable({
+
+  //              "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+  //              "aaSorting": [[0, 'asc']],
+  //              "aLengthMenu": [
+  //                  [5, 15, 20, -1],
+  //                  [5, 15, 20, "All"]
+  //              ],
+  //              "iDisplayLength": 10,
+  //              "oTableTools": {
+  //                  "aButtons": [
+  //                     // "copy",
+  //                     // "print",
+  //                      {
+  //                          "sExtends": "print",
+  //                          "sButtonText": "<i class=\"fa fa-print\"></i> Imprimir",
+  //                          "aButtons": ["print"]
+  //                      },
+  //                      {
+  //                          "sExtends": "collection",
+  //                          "sButtonText": "<i class=\"fa fa-save\"></i> Guardar",
+  //                          "aButtons": ["csv", "xls", "pdf"]
+  //                      }
+
+  //                  ],
+  //                  "sSwfPath": "../assets/swf/copy_csv_xls_pdf.swf"
+  //              },
+  //              "language": {
+  //                  "search": "",
+  //                  "sLengthMenu": "_MENU_",
+  //                  "oPaginate": {
+  //                      "sPrevious": "Prev",
+  //                      "sNext": "Next"
+  //                  }
+  //              },
+  //              initComplete: function () {
+  //                  this.api().columns([0,1,2]).every(function () {
+  //                      var column = this;
+  //                      var select = $('<select placeholder="Search Modelo" class="selectpicker" data-style="btn-primary"><option value="">Todos</option></select>')
+  //                          .appendTo($(column.footer()).empty())
+  //                          .on('change', function () {
+  //                              var val = $.fn.dataTable.util.escapeRegex(
+  //                                  $(this).val()
+  //                              );
+
+  //                              column
+  //                                  .search(val ? '^' + val + '$' : '', true, false)
+  //                                  .draw();
+  //                          });
+
+  //                      column.data().unique().sort().each(function (d, j) {
+  //                          select.append('<option value="' + d + '">' + d + '</option>')
+  //                      });
+  //                  });
+  //              }
+  //     });
+  // });
+       
+
+
+   //--Bootstrap Date Picker--
+     $('.date-picker').datepicker();
+
+  function ListarEvaluados(IdCabEvaluacion,IdEvaluador)
+  {
+      $("#IdCabEval").val(IdCabEvaluacion);
+      $("#IdEvaluador").val(IdEvaluador);
+
+      $.blockUI();
+
+      //COMBOBOX
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ShowSelectEvaluados", "EvaluacionActiva")',
+            data: $("#FormEvaluador").serialize(),
+            async: true,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            dataType: 'html',
+           success: function (response) {
+
+               var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 10)
+                {
+                    $("#CbxParticipantes").html(strRespuesta);
+                   
+                }
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al obtener Participantes, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+           }
+       });
+
+
+       //DATATABLE
+       $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ShowListEvaluados", "EvaluacionActiva")',
+            data: $("#FormEvaluador").serialize(),
+            async: true,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            dataType: 'html',
+           success: function (response) {
+
+               var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 10)
+                {
+                    $("#fbody").html(strRespuesta);
+                   
+                }
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al listar Evaluados, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+           }
+       });
+
+      $.unblockUI();
+
+  }
+
+  function GrabarEvaluado(IdCabEvaluacion,IdEvaluador,IdEmpleado)
+  {
+      var stGrabado = "";
+
+      $("#IdCabEval").val(IdCabEvaluacion);
+      $("#IdEvaluador").val(IdEvaluador);
+
+      $("#IdCabEvalGroup").val(IdCabEvaluacion);
+      $("#IdEvaluadGroup").val(IdEvaluador);
+      $("#IdEmpleadGroup").val(IdEmpleado);
+
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Create", "EvaluacionActiva")',
+            data: $("#FormAddEvaluado").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            //dataType: 'html',
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0)
+                {
+                    stGrabado = "GRABADO";
+                    Notify('El Evaluado se agregó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al intentar agregar un Evaluado, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+            }
+      });
+
+
+      if (stGrabado == "GRABADO")
+      {
+          //COMBOBOX
+          $.ajax({
+                 type: 'POST',
+                 url: '@Url.Action("ShowSelectEvaluados", "EvaluacionActiva")',
+                 data: $("#FormEvaluador").serialize(),
+                 async: true,
+                 //contentType: "application/json; charset=utf-8",
+                 //dataType: "json",
+                 dataType: 'html',
+                 success: function (response) {
+
+                      var strRespuesta = "" + response.toString();
+
+                      if (strRespuesta.length > 10)
+                      {
+                         $("#CbxParticipantes").html(strRespuesta);
+                   
+                      }
+                 },
+                 failure: function (response)
+                 {
+                      Notify('Hubo un error al obtener Participantes, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                      stExito = 'N';
+                  }
+           });
+
+
+       //DATATABLE
+       $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ShowListEvaluados", "EvaluacionActiva")',
+            data: $("#FormEvaluador").serialize(),
+            async: true,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            dataType: 'html',
+           success: function (response) {
+
+               var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 10)
+                {
+                    $("#fbody").html(strRespuesta);
+                   
+                }
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al listar Evaluados, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+           }
+       });
+
+      }
+  }
+
+  function EliminarEvaluado(IdCabEvaluacion,IdEvaluador,IdGrupoEvaluacion, NomEvaluado)
+  {
+      var stfuncion = "";
+
+      $("#IdCabEval").val(IdCabEvaluacion);
+      $("#IdEvaluador").val(IdEvaluador);
+
+      $("#IdGrupoEval").val(IdGrupoEvaluacion);
+
+     var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+
+     opsConfirm.message = "¿Desea eliminar al Evaluado " + NomEvaluado + "?";
+     opsConfirm.buttons.success.callback = function ()
+     {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "EvaluacionActiva")',
+            data: $("#FormGroup").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            //dataType: 'html',
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0)
+                {
+                    stfuncion = "ELIMINADO";
+                    Notify('El Evaluado se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+
+                     if (stfuncion == "ELIMINADO")
+                     {
+                        //COMBOBOX
+                        $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("ShowSelectEvaluados", "EvaluacionActiva")',
+                                data: $("#FormEvaluador").serialize(),
+                                async: true,
+                                //contentType: "application/json; charset=utf-8",
+                                //dataType: "json",
+                                dataType: 'html',
+                                success: function (response) {
+
+                                      var strRespuesta = "" + response.toString();
+
+                                      if (strRespuesta.length > 10)
+                                      {
+                                          $("#CbxParticipantes").html(strRespuesta);
+                   
+                                      }
+                                },
+                                failure: function (response)
+                                {
+                                   Notify('Hubo un error al obtener Participantes, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                                }
+                        });
+
+                        //DATATABLE
+                        $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("ShowListEvaluados", "EvaluacionActiva")',
+                                data: $("#FormEvaluador").serialize(),
+                                async: true,
+                                //contentType: "application/json; charset=utf-8",
+                                //dataType: "json",
+                                dataType: 'html',
+                                success: function (response) {
+
+                                      var strRespuesta = "" + response.toString();
+
+                                      if (strRespuesta.length > 10)
+                                      {
+                                         $("#fbody").html(strRespuesta);
+                                      }
+                                },
+                                failure: function (response)
+                                {
+                                      Notify('Hubo un error al listar Evaluados, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                                }
+                         });
+
+                     }
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al intentar eliminar un Evaluado, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+            }
+        });
+
+     };
+     bootbox.dialog(opsConfirm);
+
+     
+
+  }
+
+  function mostrarModal(page)
+  {
+
+      //alert('@url/' + page);
+      $.blockUI();
+      $.ajax({
+              url: '@url/' + page,
+              jsonp: false,
+              data: {}, //Si le vas a pasar parámetros
+              async: true,
+              beforeSend: function () {
+
+              },
+              success: function (data) {
+                  $.unblockUI();
+                  bootbox.dialog({
+                      message: data,
+                      title: "Sistema Evaluaciones",
+                      className: "modal-darkorange"//,
+                        //buttons: {
+                        //    success: {
+                        //        label: "Send",
+                        //        className: "btn-blue",
+                        //        callback: function () { }
+                        //    },
+                        //    "Save as Draft": {
+                        //        className: "btn-danger",
+                        //        callback: function () { }
+                        //    }
+                        //}
+                  });
+
+              },
+              error: function () {
+                  $('#myModal').removeClass("modal-body");
+                  $('#myModal').modal({ show: false });
+                  //alert("error");
+                  //$('ModalPage').removeClass('loading'); //Removemos la clase loading
+
+              }
+      });
+
+
+
+  }
+
+  function mostrarModalParam(page)
+  {
+      $.blockUI();
+      $.ajax({
+              type: 'POST',
+              url: '@url/' + page,
+              jsonp: false,
+              data: $("#FormFasEval").serialize(), //Si le vas a pasar parámetros
+              async: true,
+              beforeSend: function () {
+
+              },
+              success: function (data) {
+                  $.unblockUI();
+                  bootbox.dialog({
+                      message: data,
+                      title: "Sistema Evaluaciones",
+                      className: "modal-darkorange"//,
+                        //buttons: {
+                        //    success: {
+                        //        label: "Send",
+                        //        className: "btn-blue",
+                        //        callback: function () { }
+                        //    },
+                        //    "Save as Draft": {
+                        //        className: "btn-danger",
+                        //        callback: function () { }
+                        //    }
+                        //}
+                  });
+
+              },
+              error: function () {
+                  $('#myModal').removeClass("modal-body");
+                  $('#myModal').modal({ show: false });
+                  //alert("error");
+                  //$('ModalPage').removeClass('loading'); //Removemos la clase loading
+
+              }
+      });
+
+
+
+  }
+
+
+  $("#myModal").on('hidden.bs.modal', function () {
+           // alert("Esta accion se ejecuta al cerrar el modal")
+            $('#myModal').removeClass("modal-body");
+            $('#myModal .modal-body').load('@url/Loading', function () { });
+
+
+  });
+
+ </script>
+
+}

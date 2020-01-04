@@ -1,0 +1,620 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Creación de Fases";
+    ViewBag.Description = "Creación de Fases";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="widget">
+                <div class="widget-header bordered-bottom bordered-yellow">
+                    <span class="widget-caption">CREACIÓN DE FASES DE UNA EVALUACIÓN</span>
+                    <div class="widget-buttons">
+                        @*<a href="#" data-toggle="maximize">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                        <a href="#" data-toggle="collapse">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="#" data-toggle="dispose">
+                            <i class="fa fa-times"></i>
+                        </a>*@
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <!-- Modal -->
+
+                    <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    @*<h4 class="modal-title">Settings</h4>*@
+
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="widget">
+                                                <center> <img src='~/assets/img/cargando.gif' /></center>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+
+
+                    <div class="well with-header table-responsive">
+
+                        <table class="table table-responsive" id="searchable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id Fase
+                                    </th>
+                                    <th>
+                                        Fase
+                                    </th>
+                                    <th>
+                                        Fecha Inicio
+                                    </th>
+                                    <th>
+                                        Fecha Fin
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>
+                                        Id Fase
+                                    </th>
+                                    <th>
+                                        Fase
+                                    </th>
+                                    <th>
+                                        Fecha Inicio
+                                    </th>
+                                    <th>
+                                        Fecha Fin
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </tfoot>
+                            <tbody id="fbody">
+                                @{
+                                    DataTable dtTipoFase = null;
+                                    dtTipoFase = (ViewBag.TipoFase != null) ? (DataTable)ViewBag.TipoFase : null;
+                                }
+
+                                @if (dtTipoFase != null && dtTipoFase.Rows.Count > 0)
+                                {
+                                   foreach (DataRow dr in dtTipoFase.Rows)
+                                   {
+                                      <tr id="@(dr["IdTipoFaseEval"].ToString())">
+
+                                         <td align="left">@(dr["NomTipoFaseEval"].ToString())</td>
+
+                                         <td align="left"> </td>
+
+                                         <td align="left"> </td>
+
+                                         <td align="left">
+
+                                          @* @if (User.IsInRole("pedd_fase_edit")) *@
+                                          @* { 
+
+                                           <button id="btn_edit" type="button" class="btn btn-info btn-xs" onclick="Editar(1);"><i class="fa fa-check"></i>Editar</button>
+
+                                          } *@
+                                          @* else *@
+                                          @* { *@
+                                          @*<button id="btn_edit" type="button" class="btn btn-info btn-xs" disabled>Editar</button> *@
+                                          @* } *@
+
+                                          @*
+                                           @if (User.IsInRole("pedd_fase_create"))
+                                           {
+                                           *@
+                                            <button id="btn_FASES" type="button" class="btn btn-info btn-xs"><i class="fa fa-list-ol"></i>Fases</button>
+                                           @*
+                                           }
+                                           else
+                                           {
+                                             <button id="btn_FASES" type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash-o"></i>Eliminar</button>
+                                           }
+                                           *@
+                                             
+                                           @*
+                                            @if (User.IsInRole("pedd_fase_delete"))
+                                            {
+                                           *@
+                                            <button id="btn_DELETE" type="button" class="btn btn-danger btn-xs Delete-confirm"><i class="fa fa-trash-o"></i>Eliminar</button>
+                                           @*
+                                            }
+                                           else
+                                           {
+                                            <button id="btn_DELETE" type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash-o"></i>Eliminar</button>
+                                           }
+                                           *@
+
+
+                                          </td>
+
+                                      </tr>
+
+                                   }
+                                 }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     <form id="FormCabEval" method="post" @*action="Evaluacion/Edit"*@ hidden>
+         <input type="text" class="form-control" autocomplete="Off" name="IdCabEval" value="0" id="IdCabEval" readonly />
+         @*<input type="submit" value="Submit" id="btnSubmit">*@
+     </form>
+
+    <form id="FormCabEvaluacion" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="IdCabEvaluacion" value="" id="IdCabEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdCompania" value="" id="IdCompania" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="NomEvaluacion" value="" id="NomEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="DesEvaluacion" value="" id="DesEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="InsEvaluacion" value="" id="InsEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="dfInicio" value="" id="dfInicio" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="dfTermino" value="" id="dfTermino" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdTipoEvaluacion" value="" id="IdTipoEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdEstado" value="" id="IdEstado" readonly />
+    </form>
+
+ </div>
+
+
+<!--Email Modal Templates-->
+<div id="myEmailModal" class="modal fade" data-backdrop="static" data-keyboard="false" style="display:none;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="To" required="">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Subject" required="">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Content" rows="5" required=""></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var relativeUrl = HttpContext.Current.Request.Url.Segments;
+    var url = string.Empty;
+
+    foreach (var item in relativeUrl)
+    {
+        if (!item.Equals("Create"))
+        {
+            url += item;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/jquery.blockUI.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+    <script type="text/javascript" class="init">
+
+
+  $(document).ready(function () {
+            $('#searchable').DataTable({
+
+                "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+                "aaSorting": [[0, 'asc']],
+                "aLengthMenu": [
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "All"]
+                ],
+                "iDisplayLength": 10,
+                "oTableTools": {
+                    "aButtons": [
+                       // "copy",
+                       // "print",
+                        {
+                            "sExtends": "print",
+                            "sButtonText": "<i class=\"fa fa-print\"></i> Imprimir",
+                            "aButtons": ["print"]
+                        },
+                        {
+                            "sExtends": "collection",
+                            "sButtonText": "<i class=\"fa fa-save\"></i> Guardar",
+                            "aButtons": ["csv", "xls", "pdf"]
+                        }
+
+                    ],
+                    "sSwfPath": "../assets/swf/copy_csv_xls_pdf.swf"
+                },
+                "language": {
+                    "search": "",
+                    "sLengthMenu": "_MENU_",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                initComplete: function () {
+                    this.api().columns([0,1,2,3,4,5]).every(function () {
+                        var column = this;
+                        var select = $('<select placeholder="Search Modelo" class="selectpicker" data-style="btn-primary"><option value="">Todos</option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                }
+            });
+        });
+
+
+      //--Bootstrap Date Picker--
+       $('.date-picker').datepicker();
+
+//Eliminar un registro dentro de la tabla
+  $('#searchable #btn_DELETE').on("click", function (e)
+  {
+     var _this = this;
+     var stExito = '';
+     var nRow = $(this).parents('tr')[0];
+     var IdCabEvaluacion = $(this).parents('td')[0].id;
+     var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+
+     alert(nRow);
+
+     opsConfirm.message = "¿Desea eliminar la Evaluación n° " + IdCabEvaluacion + " ?";
+     opsConfirm.buttons.success.callback = function ()
+     {
+        stExito = EliminarEvaluacionBD(IdCabEvaluacion);
+
+        if (stExito == 'S')
+        {
+           var oTable = $('#searchable').dataTable()
+           oTable.fnDeleteRow(nRow);
+        }
+
+     };
+     bootbox.dialog(opsConfirm);
+ });
+
+
+  // ELIMINAR EMPRESA DE LA BASE DE DATOS
+  function EliminarEvaluacionBD(IdCabEval)
+  {
+        var stExito = '';
+
+        // ASIGNO EMPRESA AL FORMULARIO OCULTO
+        $("#IdCabEval").val(IdCabEval);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "Evaluacion")',
+            data: $("#FormCabEval").serialize(),
+            async: false,
+            success: function (response) {
+                if(response=="ELIMINADO")
+                Notify('La Evaluación se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                stExito = 'S';
+
+            },
+            failure: function (response) {
+
+                Notify('Hubo un error al eliminar la Evaluaión, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+  }
+
+
+ $("#FormCabEval").on('submit', function (e) {
+
+    var valid = true;
+    valid = checkEmpty($("#IdCabEval"));
+
+    if (!valid)
+    {
+        evt.preventDefault();
+    }
+
+ });
+
+ function Editar(IdCabEvaluacion) {
+
+    if (IdCabEvaluacion > 0) {
+        $("#IdCabEval").val(IdCabEvaluacion);
+
+        mostrarModalParam("Edit");
+    }
+
+ }
+
+
+  //DESPLEGAR CREACION EVALUACION
+  $('#btn_create').on("click", function (e) {
+
+      mostrarModal("Create");
+
+  });
+
+
+ function ActualizarCabEvaluacionBD(numCabEvaluacion,numIdCompania,dgNomEvaluacion,dgDesEvaluacion,dgInsEvaluacion,dgdfInicio,dgdfTermino,numIdTipoEvaluacion,numIdEstado,btnActualizar)
+  {
+
+      var strIdCabEvaluacion = "" + numCabEvaluacion.value ;
+      var strIdCompania = "" + numIdCompania.value;
+      var strNomEvaluacion = "" + dgNomEvaluacion.value;
+      var strDesEvaluacion = "" + dgDesEvaluacion.value;
+      var strInsEvaluacion = "" + dgInsEvaluacion.value;
+      var strdfInicio = "" + dgdfInicio.value;
+      var strdfTermino = "" + dgdfTermino.value;
+      var strIdTipoEvaluacion = "" + numIdTipoEvaluacion.value;
+      var strEstado = "" + numIdEstado.value;
+
+      $("#IdCabEvaluacion").val(strIdCabEvaluacion);
+      $("#IdCompania").val(strIdCompania);
+      $("#NomEvaluacion").val(strNomEvaluacion);
+      $("#DesEvaluacion").val(strDesEvaluacion);
+      $("#InsEvaluacion").val(strInsEvaluacion);
+      $("#dfInicio").val(strdfInicio);
+      $("#dfTermino").val(strdfTermino);
+      $("#IdTipoEvaluacion").val(strIdTipoEvaluacion);
+      $("#IdEstado").val(strEstado);
+
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateCabEvaluacion", "Evaluacion")',
+            data: $("#FormCabEvaluacion").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0)
+                {
+                    Notify('La Evaluacion "' + dgNomEvaluacion.value + '" se actualizó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+
+                    var intPos = strRespuesta.indexOf(';');
+                    var strIdCabEvaluacion = strRespuesta.substring(0, intPos);
+                    var strUrl = strRespuesta.substring(intPos + 1, strRespuesta.length);
+
+                    $("#IdCabEvaluacion").val(strIdCabEvaluacion.toString());
+                    $("#btnActualizar").attr("disabled", true);
+                    stExito = 'S';
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al grabar la Evaluacion "' + dgNomEvaluacion.value + '", revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+
+  }
+
+  //GRABA UNA NUEVA EVALUACION
+  function GrabarCabEvaluacionBD(numIdCompania,dgNomEvaluacion,dgDesEvaluacion,dgInsEvaluacion,dgdfInicio,dgdfTermino,numIdTipoEvaluacion,numIdEstado,btnAgregar)
+  {
+
+      var strIdCompania = "" + numIdCompania.value;
+      var strNomEvaluacion = "" + dgNomEvaluacion.value;
+      var strDesEvaluacion = "" + dgDesEvaluacion.value;
+      var strInsEvaluacion = "" + dgInsEvaluacion.value;
+      var strdfInicio = "" + dgdfInicio.value;
+      var strdfTermino = "" + dgdfTermino.value;
+      var strIdTipoEvaluacion = "" + numIdTipoEvaluacion.value;
+      var strEstado = "" + numIdEstado.value;
+
+      $("#IdCabEvaluacion").val('999999999');
+      $("#IdCompania").val(strIdCompania);
+      $("#NomEvaluacion").val(strNomEvaluacion);
+      $("#DesEvaluacion").val(strDesEvaluacion);
+      $("#InsEvaluacion").val(strInsEvaluacion);
+      $("#dfInicio").val(strdfInicio);
+      $("#dfTermino").val(strdfTermino);
+      $("#IdTipoEvaluacion").val(strIdTipoEvaluacion);
+      $("#IdEstado").val(strEstado);
+
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateCabEvaluacion", "Evaluacion")',
+            data: $("#FormCabEvaluacion").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0)
+                {
+                    Notify('La Evaluacion "' + dgNomEvaluacion.value + '" se grabó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+
+                    var intPos = strRespuesta.indexOf(';');
+                    var strIdCabEvaluacion = strRespuesta.substring(0, intPos);
+                    var strUrl = strRespuesta.substring(intPos + 1, strRespuesta.length);
+
+                    $("#IdCabEvaluacion").val(strIdCabEvaluacion.toString());
+                    $("#btnAgregar").attr("disabled", true);
+                    stExito = 'S';
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al grabar la Evaluacion"' + dgNomEvaluacion.value + '", revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+
+  }
+
+
+
+  function mostrarModal(page)
+  {
+
+      //alert('@url/' + page);
+      $.blockUI();
+      $.ajax({
+              url: '@url/' + page,
+              jsonp: false,
+              data: {}, //Si le vas a pasar parámetros
+              async: true,
+              beforeSend: function () {
+
+              },
+              success: function (data) {
+                  $.unblockUI();
+                  bootbox.dialog({
+                      message: data,
+                      title: "Sistema Evaluaciones",
+                      className: "modal-darkorange"//,
+                        //buttons: {
+                        //    success: {
+                        //        label: "Send",
+                        //        className: "btn-blue",
+                        //        callback: function () { }
+                        //    },
+                        //    "Save as Draft": {
+                        //        className: "btn-danger",
+                        //        callback: function () { }
+                        //    }
+                        //}
+                  });
+
+              },
+              error: function () {
+                  $('#myModal').removeClass("modal-body");
+                  $('#myModal').modal({ show: false });
+                  //alert("error");
+                  //$('ModalPage').removeClass('loading'); //Removemos la clase loading
+
+              }
+      });
+
+
+
+  }
+
+  function mostrarModalParam(page)
+  {
+      $.blockUI();
+      $.ajax({
+              type: 'POST',
+              url: '@url/' + page,
+              jsonp: false,
+              data: $("#FormCabEval").serialize(), //Si le vas a pasar parámetros
+              async: true,
+              beforeSend: function () {
+
+              },
+              success: function (data) {
+                  $.unblockUI();
+                  bootbox.dialog({
+                      message: data,
+                      title: "Sistema Evaluaciones",
+                      className: "modal-darkorange"//,
+                        //buttons: {
+                        //    success: {
+                        //        label: "Send",
+                        //        className: "btn-blue",
+                        //        callback: function () { }
+                        //    },
+                        //    "Save as Draft": {
+                        //        className: "btn-danger",
+                        //        callback: function () { }
+                        //    }
+                        //}
+                  });
+
+              },
+              error: function () {
+                  $('#myModal').removeClass("modal-body");
+                  $('#myModal').modal({ show: false });
+                  //alert("error");
+                  //$('ModalPage').removeClass('loading'); //Removemos la clase loading
+
+              }
+      });
+
+
+
+  }
+
+
+  $("#myModal").on('hidden.bs.modal', function () {
+           // alert("Esta accion se ejecuta al cerrar el modal")
+            $('#myModal').removeClass("modal-body");
+            $('#myModal .modal-body').load('@url/Loading', function () { });
+
+
+        });
+
+
+
+
+  $(function () {
+            $("#myEmailModal").draggable();
+        });
+    </script>
+
+}

@@ -1,0 +1,912 @@
+﻿@model NetCore.PeddEval.Web.WebSite.Areas.PeddEval.Models.CabEvaluacionModels
+@using System.Data;
+@using CoreLibrary.Web.Bootstrap;
+@{
+    ViewBag.Title = "Modificación de Evaluación";
+    ViewBag.Description = "Modificar una Evaluación.";
+    Layout = "~/Views/Shared/_Default.cshtml";
+
+}
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-yellow">
+                <span class="widget-caption">  MODIFICACION DE EVALUACION:</span>
+                <span class="widget-caption">&nbsp;[&nbsp;</span>
+                <span class="widget-caption">@Model.IdCabEvaluacion</span>
+                <span class="widget-caption"> &nbsp;]</span>
+                <span class="widget-caption">&nbsp;/</span>
+                <span class="widget-caption">&nbsp;[ &nbsp;</span>
+                <span class="widget-caption">@Model.NomEvaluacion</span>
+                <span class="widget-caption"> &nbsp;]</span>
+                <input hidden type="text" id="numCabEvaluacion" name="numCabEvaluacion" value="@Model.IdCabEvaluacion" />
+                <div class="widget-buttons">
+
+                    @*<a href="#" data-toggle="maximize">
+                      <i class="fa fa-expand"></i>
+                      </a>
+                      <a href="#" data-toggle="collapse">
+                      <i class="fa fa-minus"></i>
+                      </a>
+                      <a href="#" data-toggle="dispose">
+                      <i class="fa fa-times"></i>
+                      </a>*@
+
+                </div>
+            </div>
+            <div class="widget-body">
+                <!-- Modal -->
+
+                <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                @*<h4 class="modal-title">Settings</h4>*@
+
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="widget">
+                                            <center> <img src='~/assets/img/cargando.gif' /></center>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Compañía
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="numIdCompania" name="numIdCompania" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtCompania = null;
+                                        dtCompania = (ViewBag.Compania != null) ? (DataTable)ViewBag.Compania : null;
+                                    }
+                                    @foreach (DataRow drComp in dtCompania.Rows)
+                                    {
+                                        if (int.Parse((drComp["IdCompania"].ToString())) == Model.IdCompania)
+                                        {
+                                            <option selected value="@(drComp["IdCompania"].ToString())">@(drComp["NomCompania"].ToString())</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(drComp["IdCompania"].ToString())">@(drComp["NomCompania"].ToString())</option>
+                                        }
+                                    }
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Nombre
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgNomEvaluacion" type="text" class="form-control" autocomplete="Off" name="dgNomEvaluacion" value="@Html.Encode(Model.NomEvaluacion)" placeholder="Nombre de la Evaluación"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Descipción
+                        </div>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                @*<input id="dgDesEvaluacion" type="text" class="form-control" autocomplete="Off" name="dgDesEvaluacion" value="@Html.Encode(Model.DesEvaluacion)" placeholder="Descripción de la Evaluación"
+                        data-bv-notempty="true"
+                        data-bv-notempty-message="El campo es Obligatorio" />*@
+
+
+
+                                <textarea name="dgdesObjetivo" id="dgDesEvaluacion" class="form-control" rows="3" placeholder="Descripción de la Evaluación">@Html.Encode(Model.DesEvaluacion)</textarea>
+
+
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Instrucción
+                        </div>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                @*<input id="dgInsEvaluacion" type="text" class="form-control" autocomplete="Off" name="dgInsEvaluacion" value="@Html.Encode(Model.InsEvaluacion)" placeholder="Instrucciones para la Evaluación"
+                        data-bv-notempty="true"
+                        data-bv-notempty-message="El campo es Obligatorio" />*@
+
+                                <textarea name="dgdesObjetivo" id="dgInsEvaluacion" class="form-control" rows="3" placeholder="Instrucciones para la Evaluación">@Html.Encode(Model.InsEvaluacion)</textarea>
+
+
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Inicio
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgdfInicio" type="text" class="form-control date-picker" name="dgdfInicio" value="@Html.Encode(Model.dfInicio.ToString())" data-date-format="dd/mm/yyyy" placeholder="Fecha de Inicio de la Evaluación"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Término
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgdfTermino" type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" name="dgdfTermino" value="@Html.Encode(Model.dfTermino.ToString())" placeholder="Fecha de Término de la Evaluación"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Tipo Evaluación
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="numIdTipoEvaluacion" name="numIdTipoEvaluacion" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtTipoEval = null;
+                                        dtTipoEval = (ViewBag.TipoEvaluacion != null) ? (DataTable)ViewBag.TipoEvaluacion : null;
+                                    }
+                                    @foreach (DataRow drTeval in dtTipoEval.Rows)
+                                    {
+                                        if (int.Parse((drTeval["IdTipoEvaluacion"].ToString())) == Model.IdTipoEvaluacion)
+                                        {
+                                            <option selected value="@(drTeval["IdTipoEvaluacion"].ToString())">@(drTeval["NomTipoEvaluacion"].ToString())</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(drTeval["IdTipoEvaluacion"].ToString())">@(drTeval["NomTipoEvaluacion"].ToString())</option>
+                                        }
+                                    }
+                                </select>
+                                <i class="" id="IdTipoEvaluacionIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- ESTA SECCION ES UN LISTBOX GENERICO  -->
+                    <!--== INICIO -->
+
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Area Aplicación
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="numIdCompSucAreDep" name="numIdCompSucAreDep" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtGenerico = null;
+                                        dtGenerico = (ViewBag.Generico != null) ? (DataTable)ViewBag.Generico : null;
+                                    }
+
+                                    @foreach (DataRow drGen in dtGenerico.Rows)
+                                    {
+                                        if (int.Parse((drGen["Id"].ToString())) == Model.IdCompSucAreDep)
+                                        {
+                                            <option selected value="@(drGen["Id"].ToString())">@(drGen["Descripcion"].ToString())</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(drGen["Id"].ToString())">@(drGen["Descripcion"].ToString())</option>
+                                        }
+
+                                    }
+                                </select>
+                                <i class="" id="IdCompSucAreDepIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <!--== FIN -->
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            Estado
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <select id="numIdEstado" name="numIdEstado" class="form-control" style="width: 100%;">
+                                    <option value="0"> </option>
+                                    @{
+                                        DataTable dtEstado = null;
+                                        dtEstado = (ViewBag.Estado != null) ? (DataTable)ViewBag.Estado : null;
+                                    }
+                                    @foreach (DataRow dr in dtEstado.Rows)
+                                    {
+                                        if (int.Parse(dr["IdEstado"].ToString()) == Model.IdEstado)
+                                        {
+                                            <option selected value="@(dr["IdEstado"].ToString())">@(dr["NomEstado"].ToString())</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(dr["IdEstado"].ToString())">@(dr["NomEstado"].ToString())</option>
+                                        }
+
+                                    }
+                                </select>
+                                <i class="" id="IdEstadoIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <span class="widget-caption">
+                        <hr />
+                    </span>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            @*@if (User.IsInRole("ope_compania_crear")) *@
+                            @*{*@
+                            <button id="btnActualizar" class="btn btn-primary" onclick="ActualizarCabEvaluacionBD(numCabEvaluacion,numIdCompania,dgNomEvaluacion,dgDesEvaluacion,dgInsEvaluacion,dgdfInicio,dgdfTermino,numIdTipoEvaluacion,numIdCompSucAreDep,numIdEstado,btnActualizar)"><i class="fa fa-floppy-o"></i>Grabar</button>
+
+
+                            @*}*@
+                            @*else*@
+                            @*{*@
+                            @*<button id="btnAgregar" class="btn-primary" disabled onclick="GrabarAdjuntoBD(dgDescripcion,NomArchivo,AtachTable,btnAgregar)><i class="fa fa-folder-open-o"></i>Grabar</button>*@
+                            @* } *@
+
+                            @*@if (User.IsInRole("ope_compania_crear")) *@
+                            @*{*@
+                            @*<button id="btnVolver" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-undo"></i>Volver</button>*@
+
+                            @*}*@
+                            @*else*@
+                            @*{*@
+                            @*<button disabled id="btnVolver" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-undo"></i>Volver</button>*@
+                            @* } *@
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <form id="FormFase" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="IdCabEvalFase" id="IdCabEvalFase" value="0" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="FasesJSON" id="FasesJSON" value="" readonly />
+    </form>
+
+    <form id="FormCabEval" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="IdCabEval" value="0" id="IdCabEval" readonly />
+    </form>
+
+    <form id="FormCabEvaluacion" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="IdCabEvaluacion" value="" id="IdCabEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdCompania" value="" id="IdCompania" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="NomEvaluacion" value="" id="NomEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="DesEvaluacion" value="" id="DesEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="InsEvaluacion" value="" id="InsEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="dfInicio" value="" id="dfInicio" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="dfTermino" value="" id="dfTermino" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdTipoEvaluacion" value="" id="IdTipoEvaluacion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdCompSucAreDep" value="" id="IdCompSucAreDep" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdEstado" value="" id="IdEstado" readonly />
+    </form>
+
+</div>
+
+
+<!--Email Modal Templates-->
+<div id="myEmailModal" class="modal fade" data-backdrop="static" data-keyboard="false" style="display:none;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="To" required="">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Subject" required="">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Content" rows="5" required=""></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var relativeUrl = HttpContext.Current.Request.Url.Segments;
+    var url = string.Empty;
+
+    foreach (var item in relativeUrl)
+    {
+        if (!item.Equals("Edit"))
+        {
+            url += item;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/jquery.blockUI.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript" class="init">
+
+
+  $(document).ready(function () {
+            $('#searchable').DataTable({
+
+                "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+                "aaSorting": [[0, 'asc']],
+                "aLengthMenu": [
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "All"]
+                ],
+                "iDisplayLength": 10,
+                "oTableTools": {
+                    "aButtons": [
+                       // "copy",
+                       // "print",
+                        {
+                            "sExtends": "print",
+                            "sButtonText": "<i class=\"fa fa-print\"></i> Imprimir",
+                            "aButtons": ["print"]
+                        },
+                        {
+                            "sExtends": "collection",
+                            "sButtonText": "<i class=\"fa fa-save\"></i> Guardar",
+                            "aButtons": ["csv", "xls", "pdf"]
+                        }
+
+                    ],
+                    "sSwfPath": "../assets/swf/copy_csv_xls_pdf.swf"
+                },
+                "language": {
+                    "search": "",
+                    "sLengthMenu": "_MENU_",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                initComplete: function () {
+                    this.api().columns([0,1,2,3,4]).every(function () {
+                        var column = this;
+                        var select = $('<select placeholder="Search Modelo" class="selectpicker" data-style="btn-primary"><option value="">Todos</option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                }
+            });
+        });
+
+
+      //--Bootstrap Date Picker--
+        $('.date-picker').datepicker();
+
+
+//Eliminar un registro dentro de la tabla
+  $('#searchable #btn_DELETE').on("click", function (e)
+  {
+     var _this = this;
+     var stExito = '';
+     var nRow = $(this).parents('tr')[0];
+     var IdCabEvaluacion = $(this).parents('td')[0].id;
+     var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+
+     opsConfirm.message = "¿Desea eliminar la Evaluación n° " + IdCabEvaluacion + " ?";
+     opsConfirm.buttons.success.callback = function ()
+     {
+        stExito = EliminarEvaluacionBD(IdCabEvaluacion);
+
+        if (stExito == 'S')
+        {
+           var oTable = $('#searchable').dataTable()
+           oTable.fnDeleteRow(nRow);
+        }
+
+     };
+     bootbox.dialog(opsConfirm);
+ });
+
+ // CREAR FASES DE UNA EVALUACION
+  function CrearFases(IdCabEval)
+  {
+
+    if (IdCabEval > 0)
+    {
+       $("#IdCabEval").val(IdCabEval);
+
+      mostrarModalParam("FaseCreate");
+    }
+
+
+  }
+
+
+  // ELIMINAR EVALUACION DE LA BASE DE DATOS
+  function EliminarEvaluacionBD(IdCabEval)
+  {
+        var stExito = '';
+
+        // ASIGNO ID AL FORMULARIO OCULTO
+        $("#IdCabEval").val(IdCabEval);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "Evaluacion")',
+            data: $("#FormCabEval").serialize(),
+            async: false,
+            success: function (response) {
+                if(response=="ELIMINADO")
+                Notify('La Evaluación se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                stExito = 'S';
+
+            },
+            failure: function (response) {
+
+                Notify('Hubo un error al eliminar la Evaluaión, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+  }
+
+
+ $("#FormCabEval").on('submit', function (e) {
+
+    var valid = true;
+    valid = checkEmpty($("#IdCabEval"));
+
+    if (!valid)
+    {
+        evt.preventDefault();
+    }
+
+ });
+
+ function Editar(IdCabEvaluacion) {
+
+    if (IdCabEvaluacion > 0) {
+        $("#IdCabEval").val(IdCabEvaluacion);
+
+        mostrarModalParam("Edit");
+    }
+
+ }
+
+  //DESPLEGAR CREACION EVALUACION
+  //$('#btn_create').on("click", function (e) {
+
+  //    //mostrarModal("Create");
+
+  //    window.location.href = 'Evaluacion/Create'
+
+  //});
+
+// QUITAR UNA FASE DESDE TABLA HTML
+ //function QuitarFaseHtml(tableTipoFase,FaseId,IdRow)
+ //{
+ //    var fila = IdRow.parentNode.parentNode.rowIndex;
+
+ //    var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+
+ //    opsConfirm.message = "¿Desea eliminar la Fase n° " + FaseId + " ?";
+ //    opsConfirm.buttons.success.callback = function ()
+ //    {
+ //        document.getElementById(tableTipoFase.id).deleteRow(fila);
+ //    };
+
+ //    bootbox.dialog(opsConfirm);
+
+ //}
+
+ // GRABAR FASES EN BD
+ function GrabarFasesBD(dgCabEvaluacion,tableTipoFase,btnAgregaFase)
+ {
+     var fases = new Array();
+
+     for (var i = 1; i < tableTipoFase.rows.length; i++)
+     {
+       //Reference the Table Row.
+       var row = tableTipoFase.rows[i];
+
+       //Copy values from Table Cell to JSON object.
+       var fase = {};
+       fase.Id = row.cells[0].innerHTML;
+       //fase.Inicio = row.cells[2].innerHTML;
+       //fase.Termino = row.cells[3].innerHTML;
+
+       fase.Inicio =  row.cells[2].getElementsByTagName('input')[0].value;
+
+       fase.Termino = row.cells[3].getElementsByTagName('input')[0].value;
+
+       fases.push(fase);
+
+
+     }
+
+     $("#FasesJSON").val(JSON.stringify(fases));
+     $("#IdCabEvalFase").val(dgCabEvaluacion);
+
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateFases", "Fase")',
+            data: $("#FormFase").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0)
+                {
+                    if (strRespuesta == "INSERTADO")
+                    {
+                        Notify('Las Fases de la Evaluación se crearon correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                        $("#btnAgregaFase").attr("disabled", true);
+                    }
+                    else
+                    {
+                        Notify('ATENCION: ' + strRespuesta, 'bottom-right', '10000', 'danger', 'fa-times', true);
+                    }
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al crear las Fases de la Evaluación, revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+            }
+        });
+
+
+ }
+
+ function ActualizarCabEvaluacionBD(numCabEvaluacion,numIdCompania,dgNomEvaluacion,dgDesEvaluacion,dgInsEvaluacion,dgdfInicio,dgdfTermino,numIdTipoEvaluacion,numIdCompSucAreDep,numIdEstado,btnActualizar)
+ {
+      var strIdCabEvaluacion = "" + numCabEvaluacion.value;
+      var strIdCompania = "" + numIdCompania.value;
+      var strNomEvaluacion = "" + dgNomEvaluacion.value;
+      var strDesEvaluacion = "" + dgDesEvaluacion.value;
+      var strInsEvaluacion = "" + dgInsEvaluacion.value;
+      var strdfInicio = "" + dgdfInicio.value;
+      var strdfTermino = "" + dgdfTermino.value;
+      var strIdTipoEvaluacion = "" + numIdTipoEvaluacion.value;
+      var strIdCompSucAreDep = "" + numIdCompSucAreDep.value;
+      var strEstado = "" + numIdEstado.value;
+
+      $("#IdCabEvaluacion").val(strIdCabEvaluacion);
+      $("#IdCompania").val(strIdCompania);
+      $("#NomEvaluacion").val(strNomEvaluacion);
+      $("#DesEvaluacion").val(strDesEvaluacion);
+      $("#InsEvaluacion").val(strInsEvaluacion);
+      $("#dfInicio").val(strdfInicio);
+      $("#dfTermino").val(strdfTermino);
+      $("#IdTipoEvaluacion").val(strIdTipoEvaluacion);
+      $("#IdCompSucAreDep").val(strIdCompSucAreDep);
+      $("#IdEstado").val(strEstado);
+
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateCabEvaluacion", "Evaluacion")',
+            data: $("#FormCabEvaluacion").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0) {
+                    Notify('La Evaluacion "' + dgNomEvaluacion.value + '", se actualizó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+
+                    var intPos = strRespuesta.indexOf(';');
+                    var strIdCabEvaluacion = strRespuesta.substring(0, intPos);
+                    var strUrl = strRespuesta.substring(intPos + 1, strRespuesta.length);
+
+                    $("#IdCabEvaluacion").val(strIdCabEvaluacion.toString());
+                    //$("#btnActualizar").attr("disabled", true);
+                    stExito = 'S';
+                }
+                else
+                {
+                    if (strRespuesta.length < 1)
+                    {
+                         Notify('Hubo un problema al actualizar la Evaluacion "' + dgNomEvaluacion.value + '", revise y vuelva a intentar.', 'bottom-right', '5000', 'warning', 'fa-check', true);
+                    }
+
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al grabar la Evaluacion "' + dgNomEvaluacion.value + '", revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+
+  }
+
+  //GRABA UNA NUEVA EVALUACION
+  function GrabarCabEvaluacionBD(numIdCompania,dgNomEvaluacion,dgDesEvaluacion,dgInsEvaluacion,dgdfInicio,dgdfTermino,numIdTipoEvaluacion,numIdEstado,btnAgregar)
+  {
+
+      var strIdCompania = "" + numIdCompania.value;
+      var strNomEvaluacion = "" + dgNomEvaluacion.value;
+      var strDesEvaluacion = "" + dgDesEvaluacion.value;
+      var strInsEvaluacion = "" + dgInsEvaluacion.value;
+      var strdfInicio = "" + dgdfInicio.value;
+      var strdfTermino = "" + dgdfTermino.value;
+      var strIdTipoEvaluacion = "" + numIdTipoEvaluacion.value;
+      var strEstado = "" + numIdEstado.value;
+
+      $("#IdCabEvaluacion").val('999999999');
+      $("#IdCompania").val(strIdCompania);
+      $("#NomEvaluacion").val(strNomEvaluacion);
+      $("#DesEvaluacion").val(strDesEvaluacion);
+      $("#InsEvaluacion").val(strInsEvaluacion);
+      $("#dfInicio").val(strdfInicio);
+      $("#dfTermino").val(strdfTermino);
+      $("#IdTipoEvaluacion").val(strIdTipoEvaluacion);
+      $("#IdEstado").val(strEstado);
+
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateCabEvaluacion", "Evaluacion")',
+            data: $("#FormCabEvaluacion").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0)
+                {
+                    Notify('La Evaluacion "' + dgNomEvaluacion.value + '" se grabó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+
+                    var intPos = strRespuesta.indexOf(';');
+                    var strIdCabEvaluacion = strRespuesta.substring(0, intPos);
+                    var strUrl = strRespuesta.substring(intPos + 1, strRespuesta.length);
+
+                    $("#IdCabEvaluacion").val(strIdCabEvaluacion.toString());
+                    $("#btnAgregar").attr("disabled", true);
+                    stExito = 'S';
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al grabar la Evaluacion"' + dgNomEvaluacion.value + '", revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+
+  }
+
+
+
+  function mostrarModal(page)
+  {
+
+      //alert('@url/' + page);
+      $.blockUI();
+      $.ajax({
+              url: '@url/' + page,
+              jsonp: false,
+              data: {}, //Si le vas a pasar parámetros
+              async: true,
+              beforeSend: function () {
+
+              },
+              success: function (data) {
+                  $.unblockUI();
+                  bootbox.dialog({
+                      message: data,
+                      title: "Sistema Evaluaciones",
+                      className: "modal-darkorange"//,
+                        //buttons: {
+                        //    success: {
+                        //        label: "Send",
+                        //        className: "btn-blue",
+                        //        callback: function () { }
+                        //    },
+                        //    "Save as Draft": {
+                        //        className: "btn-danger",
+                        //        callback: function () { }
+                        //    }
+                        //}
+                  });
+
+              },
+              error: function () {
+                  $('#myModal').removeClass("modal-body");
+                  $('#myModal').modal({ show: false });
+                  //alert("error");
+                  //$('ModalPage').removeClass('loading'); //Removemos la clase loading
+
+              }
+      });
+
+
+
+  }
+
+  function mostrarModalParam(page)
+  {
+      $.blockUI();
+      $.ajax({
+              type: 'POST',
+              url: '@url/' + page,
+              jsonp: false,
+              data: $("#FormCabEval").serialize(), //Si le vas a pasar parámetros
+              async: true,
+              beforeSend: function () {
+
+              },
+              success: function (data) {
+                  $.unblockUI();
+                  bootbox.dialog({
+                      message: data,
+                      title: "Sistema Evaluaciones",
+                      className: "modal-darkorange"//,
+                        //buttons: {
+                        //    success: {
+                        //        label: "Send",
+                        //        className: "btn-blue",
+                        //        callback: function () { }
+                        //    },
+                        //    "Save as Draft": {
+                        //        className: "btn-danger",
+                        //        callback: function () { }
+                        //    }
+                        //}
+                  });
+
+              },
+              error: function () {
+                  $('#myModal').removeClass("modal-body");
+                  $('#myModal').modal({ show: false });
+                  //alert("error");
+                  //$('ModalPage').removeClass('loading'); //Removemos la clase loading
+
+              }
+      });
+
+
+
+  }
+
+
+  $("#myModal").on('hidden.bs.modal', function () {
+           // alert("Esta accion se ejecuta al cerrar el modal")
+            $('#myModal').removeClass("modal-body");
+            $('#myModal .modal-body').load('@url/Loading', function () { });
+
+
+        });
+
+
+
+
+  $(function () {
+            $("#myEmailModal").draggable();
+        });
+    </script>
+
+}

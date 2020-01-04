@@ -1,0 +1,874 @@
+﻿@using System
+@using Microsoft.AspNet.Identity
+@using System.Data
+@using System.Collections.Generic
+@using CoreLibrary;
+@using CoreLibrary.Business;
+@using CoreLibrary.Web.Bootstrap;
+@using MvcSiteMapProvider.Web.Html
+
+@{
+
+    Dictionary<string, object> userData = new Dictionary<string, object>();
+    if (ViewBag.User != null)
+    {
+        userData = ((DataRow)ViewBag.User).GetDictionary();
+    }
+
+    Dictionary<string, object> AlertsData = new Dictionary<string, object>();
+
+    DataTable dt = null;
+    dt = (ViewBag.Alerts != null) ? (DataTable)ViewBag.Alerts : null;
+
+    if (dt != null && dt.Rows.Count > 0)
+    {
+        AlertsData = dt.GetFirstRow().GetDictionary();
+    }
+
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+
+    <meta name="description" content="@ViewBag.Description" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="https://www.dycsa.cl/wp-content/uploads/2019/06/dyclogo.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    @Styles.Render("~/css/bootstrap")
+
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+
+
+    <!--Fonts-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300"
+          rel="stylesheet" type="text/css">
+
+    <!--Beyond styles-->
+    @Styles.Render("~/css/beyond")
+    <link id="skin-link" href="~/assets/css/skins/deepblue.min.css" rel="stylesheet" type="text/css" />
+    <link id="bootstrap-rtl-link" href="~/assets/css/SIT.css" rel="stylesheet" type="text/css" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+
+    @Scripts.Render("~/bundles/skin")
+
+
+</head>
+<!-- /Head -->
+<!-- Body -->
+<body>
+    <!-- Loading Container -->
+    <div class="loading-container">
+        <div class="loader"></div>
+    </div>
+    <!--  /Loading Container -->
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-container">
+                <!-- Navbar Barnd -->
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand">
+                        <small>
+                            @*<img width="1040" height="133" src="~/assets/img/logo.png" alt="" />*@
+                            <img src="https://www.dycsa.cl/wp-content/uploads/2019/06/dyclogo.png" alt="NETCORE." style="max-width: 100%; max-height: 100%" />
+                        </small>
+                    </a>
+                </div>
+                <!-- /Navbar Barnd -->
+                <!-- Sidebar Collapse -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="collapse-icon fa fa-bars"></i>
+                </div>
+                <!-- /Sidebar Collapse -->
+                <!-- Account Area and Settings --->
+                <div class="navbar-header pull-right">
+                    <div class="navbar-account">
+                        <ul class="account-area" onload="JavaScript:timedRefresh(5000);">
+                            <li id="alert_icon">
+                                @{
+                                    int numNotified = 0;
+
+                                    if (dt != null)
+                                    {
+                                        DataRow[] drsNotifieds = dt.Select("Notified <> 1");
+                                        numNotified = (drsNotifieds != null) ? drsNotifieds.Length : 0;
+                                    }
+
+                                    string badgeClass = "";
+                                    string badgeStyle = "";
+
+                                    if (numNotified > 0)
+                                    {
+                                        badgeClass = "badge";
+                                        badgeStyle = "background-color:red!important;";
+                                    }
+                                    else
+                                    {
+                                        badgeClass = string.Empty;
+                                        badgeStyle = string.Empty;
+                                    }
+
+                                }
+
+                                @if (User.IsInRole("core_ui_alerts"))
+                                {
+
+                                    <a class="dropdown-toggle" data-toggle="dropdown" title="Help" href="#">
+                                        <i class="icon fa fa-warning"></i>
+                                        <span class="@badgeClass" style="@badgeStyle">
+                                            @if (numNotified > 0)
+                                            {
+                                                @numNotified.ToString();
+                                            }
+                                        </span>
+                                    </a>
+
+                                    <!--Notification Dropdown-->
+                                    <ul style="width:100px; height:500px; overflow:auto;" class="pull-right dropdown-menu dropdown-arrow dropdown-notifications" id="NewsList" onclick="JavaScript:setTimeout(5000)">
+                                        @if (dt != null && dt.Rows.Count > 0)
+                                        {
+                                            foreach (DataRow dr in dt.Rows)
+                                            {
+                                                string alert_estilo = "bg-darkorange";
+                                                if (!dr.IsNull("Readed") && Convert.ToBoolean(dr["Readed"]))
+                                                {
+                                                    alert_estilo = "bg-gray";
+                                                }
+                                                <li class="item_alert" id="@(dr["Id"].ToString())">
+                                                    <!--Notificaciones Leídas-->
+                                                    <a href="/Administration/Alerts/Details?id=@(dr["Id"].ToString())">
+                                                        <div class="clearfix">
+
+                                                            <div class="notification-icon">
+                                                                <i class="fa fa-check @alert_estilo white"></i>
+                                                            </div>
+                                                            <div class="notification-body">
+                                                                <span class="title">@(dr["Title"].ToString())&nbsp</span>
+                                                                <span class="description">@(dr["CreatedRecord"].ToString())&nbsp</span>
+                                                            </div>
+                                                            <div class="notification-extra">
+                                                                @{string ExtraIcon = AlertsData["ExtraIcon"].ToString();}
+                                                                <i class="@ExtraIcon"></i>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            }
+                                        }
+                                        <!--Ver todas las alrtas-->
+                                        <a href="~/Administration/Alerts">
+                                            <li>
+
+                                                <div class="notification-extra" style="padding-right:40%">
+                                                    <i class="fa fa-search"></i>
+                                                    <span>Ver todo</span>
+                                                </div>
+                                            </li>
+                                        </a>
+                                        <!--
+                                        <li>
+                                            <a href="#">
+                                                <div class="clearfix">
+                                                    <div class="notification-icon">
+                                                        <i class="fa fa-gift bg-warning white"></i>
+                                                    </div>
+                                                    <div class="notification-body">
+                                                        <span class="title">Cumpleaños de Juan</span>
+                                                        <span class="description">09:30 am</span>
+                                                    </div>
+                                                    <div class="notification-extra">
+                                                        <i class="fa fa-calendar warning"></i>
+                                                        <i class="fa fa-clock-o warning"></i>
+                                                        <span class="description">oficina</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-footer ">
+                                            <span>
+                                                Hoy, @(DateTime.Now.ToString("MMMM dd"))
+                                            </span>
+                                            <span class="pull-right">
+                                                20°c
+                                                <i class="wi wi-cloudy"></i>
+                                            </span>
+                                        </li>
+                                        -->
+                                    </ul>
+                                    <!--/Notification Dropdown-->
+                                }
+                            </li>
+
+                            <li>
+                                @if (User.IsInRole("core_ui_message_nomostrar"))
+                                {
+                                    <a class="dropdown-toggle" data-toggle="dropdown" title="Help" href="#">
+                                        <i class="icon fa fa-envelope"></i>
+                                        <span class="badge">3</span>
+                                    </a>
+
+                                    <!--Messages Dropdown-->
+                                    <ul class="pull-right dropdown-menu dropdown-arrow dropdown-messages">
+                                        <li>
+                                            <a href="#">
+                                                <img src="~/assets/img/avatars/usuario-vacio.png" class="message-avatar" alt="Victor López">
+                                                <div class="message">
+                                                    <span class="message-sender">
+                                                        Victor López
+                                                    </span>
+                                                    <span class="message-time">
+                                                        hace 2 minutos
+                                                    </span>
+                                                    <span class="message-subject">
+                                                        Datos para proyecto
+                                                    </span>
+                                                    <span class="message-body">
+                                                        Información relacionada con el proyecto que te había mencionado
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <img src="~/assets/img/avatars/bing.png" class="message-avatar" alt="Emol.com">
+                                                <div class="message">
+                                                    <span class="message-sender">
+                                                        Emol.com
+                                                    </span>
+                                                    <span class="message-time">
+                                                        Ayer
+                                                    </span>
+                                                    <span class="message-subject">
+                                                        Emol lectores
+                                                    </span>
+                                                    <span class="message-body">
+                                                        Revise la información actualizada en su ciudad
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <img src="~/assets/img/avatars/usuario-vacio.png" class="message-avatar" alt="Nicolás Valenzuela">
+                                                <div class="message">
+                                                    <span class="message-sender">
+                                                        Nicolás Valenzuela
+                                                    </span>
+                                                    <span class="message-time">
+                                                        Lunes, Marzo 21
+                                                    </span>
+                                                    <span class="message-subject">
+                                                        Nuevas cámaras 4K disponibles
+                                                    </span>
+                                                    <span class="message-body">
+                                                        Tengo disponibles las nuevas cámaras en 4K favor comunicarse
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <!--/Messages Dropdown-->
+                                }
+                            </li>
+
+                            <li>
+                                @if (User.IsInRole("core_ui_message_nomostrar"))
+                                {
+                                    <a class="dropdown-toggle" data-toggle="dropdown" title="Tasks" href="#">
+                                        <i class="icon fa fa-tasks"></i>
+                                        <span class="badge">4</span>
+                                    </a>
+                                    <!--Tasks Dropdown-->
+                                    <ul class="pull-right dropdown-menu dropdown-tasks dropdown-arrow ">
+                                        <li class="dropdown-header bordered-darkorange">
+                                            <i class="fa fa-tasks"></i>
+                                            4 tareas en progreso
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <div class="clearfix">
+                                                    <span class="pull-left">Perfil Completo</span>
+                                                    <span class="pull-right">65%</span>
+                                                </div>
+
+                                                <div class="progress progress-xs">
+                                                    <div style="width:65%" class="progress-bar"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!--
+                                        <li>
+                                            <a href="#">
+                                                <div class="clearfix">
+                                                    <span class="pull-left">Profile Data</span>
+                                                    <span class="pull-right">35%</span>
+                                                </div>
+
+                                                <div class="progress progress-xs">
+                                                    <div style="width:35%" class="progress-bar progress-bar-success"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <div class="clearfix">
+                                                    <span class="pull-left">Updating Resume</span>
+                                                    <span class="pull-right">75%</span>
+                                                </div>
+
+                                                <div class="progress progress-xs">
+                                                    <div style="width:75%" class="progress-bar progress-bar-darkorange"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <div class="clearfix">
+                                                    <span class="pull-left">Adding Contacts</span>
+                                                    <span class="pull-right">10%</span>
+                                                </div>
+
+                                                <div class="progress progress-xs">
+                                                    <div style="width:10%" class="progress-bar progress-bar-warning"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li class="dropdown-footer">
+                                            <a href="#">
+                                                See All Tasks
+                                            </a>
+                                            <button class="btn btn-xs btn-default shiny darkorange icon-only pull-right"><i class="fa fa-check"></i></button>
+                                        </li>
+                                        -->
+                                    </ul>
+                                    <!--/Tasks Dropdown-->
+                                }
+                            </li>
+                            <li>
+                                @if (User.IsInRole("core_ui_message_nomostrar"))
+                                {
+                                    <a class="wave in" id="chat-link" title="Chat" href="#">
+                                        <i class="icon glyphicon glyphicon-comment"></i>
+                                    </a>
+                                }
+
+                            </li>
+                            <li>
+                                <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                                    <div class="avatar" title="Ver tu perfil">
+                                        <img src="/assets/img/avatars/usuario-vacio.png">
+                                    </div>
+                                    <section>
+                                        <h2><span class="profile"><span>@userData["FullName"].ToString() - @userData["Email"].ToString()</span></span></h2>
+                                    </section>
+                                </a>
+                                <!--Login Area Dropdown-->
+                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                    <li class="username"><a>@userData["FullName"].ToString()</a></li>
+                                    <li class="email"><a>@userData["Email"].ToString()</a></li>
+                                    <!--Avatar Area-->
+                                    <li>
+                                        <div class="avatar-area">
+                                            <img src="~/assets/img/avatars/usuario-vacio.png" class="avatar">
+                                            <span class="caption">Cambiar foto</span>
+                                        </div>
+                                    </li>
+                                    <!--Avatar Area-->
+                                    <li class="edit">
+                                        <a href="profile.html" class="pull-left">Perfil</a>
+                                        <a href="#" class="pull-right">Configuración</a>
+                                    </li>
+                                    <!--Theme Selector Area-->
+                                    <!--
+                                    <li class="theme-area">
+                                        <ul class="colorpicker" id="skin-changer">
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="~/assets/css/skins/blue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="~/assets/css/skins/azure.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="~/assets/css/skins/teal.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="~/assets/css/skins/green.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="~/assets/css/skins/orange.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="~/assets/css/skins/pink.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="~/assets/css/skins/darkred.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="~/assets/css/skins/purple.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="~/assets/css/skins/darkblue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="~/assets/css/skins/gray.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="~/assets/css/skins/black.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="~/assets/css/skins/green.min.css"></a></li>
+                                        </ul>
+                                    </li>
+                                    -->
+                                    <!--/Theme Selector Area-->
+                                    <li class="dropdown-footer">
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            using (Html.BeginForm("LogOff", "Account", new { Area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+
+                                                <a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a>
+                                            }
+                                        }
+                                    </li>
+                                </ul>
+                                <!--/Login Area Dropdown-->
+                            </li>
+                            <!-- /Account Area -->
+                            <!--Note: notice that setting div must start right after account area list.
+                            no space must be between these elements-->
+                            <!-- Settings -->
+                        </ul><div class="setting">
+                            <a id="btn-setting" title="Setting" href="#">
+                                <i class="icon glyphicon glyphicon-cog"></i>
+                            </a>
+                        </div><div class="setting-container">
+                            <label>
+                                <input type="checkbox" id="checkbox_fixednavbar">
+                                <span class="text">Fijar barra</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" id="checkbox_fixedsidebar">
+                                <span class="text">Fijar menú</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" id="checkbox_fixedbreadcrumbs">
+                                <span class="text">Fijar detalle</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" id="checkbox_fixedheader">
+                                <span class="text">Fijar cabecera</span>
+                            </label>
+                        </div>
+                        <!-- Settings -->
+                    </div>
+                </div>
+                <!-- /Account Area and Settings -->
+            </div>
+        </div>
+    </div>
+    <!-- /Navbar -->
+    <!-- Main Container -->
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                <div class="sidebar-header-wrapper">
+                    <input type="text" class="searchinput" />
+                    <i class="searchicon fa fa-search"></i>
+                    <div class="searchhelper">Buscar módulos, reportes, gráficos, notificaciones</div>
+                </div>
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                @try
+                {
+                    @Html.MvcSiteMap().Menu()
+                }
+                catch (Exception ex)
+                {
+                    var error = ex.Message;
+
+                }<!-- /Sidebar Menu -->
+            </div>
+            <!-- /Page Sidebar -->
+            <!-- Chat Bar -->
+            <div id="chatbar" class="page-chatbar">
+                <div class="chatbar-contacts">
+                    <div class="contacts-search">
+                        <input type="text" class="searchinput" placeholder="Buscar contactos" />
+                        <i class="searchicon fa fa-search"></i>
+                        <div class="searchhelper">Buscar contactos ne el historial de chat</div>
+                    </div>
+                    <ul class="contacts-list">
+                        <li class="contact">
+                            <div class="contact-avatar">
+                                <img src="~/assets/img/avatars/usuario-vacio.png" />
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">Nicolás Valenzuela</div>
+                                <div class="contact-status">
+                                    <div class="online"></div>
+                                    <div class="status">en línea</div>
+                                </div>
+                                <div class="last-chat-time">
+                                    semana anterior
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="contact-avatar">
+                                <img src="~/assets/img/avatars/usuario-vacio.png" />
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">Victor López</div>
+                                <div class="contact-status">
+                                    <div class="offline"></div>
+                                    <div class="status">hace 4 minutos</div>
+                                </div>
+                                <div class="last-chat-time">
+                                    hoy
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="contact-avatar">
+                                <img src="~/assets/img/avatars/usuario-vacio.png" />
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">Patricia Medina</div>
+                                <div class="contact-status">
+                                    <div class="online"></div>
+                                    <div class="status">en línea</div>
+                                </div>
+                                <div class="last-chat-time">
+                                    01:57 am
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="contact-avatar">
+                                <img src="~/assets/img/avatars/usuario-vacio.png" />
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">Osvaldo Pizarro</div>
+                                <div class="contact-status">
+                                    <div class="online"></div>
+                                    <div class="status">en línea</div>
+                                </div>
+                                <div class="last-chat-time">
+                                    today
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="contact-avatar">
+                                <img src="~/assets/img/avatars/usuario-vacio.png" />
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">Catalina Gutierrez</div>
+                                <div class="contact-status">
+                                    <div class="online"></div>
+                                    <div class="status">en línea</div>
+                                </div>
+                                <div class="last-chat-time">
+                                    today
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="contact-avatar">
+                                <img src="~/assets/img/avatars/usuario-vacio.png" />
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">María José Rivera</div>
+                                <div class="contact-status">
+                                    <div class="online"></div>
+                                    <div class="status">en línea</div>
+                                </div>
+                                <div class="last-chat-time">
+                                    ayer
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="contact-avatar">
+                                <img src="~/assets/img/avatars/usuario-vacio.png" />
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">Pedro Aros</div>
+                                <div class="contact-status">
+                                    <div class="offline"></div>
+                                    <div class="status">offline</div>
+                                </div>
+                                <div class="last-chat-time">
+                                    22 mar
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="contact-avatar">
+                                <img src="~/assets/img/avatars/usuario-vacio.png" />
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">Guillermina Larraín</div>
+                                <div class="contact-status">
+                                    <div class="online"></div>
+                                    <div class="status">en línea</div>
+                                </div>
+                                <div class="last-chat-time">
+                                    ayer
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact">
+                            <div class="contact-avatar">
+                                <img src="~/assets/img/avatars/usuario-vacio.png" />
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-name">Juan Castaño</div>
+                                <div class="contact-status">
+                                    <div class="online"></div>
+                                    <div class="status">en línea</div>
+                                </div>
+                                <div class="last-chat-time">
+                                    una semana
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chatbar-messages" style="display: none;">
+                    <div class="messages-contact">
+                        <div class="contact-avatar">
+                            <img src="~/assets/img/avatars/usuario-vacio.png" />
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-name">Juan Castaño</div>
+                            <div class="contact-status">
+                                <div class="online"></div>
+                                <div class="status">en línea</div>
+                            </div>
+                            <div class="last-chat-time">
+                                hace 5 minutos
+                            </div>
+                            <div class="back">
+                                <i class="fa fa-arrow-circle-left"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="messages-list">
+                        <li class="message">
+                            <div class="message-info">
+                                <div class="bullet"></div>
+                                <div class="contact-name">Yo</div>
+                                <div class="message-time">11:14 am, hoy</div>
+                            </div>
+                            <div class="message-body">
+                                Hola, espero que estés bien ¿vas a la reunión de hoy?
+                            </div>
+                        </li>
+                        <li class="message reply">
+                            <div class="message-info">
+                                <div class="bullet"></div>
+                                <div class="contact-name">Juan</div>
+                                <div class="message-time">11:14 am, hoy</div>
+                            </div>
+                            <div class="message-body">
+                                Hola, espero que estés bien ¿vas a la reunión de hoy?
+                            </div>
+                        </li>
+                        <li class="message">
+                            <div class="message-info">
+                                <div class="bullet"></div>
+                                <div class="contact-name">Yo</div>
+                                <div class="message-time">11:14 am, hoy</div>
+                            </div>
+                            <div class="message-body">
+                                Hola, espero que estés bien ¿vas a la reunión de hoy?
+                            </div>
+                        </li>
+                        <li class="message reply">
+                            <div class="message-info">
+                                <div class="bullet"></div>
+                                <div class="contact-name">Juan</div>
+                                <div class="message-time">11:14 am, hoy</div>
+                            </div>
+                            <div class="message-body">
+                                Hola, espero que estés bien ¿vas a la reunión de hoy?
+                            </div>
+                        </li>
+                        <li class="message">
+                            <div class="message-info">
+                                <div class="bullet"></div>
+                                <div class="contact-name">Yo</div>
+                                <div class="message-time">11:14 am, hoy</div>
+                            </div>
+                            <div class="message-body">
+                                Hola, espero que estés bien ¿vas a la reunión de hoy?
+                            </div>
+                        </li>
+                        <li class="message reply">
+                            <div class="message-info">
+                                <div class="bullet"></div>
+                                <div class="contact-name">Juan</div>
+                                <div class="message-time">11:14 am, hoy</div>
+                            </div>
+                            <div class="message-body">
+                                Hola, espero que estés bien ¿vas a la reunión de hoy?
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="send-message">
+                        <span class="input-icon icon-right">
+                            <textarea rows="4" class="form-control" placeholder="Escribe tu mensaje"></textarea>
+                            <i class="fa fa-camera themeprimary"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- /Chat Bar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                @*<div class="page-breadcrumbs">
+                        @Html.MvcSiteMap().SiteMapPath()
+                    </div>*@
+                <!-- /Page Breadcrumb -->
+                <!-- Page Header -->
+                @*<div class="page-header position-relative">*@
+                @*@Html.MvcSiteMap().SiteMapTitle()*@
+                <!--Header Buttons-->
+                @*<div class="header-buttons">
+                        <a class="sidebar-toggler" href="#">
+                            <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <a class="refresh" id="refresh-toggler" href="">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </a>
+                        <a class="fullscreen" id="fullscreen-toggler" href="#">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>*@
+                <!--Header Buttons End-->
+                @*</div>*@
+                <!-- /Page Header -->
+                <!-- Notificaciones de Error en pantalla -->
+                @if (TempData["ResultError"] != null)
+                {
+                    CoreLibrary.Result objResult = (CoreLibrary.Result)TempData["ResultError"];
+                    if (objResult.HasError)
+                    {
+                        using (Html.Bootstrap().Begin(new Alert().Style(AlertColor.Error).Closeable().Shadowed().RadiusBordered()))
+                        {
+                            <i class="fa-fw fa fa-times"></i>
+                            <strong>Error</strong> <span>Ocurrió un error al ejecutar la última solicitud al sistema. Revise el registro de sucesos para mayor información.</span>
+                        }
+                    }
+                }
+                <!-- /Notificaciones de Error en pantalla -->
+                <!-- Page Body -->
+                <div class="page-body">
+                    <!-- Your Content Goes Here -->
+                    @RenderBody()
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /Page Container -->
+        <!-- Main Container -->
+
+    </div>
+
+    <!--Basic Scripts-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <!--Beyond Scripts-->
+    @Scripts.Render("~/bundles/beyond")
+
+    <!-- Cargar notificaciones y librería Core JS -->
+    @Html.Partial("Notifications")
+
+    @if (TempData["ResultError"] != null)
+    {
+        CoreLibrary.Result objResult = (CoreLibrary.Result)TempData["ResultError"];
+        if (objResult.HasError)
+        {
+            <script>
+                $(document).ready(function () {
+                    Notify('Un error ocurrió en el sistema', 'bottom-right', '10000', 'danger', 'fa-times', true);
+                });
+            </script>
+        }
+    }
+
+    @if (TempData["ResultSuccessMessage"] != null)
+    {
+        <script>
+                $(document).ready(function () {
+                    Notify('@TempData["ResultSuccessMessage"].ToString()', 'bottom-right', '10000', 'success', 'fa-check', true);
+                });
+        </script>
+
+    }
+
+    @if (TempData["ResultErrorMessage"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                Notify('@TempData["ResultErrorMessage"].ToString()', 'bottom-right', '10000', 'danger', 'fa-times', true);
+            });
+        </script>
+
+    }
+
+    @if (TempData["ResultWarningMessage"] != null)
+    {
+        <script>
+                $(document).ready(function () {
+                    Notify('@TempData["ResultWarningMessage"].ToString()', 'bottom-right', '10000', 'warning', 'fa fa-exclamation-triangle', true);
+                });
+        </script>
+
+    }
+
+    @Scripts.Render("~/bundles/core")
+    @{
+        var relativeUrl = HttpContext.Current.Request.Url.Segments;
+        var url = string.Empty;
+
+        foreach (var item in relativeUrl)
+        {
+            if (!item.Equals("Index"))
+            {
+                url += item;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    <script>
+        jsCore.Url = '@url';
+    </script>
+
+    <script type="text/javascript">
+
+        var myVar = setInterval(myTimer, 10000);
+
+        function myTimer() {
+            setTimeout(function () {
+                $("#NewsList").empty();
+                $.ajax({
+                    url: '../Alerts/retornaDiv?idUserAlert=@ViewBag.usuario',
+                    type: 'post',
+                    dataType: "html",
+                    async: true,
+                    success: function (_result) {
+                        $("#NewsList").append(_result);
+                    }
+                })
+                , 5000
+            });
+         }
+    </script>
+
+    <!--Page Related Scripts-->
+    @RenderSection("PageScripts", required: false)
+</body>
+<!--  /Body -->
+</html>
