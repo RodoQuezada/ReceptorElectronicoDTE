@@ -1,0 +1,188 @@
+﻿@using System.Data;
+
+@{
+    ViewBag.Title = "Creación de Area";
+    ViewBag.Description = "Crear una nueva Area.";
+    Layout = "";
+
+}
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-yellow">
+                <span class="widget-caption">
+                    @*[
+                        @{
+                            if (Model.Id_Sistema == null) {
+                                var IDactivo = Model.ID_ACTIVO;
+
+
+                            }
+                            else{ var IDactivo = 0; }
+                         }
+                            ]*@ Creación de Area
+                        </span>
+
+                        <div class="widget-buttons">
+                            @*<a href="#" data-toggle="maximize">
+                                    <i class="fa fa-expand"></i>
+                                </a>
+                                <a href="#" data-toggle="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </a>
+                                <a href="#" data-toggle="dispose">
+                                    <i class="fa fa-times"></i>
+                                </a>*@
+                        </div>
+                    </div>
+            <div class="widget-body">
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            Codigo Area
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgCodigoArea" type="number" class="form-control" autocomplete="Off" name="dgCodigoArea" value="" placeholder="Codigo de Area"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            Rut Empresa
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgRutEmpresa" type="text" class="form-control" autocomplete="Off" name="dgRutEmpresa" value="" placeholder="Rut de la Empresa"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-comment"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            Nombre Area
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgNombreArea" type="text" class="form-control" autocomplete="Off" name="dgNombreArea" value="" placeholder="Nombre del Area"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-cog"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            Descripción
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgDescripcion" type="text" class="form-control" autocomplete="Off" name="dgDescripcion" value="" placeholder="Nombre del Area"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-cog"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <table align="center">
+                                <tr>
+                                    <td align="center">
+
+                                        @*@if (User.IsInRole("ope_compania_crear")) *@
+                                        @*{*@
+                                        <button id="btnAgregar" class="btn btn-primary" onclick="GrabarAreaBD( dgCodigoArea, dgRutEmpresa, dgNombreArea, dgDescripcion,btnAgregar)"><i class="fa fa-floppy-o"></i>Grabar</button>
+
+
+                                        @*}*@
+                                        @*else*@
+                                        @*{*@
+                                        @*<button id="btnAgregar" class="btn-primary" disabled onclick="GrabarAdjuntoBD(dgDescripcion,NomArchivo,AtachTable,btnAgregar)><i class="fa fa-folder-open-o"></i>Grabar</button>*@
+                                        @* } *@
+
+                                        @*@if (User.IsInRole("ope_compania_crear")) *@
+                                        @*{*@
+                                        <button id="btnVolver" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-undo"></i>Volver</button>
+
+                                        @*}*@
+                                        @*else*@
+                                        @*{*@
+                                        @*<button disabled id="btnVolver" class="btn-primary" data-dismiss="modal"><i class="fa fa-folder-open-o"></i>Archivo</button>*@
+                                        @* } *@
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+          </div>
+ </div>
+
+ @{
+    var relativeUrl = HttpContext.Current.Request.Url.Segments;
+    var url = string.Empty;
+
+    foreach (var item in relativeUrl)
+    {
+            if (!item.Equals("Attach"))
+            {
+                url += item;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+@section PageScripts{
+  <script src="~/assets/js/validation/bootstrapValidator.js"></script>
+  <script src="~/assets/js/select2/select2.js"></script>
+  <script src="~/assets/js/bootbox/bootbox.js"></script>
+  <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+
+       
+<script type="text/javascript" class="init">
+
+</script>
+}

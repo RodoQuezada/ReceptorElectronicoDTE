@@ -24,3 +24,12 @@ D:\Users\rquezada\source\repos\ReceptorElectronicoDTE\NetCore.PeddEval\obj\Debug
 D:\Users\rquezada\source\repos\ReceptorElectronicoDTE\NetCore.PeddEval\obj\Debug\NetCore.PeddEval.csproj.CopyComplete
 D:\Users\rquezada\source\repos\ReceptorElectronicoDTE\NetCore.PeddEval\obj\Debug\NetCore.PeddEval.dll
 D:\Users\rquezada\source\repos\ReceptorElectronicoDTE\NetCore.PeddEval\obj\Debug\NetCore.PeddEval.pdb
+D:\Users\rquezada\Source\Repos\ReceptorElectronicoDTE2\NetCore.PeddEval\bin\Debug\NetCore.PeddEval.dll.config
+D:\Users\rquezada\Source\Repos\ReceptorElectronicoDTE2\NetCore.PeddEval\bin\Debug\NetCore.PeddEval.dll
+D:\Users\rquezada\Source\Repos\ReceptorElectronicoDTE2\NetCore.PeddEval\bin\Debug\NetCore.PeddEval.pdb
+D:\Users\rquezada\Source\Repos\ReceptorElectronicoDTE2\NetCore.PeddEval\bin\Debug\CoreLibrary.dll
+D:\Users\rquezada\Source\Repos\ReceptorElectronicoDTE2\NetCore.PeddEval\obj\Debug\NetCore.PeddEval.csprojAssemblyReference.cache
+D:\Users\rquezada\Source\Repos\ReceptorElectronicoDTE2\NetCore.PeddEval\obj\Debug\NetCore.PeddEval.csproj.CoreCompileInputs.cache
+D:\Users\rquezada\Source\Repos\ReceptorElectronicoDTE2\NetCore.PeddEval\obj\Debug\NetCore.PeddEval.csproj.CopyComplete
+D:\Users\rquezada\Source\Repos\ReceptorElectronicoDTE2\NetCore.PeddEval\obj\Debug\NetCore.PeddEval.dll
+D:\Users\rquezada\Source\Repos\ReceptorElectronicoDTE2\NetCore.PeddEval\obj\Debug\NetCore.PeddEval.pdb
