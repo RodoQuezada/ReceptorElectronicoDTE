@@ -8,18 +8,17 @@ namespace NetCore.PeddEval.DataAccess
 {
     //@uthor: Rodolfo Quezada
 
-    public class Empresa : CommonDataAccess
+    public class EmpresaDA : CommonDataAccess
     {
 
 
         //variables de SP
         private string spEmpresaInsert = "sp_maestros_empresa_insert";
         private string spEmpresaSelectAll = "sp_maestros_empresa_selectAll";
-
-
+        private string spEmpresaSelectById = "sp_eval_empresas_select";
         protected string className;
 
-        public Empresa()
+        public EmpresaDA()
             : base()
         {
             className = string.Format("{0}.{1}", this.GetType().Namespace, this.GetType().Name);
@@ -39,7 +38,52 @@ namespace NetCore.PeddEval.DataAccess
             return ProcedureCall(spEmpresaSelectAll, parameters);
         }
 
+        public DataTable SelectByIdEmpresa(int IdEmpresa, int IdUsuario)
+        {
+            DataTable dt = null;
+            try
+            {
+                using (DbConnection conn = db.CreateConnection())
+                {
+                    try
+                    {
+                        conn.Open();
+                        DbCommand cmd;
+                        IDataReader dr;
 
+                        try
+                        {
+                            cmd = db.GetStoredProcCommand(spEmpresaSelectById
+                                , IdUsuario, IdEmpresa);
+                            dr = db.ExecuteReader(cmd);
+                        }
+                        catch (Exception ex)
+                        {
+                            this.Result = Result.GetNewError(ex, this.className);
+                            return null;
+                        }
+
+                        dt = new DataTable();
+                        dt.Load(dr);
+                        dr.Close();
+                        this.Result = Result.GetNewOK(this.className);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Result = Result.GetNewError(ex, this.className);
+                        return null;
+                    }
+                    finally
+                    { }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Result = Result.GetNewError(ex, this.className);
+                return null;
+            }
+            return dt;
+        }
 
 
         private DataTable ProcedureCall(string procedure, object[] parameters)
@@ -90,8 +134,4 @@ namespace NetCore.PeddEval.DataAccess
      
     }
 
-
-    class EmpresaDA 
-    {
-    }
 }

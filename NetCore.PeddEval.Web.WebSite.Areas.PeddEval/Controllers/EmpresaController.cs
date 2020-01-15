@@ -30,15 +30,24 @@ namespace NetCore.PeddEval.Web.WebSite.Areas.PeddEval.Controllers
         public ActionResult Create()
         {
             //se carga el viewbag de los Estados
-           
+
             return View();
         }
 
 
+        [HttpPost]
+        public ActionResult SelectEmpresaById(int IdEmpresa, int IdUsuario)
+        {
+            //se carga el viewbag de los Estados
 
+            Business.EmpresaBS empresaBS = new Business.EmpresaBS();
+            DataTable _empresas = empresaBS.SelectByIdEmpresa(IdEmpresa, IdUsuario);
+            this.Result = empresaBS.Result;
 
+            ViewBag.Empresas = _empresas;
 
+            return View();
 
-
+        }
     }
 }

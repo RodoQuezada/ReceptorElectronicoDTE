@@ -36,9 +36,21 @@ namespace NetCore.PeddEval.Web.WebSite.Areas.PeddEval.Controllers
             this.Result = areaBS.Result;
 
             return Resultado;
-
            
         }
+
+        [HttpPost]
+        public ActionResult SelectAreaByEmpSuc(int IdEmpresa, int IdSucursal, int IdArea, int IdUsuario)
+        {
+            AreaBS areaBS = new AreaBS();
+            DataTable dtArea = areaBS.AreasbyEmpresaSuc( IdEmpresa,  IdSucursal,  IdArea,  IdUsuario);//Aca se debe definir de donde obtener el valor de la empresa
+            this.Result = areaBS.Result;
+            ViewBag.Area = dtArea;
+
+            return View();
+        }
+
+    }
 
 
 

@@ -31,6 +31,17 @@ namespace NetCore.PeddEval.Business
             return dt;
         }
 
+        public DataTable AreasbyEmpresaSuc(int IdEmpresa, int IdSucursal, int IdArea, int IdUsuario)
+        {
+            DataTable dt = this.datAreaDA.SelectAreabyEmpresaSuc(IdEmpresa,  IdSucursal,  IdArea,  IdUsuario);
+            this.Result = this.datAreaDA.Result;
+            if (this.Result.HasError)
+                return null;
+
+            return dt;
+        }
+
+
         public string InsertAreabyEmpresa(string codArea, string rutEmpresa, string nombre, string descripcion, int auditNoEliminar, DateTime auditFechaCreacion, DateTime auditUltimaFechaActualiza, string auditUsuarioActualiza)
         {
 

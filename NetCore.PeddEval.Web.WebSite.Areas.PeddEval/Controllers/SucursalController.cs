@@ -29,7 +29,20 @@ namespace NetCore.PeddEval.Web.WebSite.Areas.PeddEval.Controllers
             return View();
         }
 
-        //Ultima Prueba de cambios.
+        [HttpPost]
+        public ActionResult SelectEmpresaById(int IdEmpresa,int IdSucursal, int IdUsuario)
+        {
+            //se carga el viewbag de los Estados
+
+            Business.SucursalBS sucursalBs = new Business.SucursalBS();
+            DataTable _sucursal = sucursalBs.SelectByEmpSuc(IdEmpresa, IdSucursal, IdUsuario);
+            this.Result = sucursalBs.Result;
+
+            ViewBag.Sucursales = _sucursal;
+
+            return View();
+
+        }
 
     }
 }
