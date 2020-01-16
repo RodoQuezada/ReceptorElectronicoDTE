@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaDA.cs" />
     <Compile Include="DepartamentoDA.cs" />
     <Compile Include="DetObjetivoDA.cs" />
     <Compile Include="EmpresaDA.cs" />

@@ -101,7 +101,7 @@
     <Compile Include="Controllers\FaseController.cs" />
     <Compile Include="Controllers\EvaluacionController.cs" />
     <Compile Include="Controllers\CompaniaController.cs" />
-    <Compile Include="Controllers\Proveedor.cs" />
+    <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Models\AreaModel.cs" />

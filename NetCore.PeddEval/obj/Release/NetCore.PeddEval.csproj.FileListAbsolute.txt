@@ -1,9 +1,0 @@
-C:\Trabajo\GlobalApps\PeddEval\NetCore.PeddEval\bin\Release\NetCore.PeddEval.dll.config
-C:\Trabajo\GlobalApps\PeddEval\NetCore.PeddEval\bin\Release\NetCore.PeddEval.dll
-C:\Trabajo\GlobalApps\PeddEval\NetCore.PeddEval\bin\Release\NetCore.PeddEval.pdb
-C:\Trabajo\GlobalApps\PeddEval\NetCore.PeddEval\bin\Release\CoreLibrary.dll
-C:\Trabajo\GlobalApps\PeddEval\NetCore.PeddEval\obj\Release\NetCore.PeddEval.csprojAssemblyReference.cache
-C:\Trabajo\GlobalApps\PeddEval\NetCore.PeddEval\obj\Release\NetCore.PeddEval.csproj.CoreCompileInputs.cache
-C:\Trabajo\GlobalApps\PeddEval\NetCore.PeddEval\obj\Release\NetCore.PeddEval.csproj.CopyComplete
-C:\Trabajo\GlobalApps\PeddEval\NetCore.PeddEval\obj\Release\NetCore.PeddEval.dll
-C:\Trabajo\GlobalApps\PeddEval\NetCore.PeddEval\obj\Release\NetCore.PeddEval.pdb

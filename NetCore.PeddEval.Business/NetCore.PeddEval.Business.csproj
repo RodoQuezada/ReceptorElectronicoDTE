@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaBS.cs" />
     <Compile Include="DetObjetivoBS.cs" />
     <Compile Include="EmpresaBS.cs" />
     <Compile Include="GrupoEvaluacionBS.cs" />
