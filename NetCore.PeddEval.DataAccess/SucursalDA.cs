@@ -14,20 +14,21 @@ using NetCore.PeddEval.DataAccess;
 
 namespace NetCore.PeddEval.DataAccess
 {
-    public class Sucursal : CommonDataAccess
+    public class SucursalDA : CommonDataAccess
     {
         private const string tbName = "tbPeddSucursal";
         private const string spSelAll = "spPeddSucursal_SelAll";
         private const string spDelete = "spPeddSucursal_Delete";
         private const string spInsert = "spPeddSucursal_Insert";
         private const string spSelect = "spPeddSucursal_Select";
+        private const string spSelectByEmpSuc = "sp_eval_sucursal_select";
         private const string spUpdate = "spPeddSucursal_Update";
         private const string spExists = "spPeddSucursal_Exists";
         private const string spSelByCom = "";
 
         protected string className;
 
-        public Sucursal()
+        public SucursalDA()
             : base()
         {
             className = string.Format("{0}.{1}", this.GetType().Namespace, this.GetType().Name);
@@ -223,6 +224,54 @@ namespace NetCore.PeddEval.DataAccess
             }
             return dt;
         }
+
+        public DataTable SelectByIdEmpresaSucursal(int IdEmpresa,int IdSucursal, int IdUsuario)
+        {
+            DataTable dt = null;
+            try
+            {
+                using (DbConnection conn = db.CreateConnection())
+                {
+                    try
+                    {
+                        conn.Open();
+                        DbCommand cmd;
+                        IDataReader dr;
+
+                        try
+                        {
+                            cmd = db.GetStoredProcCommand(spSelectByEmpSuc
+                                , IdUsuario, IdEmpresa,IdSucursal);
+                            dr = db.ExecuteReader(cmd);
+                        }
+                        catch (Exception ex)
+                        {
+                            this.Result = Result.GetNewError(ex, this.className);
+                            return null;
+                        }
+
+                        dt = new DataTable();
+                        dt.Load(dr);
+                        dr.Close();
+                        this.Result = Result.GetNewOK(this.className);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Result = Result.GetNewError(ex, this.className);
+                        return null;
+                    }
+                    finally
+                    { }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Result = Result.GetNewError(ex, this.className);
+                return null;
+            }
+            return dt;
+        }
+
 
         //public String Edit( int AreaId, string description, string webIcon, string webClass, bool activo, string UserRecord, DateTime? createdRecord, DateTime? UpdatedRecord, string LastUserRecord)
         //{

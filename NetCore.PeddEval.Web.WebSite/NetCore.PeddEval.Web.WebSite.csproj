@@ -451,8 +451,7 @@
     <Content Include="Areas\ReceptorDTE\Views\Empresa\Index.cshtml" />
     <Content Include="Areas\PeddEval\Views\Empresa\Index.cshtml" />
     <Content Include="Areas\PeddEval\Views\Empresa\Create.cshtml" />
-<<<<<<< Updated upstream
-=======
+
     <Content Include="Areas\PeddEval\Views\Area\Index.cshtml" />
     <Content Include="Areas\PeddEval\Views\Area\Create.cshtml" />
     <Content Include="Areas\PeddEval\Views\Sucursal\Create.cshtml" />
@@ -463,11 +462,12 @@
     <Content Include="Areas\PeddEval\Views\Estado\Index.cshtml" />
     <Content Include="Areas\PeddEval\Views\Proveedor\Create.cshtml" />
     <Content Include="Areas\PeddEval\Views\Proveedor\Index.cshtml" />
+
     <Content Include="Areas\PeddEval\Views\Receptor\Index.cshtml" />
     <Content Include="Areas\PeddEval\Views\Receptor\Condiciones.cshtml" />
     <Content Include="Areas\PeddEval\Views\Receptor\__AddCondicion.cshtml" />
     <Content Include="Areas\PeddEval\Views\Receptor\Create.cshtml" />
->>>>>>> Stashed changes
+
     <None Include="assets\js\jqueryval\jquery.validate-vsdoc.js" />
     <Content Include="assets\js\jquery.blockUI.js" />
     <Content Include="assets\js\jquery.min.js" />

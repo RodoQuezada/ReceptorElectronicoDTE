@@ -12,13 +12,13 @@ namespace NetCore.PeddEval.Business
     public class EmpresaBS : CommonBusiness
     {
 
-        private DataAccess.Empresa datEmpresa;
+        private DataAccess.EmpresaDA datEmpresa;
         protected string className;
 
         public EmpresaBS() : base()
         {
             className = string.Format("{0}.{1}", this.GetType().Namespace, this.GetType().Name);
-            datEmpresa = new DataAccess.Empresa();
+            datEmpresa = new DataAccess.EmpresaDA();
         }
 
 
@@ -37,6 +37,17 @@ namespace NetCore.PeddEval.Business
         public DataTable Todos()
         {
             DataTable dt = this.datEmpresa.GetAllEmpresas();
+            this.Result = this.datEmpresa.Result;
+            if (this.Result.HasError)
+                return null;
+
+            return dt;
+        }
+
+
+        public DataTable SelectByIdEmpresa(int IdEmpresa, int IdUsuario)
+        {
+            DataTable dt = this.datEmpresa.SelectByIdEmpresa(IdEmpresa, IdUsuario);
             this.Result = this.datEmpresa.Result;
             if (this.Result.HasError)
                 return null;
