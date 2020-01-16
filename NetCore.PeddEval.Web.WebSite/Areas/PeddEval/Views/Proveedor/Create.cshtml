@@ -1,8 +1,9 @@
 ﻿@using System.Data;
 
 @{
-    ViewBag.Title = "Creación de Area";
-    ViewBag.Description = "Crear una nueva Area.";
+
+    ViewBag.Title = "Creación de Proveedor";
+    ViewBag.Description = "Crear una nueva Proveedor.";
     Layout = "";
 
 }
@@ -20,7 +21,8 @@
                             }
                             else{ var IDactivo = 0; }
                          }
-                            ]*@ Creación de Area
+
+                            ]*@ Creación de Proveedor
                         </span>
 
                         <div class="widget-buttons">
@@ -40,14 +42,17 @@
                 <div class="row">
                     <div class="col-sm-2">
                         <div class="form-group">
-                            Codigo Area
+
+                            Rut
                         </div>
                     </div>
 
                     <div class="col-sm-10">
                         <div class="form-group">
                             <span class="input-icon icon-right">
-                                <input id="dgCodigoArea" type="number" class="form-control" autocomplete="Off" name="dgCodigoArea" value="" placeholder="Codigo de Area"
+
+                                <input id="dgRut" type="number" class="form-control" autocomplete="Off" name="dgRut" value="" placeholder="Codigo de Proveedor"
+
                                        data-bv-notempty="true"
                                        data-bv-notempty-message="El campo es Obligatorio" />
                                 <i class="glyphicon glyphicon-comment"></i>
@@ -59,15 +64,16 @@
 
                 <div class="row">
                     <div class="col-sm-2">
-                        <div class="form-group">
-                            Rut Empresa
+                        <div class="form-group"
+                            Alias
                         </div>
                     </div>
 
                     <div class="col-sm-10">
                         <div class="form-group">
                             <span class="input-icon icon-right">
-                                <input id="dgRutEmpresa" type="text" class="form-control" autocomplete="Off" name="dgRutEmpresa" value="" placeholder="Rut de la Empresa"
+
+                                <input id="dgAlias" type="text" class="form-control" autocomplete="Off" name="dgAlias" value="" placeholder="Rut de la Empresa"
                                        data-bv-notempty="true"
                                        data-bv-notempty-message="El campo es Obligatorio" />
                                 <i class="glyphicon glyphicon-comment"></i>
@@ -79,14 +85,18 @@
                 <div class="row">
                     <div class="col-sm-2">
                         <div class="form-group">
-                            Nombre Area
+
+                            Nombre
+
                         </div>
                     </div>
 
                     <div class="col-sm-10">
                         <div class="form-group">
                             <span class="input-icon icon-right">
-                                <input id="dgNombreArea" type="text" class="form-control" autocomplete="Off" name="dgNombreArea" value="" placeholder="Nombre del Area"
+
+                                <input id="dgNombre" type="text" class="form-control" autocomplete="Off" name="dgNombre" value="" placeholder="Nombre del Proveedor"
+
                                        data-bv-notempty="true"
                                        data-bv-notempty-message="El campo es Obligatorio" />
                                 <i class="glyphicon glyphicon-cog"></i>
@@ -98,14 +108,76 @@
                 <div class="row">
                     <div class="col-sm-2">
                         <div class="form-group">
-                            Descripción
+
+                            Fono
                         </div>
                     </div>
 
                     <div class="col-sm-10">
                         <div class="form-group">
                             <span class="input-icon icon-right">
-                                <input id="dgDescripcion" type="text" class="form-control" autocomplete="Off" name="dgDescripcion" value="" placeholder="Nombre del Area"
+
+                                <input id="dgFono" type="text" class="form-control" autocomplete="Off" name="dgFono" value="" placeholder="Nombre del Proveedor"
+
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-cog"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            Direccion
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgDireccion" type="text" class="form-control" autocomplete="Off" name="dgDireccion" value="" placeholder="Nombre del Proveedor"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-cog"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            Correo
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgCorreo" type="text" class="form-control" autocomplete="Off" name="dgCorreo" value="" placeholder="Nombre del Proveedor"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="El campo es Obligatorio" />
+                                <i class="glyphicon glyphicon-cog"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            CodEstado
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <div class="form-group">
+                            <span class="input-icon icon-right">
+                                <input id="dgCodEstado" type="text" class="form-control" autocomplete="Off" name="dgCodEstado" value="" placeholder="Nombre del Proveedor"
                                        data-bv-notempty="true"
                                        data-bv-notempty-message="El campo es Obligatorio" />
                                 <i class="glyphicon glyphicon-cog"></i>
@@ -128,7 +200,9 @@
 
                                         @*@if (User.IsInRole("ope_compania_crear")) *@
                                         @*{*@
-                                        <button id="btnAgregar" class="btn btn-primary" onclick="GrabarAreaBD( dgCodigoArea, dgRutEmpresa, dgNombreArea, dgDescripcion,btnAgregar)"><i class="fa fa-floppy-o"></i>Grabar</button>
+
+                                        <button id="btnAgregar" class="btn btn-primary" onclick="GrabarProveedorBD( dgRut, dgAlias, dgNombre, dgFono, dgDireccion, dgCorreo, dgCodEstado, btnAgregar)"><i class="fa fa-floppy-o"></i>Grabar</button>
+
 
 
                                         @*}*@
