@@ -1,0 +1,543 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "PROVEEDORES";
+    ViewBag.Description = "Listado de PROVEEDORES";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-yellow">
+                <span class="widget-caption">LISTADO DE PROVEEDORES</span>
+                <div class="widget-buttons">
+                    @*<a href="#" data-toggle="maximize">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                        <a href="#" data-toggle="collapse">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="#" data-toggle="dispose">
+                            <i class="fa fa-times"></i>
+                        </a>*@
+                </div>
+            </div>
+            <div class="widget-body">
+                <!-- Modal -->
+
+                <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                @*<h4 class="modal-title">Settings</h4>*@
+
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="widget">
+                                            <center> <img src='~/assets/img/cargando.gif' /></center>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+                <div class="well with-header table-responsive">
+                    <div class="header bordered-pink">
+                        @*@if (User.IsInRole("pedd_compania_create")) *@
+                        @*{
+                            <button id="crear" class="btn btn-primary"><i class="fa fa-calendar"></i>Crear Empresa</button> *@
+                        <a id="btn_create" class="btn btn-primary">
+                            <i class="fa fa-building-o"></i>Crear PROVEEDOR
+                        </a>
+                        @*}*@
+                        @*else*@
+                        @*{*@
+                        @*<button id="crear" class="btn-primary" disabled>Crear Empresa</button>*@
+                        @* } *@
+
+                    </div>
+                    <table class="table table-responsive" id="searchable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Rut
+                                </th>
+
+                                <th>
+                                    Alias
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Fono
+                                </th>
+
+                                <th>
+                                    Direccion
+                                </th>
+
+                                <th>
+                                    Correo
+                                </th>
+
+                                <th>
+                                    CodEstado
+                                </th>
+
+
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                      
+                        <tbody id="fbody">
+                            @{
+                                DataTable dt = null;
+                                dt = (ViewBag.PROVEEDOR != null) ? (DataTable)ViewBag.PROVEEDOR : null;
+                            }
+
+                            @if (dt != null && dt.Rows.Count > 0)
+                            {
+                                foreach (DataRow dr in dt.Rows)
+                                {
+                            <tr id="@(dr["ID"].ToString())">
+
+                                <td align="left">@(dr["Rut"].ToString())</td>
+
+                                <td align="left">@(dr["Alias"].ToString())</td>
+
+                                <td align="left"> @(dr["Nombre"].ToString())</td>
+
+                                <td align="left"> @(dr["Fono"].ToString())</td>
+
+                                <td align="left">@(dr["Direccion"].ToString())</td>
+
+                                <td align="left">@(dr["Correo"].ToString())</td>
+
+                                <td align="left"> @(dr["CodEstado"].ToString())</td>                           
+
+                                <td id="@(dr["ID"].ToString())" align="left">
+
+                                    @* @if (User.IsInRole("pedd_compania_edit")) *@
+                                    @* { *@
+                                    @*<a href="Users/Detail?UserId=@(dr["ID_SISTEMA"].ToString())"><button class="btn btn-info">Ver</button></a>
+            <button id="btn_edit" type="button" class="btn btn-info btn-xs"><i class="fa fa-edit"></i>Editar</button> *@
+
+
+                                    <button id="btn_edit" type="button" class="btn btn-info btn-xs" onclick="Editar(@(dr["ID"].ToString()));"><i class="fa fa-check"></i>Editar</button>
+
+
+                                    @*<a id="btn_edit"  class="btn btn-info btn-xs" >
+                <i class="fa fa-edit"></i>Editar
+            </a>*@
+
+
+                                    @* } *@
+                                    @* else *@
+                                    @* { *@
+                                    @*<button id="btn_edit" type="button" class="btn btn-info btn-xs" disabled>Editar</button> *@
+                                    @* } *@
+
+                                    @*
+            @if (User.IsInRole("ope_ods_crear"))
+            {
+              <button id="btn_ods" type="button" class="btn btn-info btn-xs"><i class="fa fa-inbox"></i>Generar ODS</button>
+            }
+            else
+            {
+              <button id="btn_ods" type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-inbox"></i>Generar ODS</button>
+            }
+                                    *@
+
+                                    @*
+            @if (User.IsInRole("pedd_compania_delete"))
+            {
+                                    *@
+                                    <button id="btn_DELETE" type="button" class="btn btn-danger btn-xs Delete-confirm"><i class="fa fa-trash-o"></i>Eliminar</button>
+                                    @*
+            }
+            else
+            {
+                <button id="btn_DELETE" type="button" class="btn btn-danger btn-xs" disabled><i class="fa fa-trash-o"></i>Eliminar</button>
+            }
+                                    *@
+                                </td>
+
+                            </tr>
+
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<form id="FormEmpresa" method="post" action="Compania/Edit" hidden>
+            <input type="text" class="form-control" autocomplete="Off" name="IdEmpresa" value="0" id="IdEmpresa" readonly />
+            <input type="submit" value="Submit" id="btnSubmit">
+        </form>*@
+
+    <form id="FormEmpresa" method="post" hidden>
+        <input type="text" class="form-control" autocomplete="Off" name="Id" value="" id="Id" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="Rut" value="" id="Rut" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="Alias" value="" id="Alias" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="Nombre" value="" id="Nombre" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="Fono" value="" id="Fono" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="Direccion" value="" id="Direccion" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="Correo" value="" id="Correo" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="CodEstado" value="" id="CodEstado" readonly />     
+    </form>
+
+</div>
+
+
+<!--Email Modal Templates-->
+<div id="myEmailModal" class="modal fade" data-backdrop="static" data-keyboard="false" style="display:none;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="To" required="">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Subject" required="">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Content" rows="5" required=""></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var relativeUrl = HttpContext.Current.Request.Url.Segments;
+    var url = string.Empty;
+
+    foreach (var item in relativeUrl)
+    {
+        if (!item.Equals("Index"))
+        {
+            url += item;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/assets/js/jquery.blockUI.js"></script>
+    <script type="text/javascript" class="init">
+
+
+  $(document).ready(function () {
+            $('#searchable').DataTable({
+
+                "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+                "aaSorting": [[4, 'asc']],
+                "aLengthMenu": [
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "All"]
+                ],
+                "iDisplayLength": 10,
+                "oTableTools": {
+                    "aButtons": [
+                       // "copy",
+                       // "print",
+                        {
+                            "sExtends": "print",
+                            "sButtonText": "<i class=\"fa fa-print\"></i> Imprimir",
+                            "aButtons": ["print"]
+                        },
+                        {
+                            "sExtends": "collection",
+                            "sButtonText": "<i class=\"fa fa-save\"></i> Guardar",
+                            "aButtons": ["csv", "xls", "pdf"]
+                        }
+
+                    ],
+                    "sSwfPath": "../assets/swf/copy_csv_xls_pdf.swf"
+                },
+                "language": {
+                    "search": "",
+                    "sLengthMenu": "_MENU_",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                initComplete: function () {
+                    this.api().columns([0,1,2,3,4]).every(function () {
+                        var column = this;
+                        var select = $('<select placeholder="Search Modelo" class="selectpicker" data-style="btn-primary"><option value="">Todos</option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                }
+            });
+        });
+
+
+//Eliminar un registro dentro de la tabla
+  $('#searchable #btn_DELETE').on("click", function (e)
+ {
+     var _this = this;
+     var stExito = '';
+     var nRow = $(this).parents('tr')[0];
+     var IdEmpresa = $(this).parents('td')[0].id;
+     var opsConfirm = jsCore.bootBoxConfirmDeleteOptions;
+
+     opsConfirm.message = "¿Desea eliminar la Empresa n° " + IdEmpresa + "?";
+     opsConfirm.buttons.success.callback = function ()
+     {
+        stExito = EliminarOtBD(IdEmpresa);
+
+        if (stExito == 'S')
+        {
+           var oTable = $('#searchable').dataTable()
+           oTable.fnDeleteRow(nRow);
+        }
+
+     };
+     bootbox.dialog(opsConfirm);
+ });
+
+
+  // ELIMINAR EMPRESA DE LA BASE DE DATOS
+  function EliminarOtBD(IdEmpresa)
+  {
+        var stExito = '';
+
+        // ASIGNO EMPRESA AL FORMULARIO OCULTO
+        $("#IdOt").val(IdEmpresa);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete", "Ot")',
+            data: $("#FormOt").serialize(),
+            async: false,
+            success: function (response) {
+                Notify('La OT se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                stExito = 'S';
+
+            },
+            failure: function (response) {
+
+                Notify('Hubo un error al eliminar la OT, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+  }
+
+
+ $("#FormOt").on('submit', function (e) {
+
+    var valid = true;
+    valid = checkEmpty($("#IdOt"));
+
+    if (!valid)
+    {
+        evt.preventDefault();
+    }
+
+ });
+
+ function Editar(IdOt) {
+
+    if (IdOt > 0) {
+        $("#IdOt").val(IdOt);
+
+        $("#btnSubmit").click();
+    }
+
+ }
+
+
+  //DESPLEGAR CREACION EMPRESA
+  $('#btn_create').on("click", function (e) {
+
+      mostrarModal("Create");
+
+  });
+
+  //DESPLEGAR EDICION EMPRESA
+  $('#btn_edit').on("click", function (e)
+  {
+     //SE AGREGA PARA PREVENIR CIERRE AUTOMATICO DEL MODAL
+     e.preventDefault();
+
+     var url = "Edit?IdEmpresa=" + $('#lblIdOt').text();
+
+      mostrarModal(url);
+  });
+
+  function GrabarProveedorBD( dgRut, dgAlias, dgNombre, dgFono, dgDireccion, dgCorreo, dgCodEstado, btnAgregar)
+  {
+      var strdgRut = "" + dgRut.value;
+      var strAlias= "" + dgAlias.value;
+      var strNombre = "" + dgNombre.value;
+      var strFono = "" + dgFono.value;
+      var strDireccion = "" + dgDireccion.value;
+      var strCorreo = "" + dgCorreo.value;
+      var strCodEstado = "" + dgCodEstado.value;
+  
+
+
+      $("#Id").val('999999999');
+      $("#Rut").val(strdgRut);
+      $("#Alias").val(strAlias);
+      $("#Nombre").val(strNombre);
+      $("#Fono").val(strFono);
+      $("#Direccion").val(strDireccion);
+      $("#Correo").val(strCorreo);
+      $("#CodEstado").val(strCodEstado);
+
+    
+
+      $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateCompania", "Compania")',
+            data: $("#FormEmpresa").serialize(),
+            async: false,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (response) {
+
+                var strRespuesta = "" + response.toString();
+
+                if (strRespuesta.length > 0)
+                {
+                    Notify('La empresa ' + Nombre.value + ' se grabó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+
+                    var intPos = strRespuesta.indexOf(';');
+                    var strIdCompania = strRespuesta.substring(0, intPos);
+                    var strUrl = strRespuesta.substring(intPos + 1, strRespuesta.length);
+
+                    $("#Id").val(strIdCompania.toString());
+                    ClaveBusqueda = ClaveBusqueda + '-' + strIdAdjunto.toString();
+                    $("#IdBusqueda").val(ClaveBusqueda);
+                    AgregaFilaAttach(AtachTable, strDescripcion, strUrl);
+
+                    $("#btnAgregar").attr("disabled", true);
+                    stExito = 'S';
+                }
+
+            },
+            failure: function (response)
+            {
+                Notify('Hubo un error al grabar la empresa' + NomCompania.value + ', revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                stExito = 'N';
+            }
+        });
+
+        return stExito;
+
+  }
+
+
+
+  function mostrarModal(page)
+  {
+      //alert('@url/' + page);
+      $.blockUI();
+      $.ajax({
+              url: '@url/' + page,
+              jsonp: false,
+              data: {}, //Si le vas a pasar parámetros
+              async: true,
+              beforeSend: function () {
+
+              },
+              success: function (data) {
+                  $.unblockUI();
+                  bootbox.dialog({
+                      message: data,
+                      title: "Sistema Receptor Electronico DTE ",
+                      className: "modal-darkorange"//,
+                        //buttons: {
+                        //    success: {
+                        //        label: "Send",
+                        //        className: "btn-blue",
+                        //        callback: function () { }
+                        //    },
+                        //    "Save as Draft": {
+                        //        className: "btn-danger",
+                        //        callback: function () { }
+                        //    }
+                        //}
+                  });
+
+              },
+              error: function () {
+                  $('#myModal').removeClass("modal-body");
+                  $('#myModal').modal({ show: false });
+                  //alert("error");
+                  //$('ModalPage').removeClass('loading'); //Removemos la clase loading
+
+              }
+      });
+
+
+
+  }
+
+
+  $("#myModal").on('hidden.bs.modal', function () {
+           // alert("Esta accion se ejecuta al cerrar el modal")
+            $('#myModal').removeClass("modal-body");
+            $('#myModal .modal-body').load('@url/Loading', function () { });
+
+
+        });
+
+
+
+
+  $(function () {
+            $("#myEmailModal").draggable();
+        });
+    </script>
+
+}
