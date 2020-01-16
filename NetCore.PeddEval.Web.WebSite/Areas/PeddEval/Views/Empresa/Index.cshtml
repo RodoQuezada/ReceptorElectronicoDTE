@@ -172,14 +172,14 @@
         </form>*@
 
     <form id="FormEmpresa" method="post" hidden>
-        <input type="text" class="form-control" autocomplete="Off" name="Id" value="" id="Id" readonly />
-        <input type="text" class="form-control" autocomplete="Off" name="Rut" value="" id="Rut" readonly />
-        <input type="text" class="form-control" autocomplete="Off" name="Nombre" value="" id="Nombre" readonly />
-        <input type="text" class="form-control" autocomplete="Off" name="Descripcion" value="" id="Descripcion" readonly />
-        <!-- <input type="text" class="form-control" autocomplete="Off" name="GiroCompania" value="" id="GiroCompania" readonly />
-         <input type="text" class="form-control" autocomplete="Off" name="DirCompania" value="" id="DirCompania" readonly />
-         <input type="text" class="form-control" autocomplete="Off" name="FonoCompania" value="" id="FonoCompania" readonly />
-         <input type="text" class="form-control" autocomplete="Off" name="IdEstado" value="" id="IdEstado" readonly /> -->
+        <input type="text" class="form-control" autocomplete="Off" name="IdCompania" value="" id="IdCompania" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="RutCompania" value="" id="RutCompania" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="DvCompania" value="" id="DvCompania" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="NomCompania" value="" id="NomCompania" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="GiroCompania" value="" id="GiroCompania" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="DirCompania" value="" id="DirCompania" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="FonoCompania" value="" id="FonoCompania" readonly />
+        <input type="text" class="form-control" autocomplete="Off" name="IdEstado" value="" id="IdEstado" readonly />
     </form>
 
 </div>
@@ -335,13 +335,13 @@
             data: $("#FormOt").serialize(),
             async: false,
             success: function (response) {
-                Notify('La Empresa se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                Notify('La OT se eliminó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
                 stExito = 'S';
 
             },
             failure: function (response) {
 
-                Notify('Hubo un error al eliminar la Empresa, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                Notify('Hubo un error al eliminar la OT, revise Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
                 stExito = 'N';
             }
         });
@@ -386,23 +386,29 @@
      //SE AGREGA PARA PREVENIR CIERRE AUTOMATICO DEL MODAL
      e.preventDefault();
 
-     var url = "Edit?Id=" + $('#lblIdOt').text();
+     var url = "Edit?IdEmpresa=" + $('#lblIdOt').text();
 
       mostrarModal(url);
   });
 
-        function GrabarEmpresaBD(dgRut, dgNombre, dgDescripcion, btnAgregar)
+  function GrabarEmpresaBD(numRutCompania,dgDvCompania,dgNomCompania,dgGiroCompania,dgDirCompania,dgFonoCompania,numIdEstado,btnAgregar)
   {
-            var strRut = "" + dgRut.value;
-            var strNombre = "" + dgNombre.value;
-            var strDescripcion = "" + dgDescripcion.value;
-    
+      var strRutCompania = "" + numRutCompania.value;
+      var strdvCompania = "" + dgDvCompania.value;
+      var strNomCompania = "" + dgNomCompania.value;
+      var strGiroCompania = "" + dgGiroCompania.value;
+      var strDirCompania = "" + dgDirCompania.value;
+      var strFonoCompania = "" + dgFonoCompania.value;
+      var strEstado = "" + numIdEstado.value;
 
-            $("#Id").val('999999999');
-            $("#Rut").val(strRut);
-            $("#Nombre").val(strNombre);
-            $("#Descripcion").val(strDescripcion);
-    
+      $("#IdCompania").val('999999999');
+      $("#RutCompania").val(strRutCompania);
+      $("#DvCompania").val(strdvCompania);
+      $("#NomCompania").val(strNomCompania);
+      $("#GiroCompania").val(strGiroCompania);
+      $("#DirCompania").val(strDirCompania);
+      $("#FonoCompania").val(strFonoCompania);
+      $("#IdEstado").val(strEstado);
 
       $.ajax({
             type: 'POST',
@@ -417,13 +423,13 @@
 
                 if (strRespuesta.length > 0)
                 {
-                    Notify('La empresa ' + Nombre.value + ' se grabó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
+                    Notify('La empresa ' + NomCompania.value + ' se grabó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
 
                     var intPos = strRespuesta.indexOf(';');
                     var strIdCompania = strRespuesta.substring(0, intPos);
                     var strUrl = strRespuesta.substring(intPos + 1, strRespuesta.length);
 
-                    $("#Id").val(strIdCompania.toString());
+                    $("#IdCompania").val(strIdCompania.toString());
                     ClaveBusqueda = ClaveBusqueda + '-' + strIdAdjunto.toString();
                     $("#IdBusqueda").val(ClaveBusqueda);
                     AgregaFilaAttach(AtachTable, strDescripcion, strUrl);
@@ -435,7 +441,7 @@
             },
             failure: function (response)
             {
-                Notify('Hubo un error al grabar la empresa' + Nombre.value + ', revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
+                Notify('Hubo un error al grabar la empresa' + NomCompania.value + ', revise el Log de Usuario.', 'bottom-right', '5000', 'danger', 'fa-times', true);
                 stExito = 'N';
             }
         });
@@ -462,7 +468,7 @@
                   $.unblockUI();
                   bootbox.dialog({
                       message: data,
-                      title: "Sistema Receptor Electronico DTE ",
+                      title: "Sistema PeddEval",
                       className: "modal-darkorange"//,
                         //buttons: {
                         //    success: {

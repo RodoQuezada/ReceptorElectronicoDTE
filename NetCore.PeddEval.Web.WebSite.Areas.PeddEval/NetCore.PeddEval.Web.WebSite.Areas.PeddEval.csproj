@@ -91,20 +91,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\AreaFuncionalController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
-    <Compile Include="Controllers\EstadoController.cs" />
     <Compile Include="Controllers\EvaluacionActivaController.cs" />
     <Compile Include="Controllers\ObjetivoController.cs" />
     <Compile Include="Controllers\ParticipanteController.cs" />
     <Compile Include="Controllers\FaseController.cs" />
     <Compile Include="Controllers\EvaluacionController.cs" />
     <Compile Include="Controllers\CompaniaController.cs" />
+<<<<<<< Updated upstream
+=======
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\ReceptorController.cs" />
     <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Models\AreaModel.cs" />
     <Compile Include="Models\CabEvaluacionModels.cs" />
     <Compile Include="Models\Empleado.cs" />

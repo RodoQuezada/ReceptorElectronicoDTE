@@ -13,12 +13,12 @@ namespace NetCore.PeddEval.Business
 {
     public class SucursalBS : CommonBusiness
     {
-        private DataAccess.SucursalDA datSucursal;
+        private DataAccess.Sucursal datSucursal;
         protected string className;
         public SucursalBS()
         {
             className = string.Format("{0}.{1}", this.GetType().Namespace, this.GetType().Name);     
-            this.datSucursal = new DataAccess.SucursalDA();
+            this.datSucursal = new DataAccess.Sucursal();
         }
         public DataTable Todos()
         {
@@ -37,13 +37,6 @@ namespace NetCore.PeddEval.Business
             this.Result = this.datSucursal.Result;
             return dt;
         }
-
-        public DataTable SelectByEmpSuc(int IdEmpresa, int IdSucursal, int IdUsuario)
-        {
-            DataTable dt = this.datSucursal.SelectByIdEmpresaSucursal(IdEmpresa, IdSucursal, IdUsuario);
-            this.Result = this.datSucursal.Result;
-            return dt;
-        }
-
+ 
     }
 }

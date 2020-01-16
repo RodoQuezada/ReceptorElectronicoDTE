@@ -71,7 +71,6 @@
                                     ID
                                 </th>
                                 <th>
-
                                     Rut
                                 </th>
 
@@ -114,7 +113,6 @@
                             {
                                 foreach (DataRow dr in dt.Rows)
                                 {
-
                             <tr id="@(dr["ID"].ToString())">
 
                                 <td align="left">@(dr["Rut"].ToString())</td>
@@ -130,7 +128,6 @@
                                 <td align="left">@(dr["Correo"].ToString())</td>
 
                                 <td align="left"> @(dr["CodEstado"].ToString())</td>                           
-
 
                                 <td id="@(dr["ID"].ToString())" align="left">
 
@@ -198,7 +195,6 @@
 
     <form id="FormEmpresa" method="post" hidden>
         <input type="text" class="form-control" autocomplete="Off" name="Id" value="" id="Id" readonly />
-
         <input type="text" class="form-control" autocomplete="Off" name="Rut" value="" id="Rut" readonly />
         <input type="text" class="form-control" autocomplete="Off" name="Alias" value="" id="Alias" readonly />
         <input type="text" class="form-control" autocomplete="Off" name="Nombre" value="" id="Nombre" readonly />
@@ -206,7 +202,6 @@
         <input type="text" class="form-control" autocomplete="Off" name="Direccion" value="" id="Direccion" readonly />
         <input type="text" class="form-control" autocomplete="Off" name="Correo" value="" id="Correo" readonly />
         <input type="text" class="form-control" autocomplete="Off" name="CodEstado" value="" id="CodEstado" readonly />     
-
     </form>
 
 </div>
@@ -439,7 +434,6 @@
       $("#Correo").val(strCorreo);
       $("#CodEstado").val(strCodEstado);
 
-
     
 
       $.ajax({
@@ -455,9 +449,7 @@
 
                 if (strRespuesta.length > 0)
                 {
-
                     Notify('La empresa ' + Nombre.value + ' se grabó correctamente.', 'bottom-right', '5000', 'success', 'fa-check', true);
-
 
                     var intPos = strRespuesta.indexOf(';');
                     var strIdCompania = strRespuesta.substring(0, intPos);
