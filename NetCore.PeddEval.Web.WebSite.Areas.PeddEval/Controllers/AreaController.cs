@@ -52,10 +52,5 @@ namespace NetCore.PeddEval.Web.WebSite.Areas.PeddEval.Controllers
 
     }
 
-
-
-
-
-
-    }
 }
+
